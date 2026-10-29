@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Workforce Tracker — Total</title>
+<meta name="description" content="Tracking layoffs and hiring at the main tech companies and AI labs: LayoffsBench, HiringsBench, and the aggregate Total.">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+</head>
+<body>
+<main>
+  <h1>⚖️ AI Workforce Tracker <span class="muted small">— Total</span></h1>
+  <p class="subtitle">Aggregate view of workforce moves at the main tech companies and AI labs.
+    Split views: <a href="layoffs.html">LayoffsBench</a> · <a href="hirings.html">HiringsBench</a>.
+    Data and sources: <a href="https://github.com/amayuelas/ai-workforce/tree/main/data">github.com/amayuelas/ai-workforce/data</a>.</p>
+
+  <section class="cards" id="kpis"></section>
+
+  <h2>Net workforce change by year (announced)</h2>
+  <div class="panel"><div id="net-chart"></div>
+    <div class="legend"><span class="l-red">net layoffs</span><span class="l-green">net hiring</span></div>
+  </div>
+
+  <h2>Layoffs vs hirings by year (announced roles)</h2>
+  <div class="panel"><div id="timeline-chart"></div>
+    <div class="legend"><span class="l-red">layoffs</span><span class="l-green">hirings</span></div>
+  </div>
+
+  <h2>Largest layoff announcements (tracked companies)</h2>
+  <div class="panel"><div id="top-layoffs"></div></div>
+
+  <h2>Tracked companies</h2>
+  <div class="panel">
+    <table class="data">
+      <thead><tr><th>Company</th><th>Type</th><th>Segment</th><th class="num">Latest headcount</th><th>Why tracked</th></tr></thead>
+      <tbody id="companies-body"></tbody>
+    </table>
+  </div>
+
+  <h2>All events (newest first)</h2>
+  <div class="panel" style="overflow-x:auto">
+    <table class="data">
+      <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
+      <tbody id="events-body"></tbody>
+    </table>
+  </div>
+</main>
+
+<script src="assets/js/app.js"></script>
+<script>
+AIW.loadAll().then(function (d) {
+  document.body.insertAdjacentHTML("afterbegin", AIW.header("Total"));
+  document.querySelector("main").insertAdjacentHTML("beforeend", AIW.footer(d.updated));
+
+  var layoffs = d.events.filter(function (e) { return e.type === "layoff"; });
+  var hirings = d.events.filter(function (e) { return e.type === "hiring"; });
+  var sizedLayoffs = layoffs.filter(function (e) { return e.size; });
+  var aiLayoffs = sizedLayoffs.filter(function (e) { return e.ai_related; });
+  var totalLaid = sizedLayoffs.reduce(function (a, e) { return a + e.size; }, 0);
+  var totalAI = aiLayoffs.reduce(function (a, e) { return a + e.size; }, 0);
+  var totalHired = hirings.reduce(function (a, e) { return a + (e.size || 0); }, 0);
+  var net = totalHired - totalLaid;
+
+  document.getElementById("kpis").innerHTML = [
+    { label: "Tracked companies", value: AIW.fmt(d.companies.length), cls: "blue", hint: "Big Tech + frontier AI labs" },
+    { label: "Announced layoffs (tracked)", value: AIW.fmt(totalLaid), cls: "red", hint: layoffs.length + " events since 2022" },
+    { label: "…of which AI-attributed", value: AIW.fmt(totalAI), cls: "red", hint: Math.round(100 * totalAI / totalLaid) + "% of announced layoffs" },
+    { label: "Announced hiring plans", value: AIW.fmt(totalHired), cls: "green", hint: hirings.length + " hiring events" },
+    { label: "Net (hiring − layoffs)", value: AIW.fmtSigned(net), cls: net < 0 ? "red" : "green", hint: "announced figures, not net headcount" }
+  ].map(function (k) {
+    return '<div class="card"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
+  }).join("");
+
+  AIW.netChart(document.getElementById("net-chart"), d.events);
+  AIW.stackedTimeline(document.getElementById("timeline-chart"), d.events);
+
+  var top = sizedLayoffs.slice().sort(function (a, b) { return b.size - a.size; }).slice(0, 8).map(function (e) {
+    return { label: AIW.companyName(d.companies, e.company), label2: e.date, value: e.size, color: e.ai_related ? AIW.AI_COLOR : AIW.LAYOFF_COLOR };
+  });
+  AIW.barChart(document.getElementById("top-layoffs"), top, { height: 340 });
+
+  AIW.companiesTable(document.getElementById("companies-body"), d.companies, d.headcount);
+  AIW.eventsTable(document.getElementById("events-body"), d.companies, d.events, null);
+});
+</script>
+</body>
+</html>

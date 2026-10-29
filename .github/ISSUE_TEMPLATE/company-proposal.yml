@@ -1,0 +1,30 @@
+name: Propose a company to track
+labels: company
+description: Suggest adding (or removing) a company from the tracker
+body:
+  - type: input
+    id: company
+    attributes:
+      label: Company
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type
+      options: [big-tech, ai-lab, other]
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why should we track it? (workforce size, AI relevance, data availability)
+    validations:
+      required: true
+  - type: input
+    id: sources
+    attributes:
+      label: Sources for headcount / layoff-hiring reporting
+      placeholder: URL
+    validations:
+      required: false

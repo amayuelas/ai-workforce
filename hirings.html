@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HiringsBench — AI Workforce Tracker</title>
+<meta name="description" content="HiringsBench: major hiring plans and talent moves at the main tech companies and AI labs, with sources.">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+</head>
+<body>
+<main>
+  <h1>📈 HiringsBench</h1>
+  <p class="subtitle">Major hiring announcements, AI talent moves and headcount growth at tracked companies. Back to <a href="index.html">Total</a> · <a href="layoffs.html">LayoffsBench</a>.</p>
+
+  <section class="cards" id="kpis"></section>
+
+  <h2>Latest reported headcount (per company)</h2>
+  <div class="panel"><div id="headcount-chart"></div></div>
+
+  <h2>Hiring plans by year (announced roles, where quantified)</h2>
+  <div class="panel"><div id="year-chart"></div>
+    <div class="legend"><span class="l-green">quantified hiring</span></div>
+    <p class="muted small">Several landmark hires (e.g. acqui-hires and merger integrations) are not headcount-quantifiable and appear in the table below.</p>
+  </div>
+
+  <h2>All hiring events (newest first)</h2>
+  <div class="panel" style="overflow-x:auto">
+    <table class="data">
+      <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
+      <tbody id="events-body"></tbody>
+    </table>
+  </div>
+</main>
+
+<script src="assets/js/app.js"></script>
+<script>
+AIW.loadAll().then(function (d) {
+  document.body.insertAdjacentHTML("afterbegin", AIW.header("HiringsBench"));
+  document.querySelector("main").insertAdjacentHTML("beforeend", AIW.footer(d.updated));
+
+  var hirings = d.events.filter(function (e) { return e.type === "hiring"; });
+  var quantified = hirings.filter(function (e) { return e.size; });
+  var total = quantified.reduce(function (a, e) { return a + e.size; }, 0);
+
+  var latest = {};
+  d.headcount.forEach(function (s) {
+    if (!latest[s.company] || s.as_of > latest[s.company].as_of) latest[s.company] = s;
+  });
+  var trackedHC = d.companies.map(function (c) { return latest[c.id]; }).filter(Boolean);
+  var totalHC = trackedHC.reduce(function (a, s) { return a + s.employees; }, 0);
+
+  document.getElementById("kpis").innerHTML = [
+    { label: "Hiring events tracked", value: AIW.fmt(hirings.length), cls: "green", hint: "since " + hirings.map(function(e){return e.date;}).sort()[0].slice(0,4) },
+    { label: "Quantified hiring plans", value: AIW.fmt(total), cls: "green", hint: "announced roles where a number exists" },
+    { label: "Combined latest headcount", value: AIW.fmt(totalHC), cls: "blue", hint: "across " + trackedHC.length + " tracked companies (mixed dates, filings)" },
+    { label: "AI-lab share of headcount", value: AIW.fmt(trackedHC.filter(function(s){var c=d.companies.find(function(x){return x.id===s.company;});return c&&c.type==="ai-lab";}).reduce(function(a,s){return a+s.employees;},0)), cls: "blue", hint: "private labs, estimate-based" }
+  ].map(function (k) {
+    return '<div class="card"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
+  }).join("");
+
+  var rows = trackedHC.slice().sort(function (a, b) { return b.employees - a.employees; }).map(function (s) {
+    return { label: AIW.companyName(d.companies, s.company), label2: s.as_of, value: s.employees, color: s.is_estimate ? AIW.PALETTE[4] : AIW.HIRING_COLOR };
+  });
+  AIW.barChart(document.getElementById("headcount-chart"), rows, { height: 380 });
+
+  var byYear = {};
+  quantified.forEach(function (e) {
+    var y = e.date.slice(0, 4);
+    byYear[y] = (byYear[y] || 0) + e.size;
+  });
+  var yRows = Object.keys(byYear).sort().map(function (y) {
+    return { label: y, value: byYear[y], color: AIW.HIRING_COLOR };
+  });
+  AIW.barChart(document.getElementById("year-chart"), yRows.length ? yRows : [{ label: "—", value: 1, color: AIW.HIRING_COLOR }], { height: 300 });
+
+  AIW.eventsTable(document.getElementById("events-body"), d.companies, hirings, "hiring");
+});
+</script>
+</body>
+</html>

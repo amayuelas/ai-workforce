@@ -1,0 +1,156 @@
+{
+  "$schema": "../schemas/headcount.schema.json",
+  "version": 1,
+  "updated": "2026-10-29",
+  "note": "Headcount snapshots from official filings where available (SEC 10-K/10-Q, company newsroom). Private labs use media reports and are marked as estimates. Fiscal years end at different dates (NVIDIA/Intel/Amazon end in January, Microsoft June 30, Apple late September, Oracle May 31).",
+  "snapshots": [
+    {
+      "company": "alphabet",
+      "as_of": "2025-12-31",
+      "employees": 190820,
+      "is_estimate": false,
+      "basis": "Alphabet FY2025 Form 10-K, Item 1 Human Capital",
+      "sources": [
+        { "title": "Alphabet FY2025 Form 10-K (headcount 190,820 as of Dec 31, 2025)", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K" }
+      ]
+    },
+    {
+      "company": "alphabet",
+      "as_of": "2026-06-30",
+      "employees": 198933,
+      "is_estimate": false,
+      "basis": "Alphabet Q2 2026 earnings release (8-K filed 2026-07-22)",
+      "sources": [
+        { "title": "Alphabet Q2 2026 results (8-K, filed July 22, 2026)", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=8-K" }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2025-12-31",
+      "employees": 1576000,
+      "is_estimate": false,
+      "basis": "Amazon FY2025 Form 10-K (approx. 1,576,000 incl. full-time and part-time; ~1.55M full-time)",
+      "sources": [
+        { "title": "Amazon FY2025 Form 10-K", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K" }
+      ]
+    },
+    {
+      "company": "apple",
+      "as_of": "2025-09-27",
+      "employees": 166000,
+      "is_estimate": false,
+      "basis": "Apple FY2025 Form 10-K: ~166,000 full-time equivalent employees",
+      "sources": [
+        { "title": "Apple FY2025 Form 10-K (Sept 27, 2025)", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K" }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2025-12-31",
+      "employees": 78865,
+      "is_estimate": false,
+      "basis": "Meta FY2025 Form 10-K (reported as 78,865; some coverage rounds to 76,834/78,000+)",
+      "sources": [
+        { "title": "Meta FY2025 Form 10-K", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K" },
+        { "title": "Variety: Meta Q4 2025 results (78,865 employees at end of 2025)", "url": "https://variety.com/2026/digital/news/meta-layoffs-8000-employees-ai-1236729003/" }
+      ]
+    },
+    {
+      "company": "microsoft",
+      "as_of": "2025-06-30",
+      "employees": 228000,
+      "is_estimate": false,
+      "basis": "Microsoft FY2025 Form 10-K: ~228,000 full-time employees as of June 30, 2025",
+      "sources": [
+        { "title": "Microsoft FY2025 Form 10-K", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K" },
+        { "title": "Fox Business (citing SEC filing): ~228,000 as of June 30, 2025", "url": "https://www.foxbusiness.com/economy/microsoft-eyes-another-wave-of-layoffs-hit-5000-workers-next-week" }
+      ]
+    },
+    {
+      "company": "nvidia",
+      "as_of": "2026-01-25",
+      "employees": 42000,
+      "is_estimate": false,
+      "basis": "NVIDIA FY2026 Form 10-K: ~42,000 employees in 38 countries (31,000 R&D)",
+      "sources": [
+        { "title": "NVIDIA FY2026 Form 10-K", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K" },
+        { "title": "StockAnalysis: NVIDIA had 42,000 employees as of January 25, 2026", "url": "https://stockanalysis.com/stocks/nvda/employees/" }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2026-05-31",
+      "employees": 141000,
+      "is_estimate": false,
+      "basis": "Oracle FY2026 Form 10-K (filed June 22, 2026): 141,000 full-time employees, down from ~162,000 a year earlier",
+      "sources": [
+        { "title": "Reuters (via Yahoo Finance): Oracle workforce shrinks by about 21,000 employees amid AI adoption", "url": "https://finance.yahoo.com/news/reuters-oracle-workforce-shrinks-13-204431510.html" },
+        { "title": "CNBC: Oracle sheds 21,000 roles over the past year", "url": "https://www.cnbc.com/2026/06/23/oracle-ai-job-cuts-layoffs-21000.html" }
+      ]
+    },
+    {
+      "company": "tesla",
+      "as_of": "2023-12-31",
+      "employees": 140473,
+      "is_estimate": false,
+      "basis": "Tesla FY2023 Form 10-K: 140,473 employees (baseline for the April 2024 '>10%' cut)",
+      "sources": [
+        { "title": "Tesla FY2023 Form 10-K", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K" }
+      ]
+    },
+    {
+      "company": "intel",
+      "as_of": "2025-12-31",
+      "employees": 85000,
+      "is_estimate": true,
+      "basis": "Approx. ~85,000 by end-2025 after 2025 restructuring (target ~75,000 core + subsidiaries); 108,900 at end-2024 per FY2024 10-K",
+      "sources": [
+        { "title": "Intel FY2024 Form 10-K (108,900 at Dec 31, 2024)", "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K" },
+        { "title": "Intel Newsroom: Lip-Bu Tan letter (target ~75,000 by end-2025)", "url": "https://newsroom.intel.com/corporate/lip-bu-tan-steps-in-the-right-direction" },
+        { "title": "LayoffNext Intel timeline (~85,000 by end-2025)", "url": "https://www.layoffnext.com/company-intel/intel" }
+      ]
+    },
+    {
+      "company": "openai",
+      "as_of": "2026-03-21",
+      "employees": 4500,
+      "is_estimate": true,
+      "basis": "Financial Times (via CNBC), two sources: ~4,500 on direct payroll, March 2026; plan to reach ~8,000 by end-2026",
+      "sources": [
+        { "title": "Epoch AI companies database: OpenAI 4,500 (March 2026, FT)", "url": "https://epoch.ai/data/ai_companies_staff_reports.csv" },
+        { "title": "Fortune: OpenAI plans to almost double its headcount this year, FT says", "url": "https://fortune.com/2026/03/21/openai-double-headcount-this-year-sam-altman-anthropic-google/" }
+      ]
+    },
+    {
+      "company": "anthropic",
+      "as_of": "2026-09-30",
+      "employees": 3500,
+      "is_estimate": true,
+      "basis": "Anthropic spokesperson to WSJ (late Sept 2026): 'more than 3,500 employees' (floor); Epoch DB: 3,328 as of Apr 6, 2026",
+      "sources": [
+        { "title": "Exploding Topics: Anthropic >3,500 employees, September 2026", "url": "https://explodingtopics.com/blog/anthropic-employees" },
+        { "title": "Epoch AI companies database: Anthropic 3,328 (Apr 6, 2026)", "url": "https://epoch.ai/data/ai_companies_staff_reports.csv" }
+      ]
+    },
+    {
+      "company": "deepseek",
+      "as_of": "2026-06-26",
+      "employees": 300,
+      "is_estimate": true,
+      "basis": "The Information (June 2026): staff of around 300; Aug 2026 commitment to at least double",
+      "sources": [
+        { "title": "Epoch AI companies database: DeepSeek ~300 (June 2026, The Information)", "url": "https://epoch.ai/data/ai_companies_staff_reports.csv" }
+      ]
+    },
+    {
+      "company": "xai",
+      "as_of": "2026-03-31",
+      "employees": 22000,
+      "is_estimate": true,
+      "basis": "SpaceX IPO filing: >22,000 full-time employees as of Mar 31, 2026 (xAI now reported as SpaceX's AI segment); standalone xAI estimates ~1,000+",
+      "sources": [
+        { "title": "Exploding Topics: SpaceX reported more than 22,000 FTEs as of March 31, 2026 (IPO filing)", "url": "https://explodingtopics.com/blog/anthropic-employees" }
+      ]
+    }
+  ]
+}

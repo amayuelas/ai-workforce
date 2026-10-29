@@ -1,0 +1,52 @@
+name: Submit a layoff / hiring event
+labels: data
+description: Propose a new workforce event for a tracked (or proposed) company
+body:
+  - type: input
+    id: company
+    attributes:
+      label: Company
+      description: Company name or id from data/companies.json
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Event type
+      options: [layoff, hiring]
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Date (announced / effective)
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+  - type: input
+    id: size
+    attributes:
+      label: Size (roles) and whether it is an estimate
+      placeholder: e.g. 14000 (confirmed) or ~16000 (estimate)
+    validations:
+      required: false
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and stated reason
+    validations:
+      required: true
+  - type: dropdown
+    id: ai
+    attributes:
+      label: Explicitly attributed to AI by the company or reporting?
+      options: ["yes", "no", "unclear"]
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Source URLs (at least one required)
+      placeholder: One URL per line
+    validations:
+      required: true

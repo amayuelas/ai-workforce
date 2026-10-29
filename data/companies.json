@@ -1,0 +1,147 @@
+{
+  "$schema": "../schemas/companies.schema.json",
+  "version": 1,
+  "updated": "2026-10-29",
+  "companies": [
+    {
+      "id": "alphabet",
+      "name": "Alphabet (Google)",
+      "ticker": "GOOGL",
+      "type": "big-tech",
+      "segment": "Search / Cloud / AI (Google DeepMind)",
+      "website": "https://abc.xyz",
+      "selected": true,
+      "selection_reason": "Largest AI investor among public companies; owns Google DeepMind and drives AI hiring at scale."
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "ticker": "AMZN",
+      "type": "big-tech",
+      "segment": "E-commerce / Cloud (AWS) / AI",
+      "website": "https://www.amazon.com",
+      "selected": true,
+      "selection_reason": "Largest private-sector employer in the US; AWS and AI investments drive large workforce swings."
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "ticker": "AAPL",
+      "type": "big-tech",
+      "segment": "Consumer electronics / Services / AI",
+      "website": "https://www.apple.com",
+      "selected": true,
+      "selection_reason": "Largest company by market cap; heavy on-device AI investment; historically avoids mass layoffs."
+    },
+    {
+      "id": "meta",
+      "name": "Meta Platforms",
+      "ticker": "META",
+      "type": "big-tech",
+      "segment": "Social / Reality Labs / AI (Superintelligence Labs)",
+      "website": "https://www.meta.com",
+      "selected": true,
+      "selection_reason": "Runs Meta Superintelligence Labs; the 'Year of Efficiency' set the modern layoff playbook."
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft",
+      "ticker": "MSFT",
+      "type": "big-tech",
+      "segment": "Software / Cloud (Azure) / AI (Copilot, Microsoft AI)",
+      "website": "https://www.microsoft.com",
+      "selected": true,
+      "selection_reason": "Deepest AI integration (OpenAI partnership, Copilot); major 2023 and 2025 layoff rounds."
+    },
+    {
+      "id": "nvidia",
+      "name": "NVIDIA",
+      "ticker": "NVDA",
+      "type": "big-tech",
+      "segment": "AI chips / Data center / Software",
+      "website": "https://www.nvidia.com",
+      "selected": true,
+      "selection_reason": "The AI compute supplier; fastest-growing headcount in the industry."
+    },
+    {
+      "id": "oracle",
+      "name": "Oracle",
+      "ticker": "ORCL",
+      "type": "big-tech",
+      "segment": "Enterprise software / Cloud (OCI) / AI infrastructure",
+      "website": "https://www.oracle.com",
+      "selected": true,
+      "selection_reason": "Massive 2026 AI-data-center buildout paired with the largest AI-attributed layoffs on record (21,000)."
+    },
+    {
+      "id": "tesla",
+      "name": "Tesla",
+      "ticker": "TSLA",
+      "type": "big-tech",
+      "segment": "EV / Energy / Robotics / AI (FSD, Optimus)",
+      "website": "https://www.tesla.com",
+      "selected": true,
+      "selection_reason": "AI/robotics pivot (FSD, Optimus) alongside repeated workforce reductions."
+    },
+    {
+      "id": "intel",
+      "name": "Intel",
+      "ticker": "INTC",
+      "type": "big-tech",
+      "segment": "Semiconductors / Foundry / AI PCs",
+      "website": "https://www.intel.com",
+      "selected": true,
+      "selection_reason": "Largest restructuring in its history (2024-2025) under CEO Lip-Bu Tan."
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "ticker": null,
+      "type": "ai-lab",
+      "segment": "Frontier models (GPT) / Enterprise AI",
+      "website": "https://openai.com",
+      "selected": true,
+      "selection_reason": "Largest independent AI lab by revenue; announced plan to nearly double headcount to ~8,000 in 2026."
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "ticker": null,
+      "type": "ai-lab",
+      "segment": "Frontier models (Claude) / Enterprise AI",
+      "website": "https://www.anthropic.com",
+      "selected": true,
+      "selection_reason": "Fastest-growing enterprise AI lab; >3,500 employees as of Sept 2026 with aggressive hiring."
+    },
+    {
+      "id": "xai",
+      "name": "xAI (SpaceX)",
+      "ticker": null,
+      "type": "ai-lab",
+      "segment": "Frontier models (Grok) / Compute (Colossus)",
+      "website": "https://x.ai",
+      "selected": true,
+      "selection_reason": "Merged into SpaceX in Feb 2026 ($1.25T combined); runs the Colossus supercluster."
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "ticker": null,
+      "type": "ai-lab",
+      "segment": "Open-weight frontier models",
+      "website": "https://www.deepseek.com",
+      "selected": true,
+      "selection_reason": "High-impact open-weight lab; announced plans to at least double its ~300-person staff in 2026."
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "ticker": null,
+      "type": "ai-lab",
+      "segment": "Open + commercial frontier models (EU)",
+      "website": "https://mistral.ai",
+      "selected": true,
+      "selection_reason": "Leading European frontier lab with fast headcount growth."
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --panel-2: #1c2330;
+  --border: #2d3542;
+  --text: #e6edf3;
+  --muted: #8b98a9;
+  --red: #f85149;
+  --green: #3fb950;
+  --blue: #58a6ff;
+  --amber: #d29922;
+  --accent: #a371f7;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header.site {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  padding: 0.9rem 1.5rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header.site .brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-right: auto;
+}
+
+header.site nav a {
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+header.site nav a.active, header.site nav a:hover {
+  color: var(--text);
+  background: var(--panel-2);
+  text-decoration: none;
+}
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+h1 { font-size: 1.6rem; margin: 0.5rem 0 0.25rem; }
+h2 { font-size: 1.15rem; margin: 2rem 0 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+
+.subtitle { color: var(--muted); margin-top: 0; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+}
+
+.card .label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.card .value { font-size: 1.7rem; font-weight: 700; margin-top: 0.2rem; }
+.card .value.red { color: var(--red); }
+.card .value.green { color: var(--green); }
+.card .value.blue { color: var(--blue); }
+.card .hint { color: var(--muted); font-size: 0.8rem; margin-top: 0.25rem; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin: 1rem 0;
+}
+
+.chart { width: 100%; height: 320px; }
+.chart.tall { height: 380px; }
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+table.data th, table.data td {
+  text-align: left;
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+table.data th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+table.data tr:hover td { background: var(--panel-2); }
+
+.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.badge.red { color: var(--red); border-color: var(--red); }
+.badge.green { color: var(--green); border-color: var(--green); }
+.badge.ai { color: var(--accent); border-color: var(--accent); }
+.badge.est { color: var(--amber); border-color: var(--amber); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0; align-items: center; }
+.filters label { color: var(--muted); font-size: 0.85rem; }
+.filters select, .filters input[type="search"] {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.9rem;
+}
+
+footer.site {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.82rem;
+  padding: 1.25rem 1.5rem;
+  max-width: 1180px;
+  margin: 2rem auto 0;
+}
+
+.src-list { margin: 0.15rem 0 0; padding-left: 1.1rem; font-size: 0.8rem; }
+.src-list li { margin-bottom: 0.15rem; }
+
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.82rem; color: var(--muted); margin-top: 0.4rem; }
+.legend span::before { content: "■"; margin-right: 0.35rem; }
+.legend .l-red::before { color: var(--red); }
+.legend .l-green::before { color: var(--green); }
+.legend .l-blue::before { color: var(--blue); }
+.legend .l-ai::before { color: var(--accent); }
