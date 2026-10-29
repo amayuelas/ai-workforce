@@ -143,7 +143,8 @@
           "text-anchor": "middle", fill: "#fbfaf6", "font-weight": 700, "font-size": 10.5
         });
       } else {
-        txt(svg, x + w / 2, r.value >= 0 ? y - 6 : y + h + 13, fmtSigned(r.value), {
+        var ly2 = r.value >= 0 ? y - 6 : Math.max(y + h + 13, padT + 10);
+        txt(svg, x + w / 2, ly2, fmtSigned(r.value), {
           "text-anchor": "middle", fill: col, "font-weight": 700, "font-size": 11
         });
       }
@@ -186,11 +187,21 @@
     keys.forEach(function (q, i) {
       var y = padT + i * rowH + rowH / 2;
       var lw = byQ[q].lay * scale, hw = byQ[q].hir * scale;
-      if (lw > 0) { var rl = svgEl("rect", { x: midX - lw, y: y - 9, width: lw, height: 18, fill: LAYOFF_COLOR, rx: 2 }); rl.setAttribute("data-tip", q + " · layoffs −" + fmt(byQ[q].lay)); svg.appendChild(rl); }
-      if (hw > 0) { var rh = svgEl("rect", { x: midX, y: y - 9, width: hw, height: 18, fill: HIRING_COLOR, rx: 2 }); rh.setAttribute("data-tip", q + " · hirings +" + fmt(byQ[q].hir)); svg.appendChild(rh); }
-      if (lw > 0) txt(svg, midX - lw - 6, y + 4, "−" + fmt(byQ[q].lay), { "text-anchor": "end", fill: LAYOFF_COLOR, "font-size": 10.5, "font-weight": 600 });
-      if (hw > 0) txt(svg, midX + hw + 6, y + 4, "+" + fmt(byQ[q].hir), { "text-anchor": "start", fill: HIRING_COLOR, "font-size": 10.5, "font-weight": 600 });
-      txt(svg, padL - 10, y + 4, q, { "text-anchor": "end", fill: INK, "font-weight": 600, "font-size": 11 });
+      if (lw > 0) {
+        var rl = svgEl("rect", { x: midX - lw, y: y - 9, width: lw, height: 18, fill: LAYOFF_COLOR, rx: 2 });
+        rl.setAttribute("data-tip", q + " · layoffs −" + fmt(byQ[q].lay));
+        svg.appendChild(rl);
+        if (lw > 34) txt(svg, midX - lw + 5, y + 4, "−" + fmt(byQ[q].lay), { "fill": "#fbfaf6", "font-size": 10, "font-weight": 700 });
+        else txt(svg, midX - lw - 6, y + 4, "−" + fmt(byQ[q].lay), { "text-anchor": "end", fill: LAYOFF_COLOR, "font-size": 10, "font-weight": 600 });
+      }
+      if (hw > 0) {
+        var rh = svgEl("rect", { x: midX, y: y - 9, width: hw, height: 18, fill: HIRING_COLOR, rx: 2 });
+        rh.setAttribute("data-tip", q + " · hirings +" + fmt(byQ[q].hir));
+        svg.appendChild(rh);
+        if (hw > 34) txt(svg, midX + hw - 5, y + 4, "+" + fmt(byQ[q].hir), { "text-anchor": "end", fill: "#fbfaf6", "font-size": 10, "font-weight": 700 });
+        else txt(svg, midX + hw + 6, y + 4, "+" + fmt(byQ[q].hir), { "text-anchor": "start", fill: HIRING_COLOR, "font-size": 10, "font-weight": 600 });
+      }
+      txt(svg, padL - 10, y + 4, q, { "text-anchor": "end", fill: INK, "font-weight": 600, "font-size": 10.5 });
     });
     container.innerHTML = "";
     container.appendChild(svg);
@@ -376,7 +387,7 @@
     Object.keys(years).sort().forEach(function (y) {
       var x = X(y + "-01-15");
       svg.appendChild(svgEl("line", { x1: x, y1: padT - 4, x2: x, y2: H - padB, stroke: LINE, "stroke-dasharray": "2 3" }));
-      txt(svg, x, H - padB + 16, y, { "text-anchor": "middle", "font-size": 10.5 });
+      txt(svg, x, H - padB + 15, y, { "text-anchor": "middle", "font-size": 10 });
     });
     ids.forEach(function (id, i) {
       var y = padT + i * rowH + rowH / 2;
