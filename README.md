@@ -48,6 +48,20 @@ python3 -m http.server 8000
 
 There is no build step and no runtime dependency — the site is vanilla HTML/CSS/JS that fetches the JSON files directly.
 
+## Publishing to GitHub Pages
+
+The site deploys automatically from `main` via `.github/workflows/deploy-pages.yml`.
+Pages must be enabled once (needs a user token with admin rights on the repo — run this from your own machine):
+
+```bash
+gh api -X POST repos/amayuelas/ai-workforce/pages \
+  --field 'source[branch]=main' --field 'source[path]=/'
+```
+
+or in the browser: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+The site then lives at **https://amayuelas.github.io/ai-workforce/** (`layoffs.html` and `hirings.html` for the two bench views).
+
 ## Project layout
 
 ```
