@@ -1368,6 +1368,23 @@
           "url": "https://finance.yahoo.com/news/musks-spacex-merge-xai-combined-212210116.html"
         }
       ]
+    },
+    {
+      "company": "mistral",
+      "as_of": "2026-03-31",
+      "employees": 1019,
+      "is_estimate": true,
+      "basis": "Revelio Labs workforce intelligence (LinkedIn-profile-based estimate), March 2026; press estimates ~350 (techfundingnews, Jun 2026) to 1,759 (Tracxn, Sep 2026) — wide range, treat as order of magnitude",
+      "sources": [
+        {
+          "title": "Revelio Labs: Mistral AI 1,019 employees (March 2026)",
+          "url": "https://www.reveliolabs.com/companies/mistral-ai/employees"
+        },
+        {
+          "title": "GetLatka/Tracxn profile estimates (~350 Jun 2026; 1,759 Sep 2026)",
+          "url": "https://getlatka.com/companies/mistral-ai"
+        }
+      ]
     }
   ]
 }

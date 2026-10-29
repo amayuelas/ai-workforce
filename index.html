@@ -5,17 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=25">
+<link rel="stylesheet" href="assets/css/style.css?v=26">
 </head>
 <body>
 <main>
   <div class="hero">
     <div class="kicker"><span>Bench 00 — aggregate</span><span>sourced · updated 2026-10-29</span></div>
     <h1>WorkforceBench</h1>
-    <p class="lede">How the workforce of the main tech companies and AI labs is moving. Two complementary measures:
+    <p class="lede">As AI reshapes the industry: are the main tech companies and AI labs net hiring or net shrinking? Measured two ways —
       <strong>announced events</strong> (layoffs <span class="neg">negative</span>, hirings <span class="pos">positive</span>) and
-      <strong>reported headcount</strong> from SEC filings. Split views:
-      <a href="layoffs.html">LayoffsBench</a> · <a href="hirings.html">HiringsBench</a>.</p>
+      <strong>reported headcount</strong> from SEC filings (the reliable net signal — most hiring is never announced).
+      Split views: <a href="layoffs.html">LayoffsBench</a> · <a href="hirings.html">HiringsBench</a> ·
+      <a href="methodology.html">methodology &amp; coverage</a>.</p>
   </div>
 
   <section class="statline" id="kpis"></section>
@@ -91,7 +92,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=25"></script>
+<script src="assets/js/app.js?v=26"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));

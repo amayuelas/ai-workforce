@@ -1,6 +1,8 @@
-# ⚖️ AI Workforce Tracker
+# AI Workforce Tracker
 
-A public dashboard tracking **layoffs and hiring at the main tech companies and AI labs**, served as a static website from this repository via **GitHub Pages**.
+A public dashboard answering one question: **as AI reshapes the industry, are the main tech companies and AI labs net hiring or net shrinking — and where are the announced cuts?** Served as a static website from this repository via **GitHub Pages**.
+
+It measures this two ways, because neither is complete alone: **announced layoff/hiring events** (signed: layoffs negative, hirings positive) and **reported headcount from SEC filings** (the reliable net signal, since most hiring is never announced).
 
 Three views:
 
