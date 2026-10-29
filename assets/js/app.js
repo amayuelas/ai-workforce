@@ -282,9 +282,7 @@
     var years = {};
     allPts.forEach(function (p) { years[p[0].slice(0, 4)] = true; });
     var ykeys = Object.keys(years).sort();
-    var step = ykeys.length > 8 ? 2 : 1;
     ykeys.forEach(function (y, i) {
-      if (i % step !== 0 && i !== ykeys.length - 1) return;
       var x = X(y + "-07-01");
       svg.appendChild(svgEl("line", { x1: x, y1: padT, x2: x, y2: H - padB, stroke: LINE, "stroke-dasharray": "2 3" }));
       txt(svg, x, H - padB + 15, y, { "text-anchor": "middle", "font-size": 10.5 });

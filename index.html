@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=19">
+<link rel="stylesheet" href="assets/css/style.css?v=20">
 </head>
 <body>
 <main>
@@ -29,11 +29,11 @@
         <option value="yoy">YoY change (%)</option>
         <option value="level">Headcount (thousands)</option>
       </select>
-      <label><input type="checkbox" id="log-toggle" checked> log scale (levels mode, on by default — linear hides everyone under Amazon)</label>
+      <label><input type="checkbox" id="log-toggle"> log scale (levels mode only; off by default since Indexed is the default view)</label>
     </div>
     <div id="headcount-lines"></div>
     <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Each company is indexed to its first reported year (2015 or 2016) = 100, so all histories start on the left edge. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M — the Headcount view therefore defaults to log scale.</p>
+    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Each company is indexed to its first reported year (2015 or 2016) = 100, so all histories start on the left edge. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M — in Headcount mode, tick "log scale" to spread them.</p>
   </div>
 
   <h2><span class="no">02</span>Announced layoffs vs implied actual hiring</h2>
@@ -100,7 +100,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=19"></script>
+<script src="assets/js/app.js?v=20"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
