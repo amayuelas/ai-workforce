@@ -21,45 +21,52 @@
 
   <section class="statline" id="kpis"></section>
 
-  <h2><span class="no">01</span>Headcount over time</h2>
+  <h2><span class="no">01</span>Workforce evolution over time</h2>
   <div class="panel">
     <div class="filters">
       <label for="hc-mode">Metric</label>
       <select id="hc-mode">
+        <option value="yoy" selected>YoY change (%) — default</option>
+        <option value="indexed">Indexed (first year = 100)</option>
         <option value="level">Headcount (thousands)</option>
-        <option value="yoy">YoY change (%)</option>
       </select>
       <label><input type="checkbox" id="log-toggle"> log scale (levels only)</label>
     </div>
     <div id="headcount-lines"></div>
     <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Levels show scale (Amazon dominates — hence the log toggle); YoY % shows who is actually shrinking vs growing.</p>
+    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). YoY % and indexed put every company on the same scale — raw levels dwarf the rest with Amazon's 1.6M (use "Headcount" + log to see scale).</p>
   </div>
 
-  <h2><span class="no">02</span>Latest net headcount change (YoY, from filings)</h2>
+  <h2><span class="no">02</span>Announced layoffs vs implied actual hiring</h2>
+  <div class="panel">
+    <div id="hiring-gap"></div>
+    <p class="cap">Per company, latest fiscal year: red = announced layoffs, green = <strong>implied gross hiring</strong> = net headcount change (10-K) + announced layoffs. Announced hiring plans look tiny because most hiring is never announced — the filings-based estimate is the real number. Year-end net change mixes both plus attrition and M&amp;A across all areas of the company, which is why it differs from either bar.</p>
+  </div>
+
+  <h2><span class="no">03</span>Latest net headcount change (YoY, from filings)</h2>
   <div class="panel">
     <div id="net-hc"></div>
-    <p class="cap">Signed year-over-year change in reported headcount per company (latest two fiscal year-ends). Negative = smaller workforce than a year earlier. Mixes hiring, layoffs, attrition and M&amp;A — that's why events (03) matter too.</p>
+    <p class="cap">Signed year-over-year change in reported headcount per company (latest two fiscal year-ends). Negative = smaller workforce than a year earlier. Mixes hiring, layoffs, attrition and M&amp;A — that's why events (04) matter too.</p>
   </div>
 
-  <h2><span class="no">03</span>Announced events timeline</h2>
+  <h2><span class="no">04</span>Announced events timeline</h2>
   <div class="panel">
     <div id="events-scatter"></div>
     <div class="legend"><span class="l-red">layoff (bubble size = roles)</span><span class="l-green">hiring plan</span></div>
     <p class="cap">Every announced layoff/hiring event since 2022, one bubble per event. Announcements only — small unannounced cuts are not visible here.</p>
   </div>
 
-  <h2><span class="no">04</span>Net announced flow by quarter</h2>
+  <h2><span class="no">05</span>Net announced flow by quarter</h2>
   <div class="panel">
     <div id="netflow-chart"></div>
     <div class="legend"><span class="l-red">layoffs (negative)</span><span class="l-green">hirings (positive)</span><span class="l-line">zero line</span></div>
     <p class="cap">Announced roles per quarter across the 14 tracked companies.</p>
   </div>
 
-  <h2><span class="no">05</span>Largest layoff announcements (negative)</h2>
+  <h2><span class="no">06</span>Largest layoff announcements (negative)</h2>
   <div class="panel"><div id="top-layoffs"></div></div>
 
-  <h2><span class="no">06</span>How robust is this tracker?</h2>
+  <h2><span class="no">07</span>How robust is this tracker?</h2>
   <div class="panel">
     <div class="tiers" id="tiers"></div>
     <p class="small muted">Every event carries a <strong>confidence tier</strong>: <strong>high</strong> = company-stated (newsroom, CEO memo, SEC filing) ·
@@ -68,7 +75,7 @@
       Full notes: <a href="https://github.com/amayuelas/ai-workforce/blob/main/docs/METHODOLOGY.md">docs/METHODOLOGY.md</a>.</p>
   </div>
 
-  <h2><span class="no">07</span>Tracked companies</h2>
+  <h2><span class="no">08</span>Tracked companies</h2>
   <div class="panel" style="overflow-x:auto">
     <table class="data">
       <thead><tr><th>Company</th><th>Type</th><th>Segment</th><th class="num">Latest headcount</th><th>Why tracked</th></tr></thead>
@@ -76,7 +83,7 @@
     </table>
   </div>
 
-  <h2><span class="no">08</span>All events, newest first</h2>
+  <h2><span class="no">09</span>All events, newest first</h2>
   <div class="panel" style="overflow-x:auto">
     <table class="data">
       <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Signed size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
@@ -125,18 +132,26 @@ AIW.loadAll().then(function (d) {
     (byCo[s.company] = byCo[s.company] || []).push([s.as_of, s.employees, s.is_estimate]);
   });
   var LINE_COLORS = { alphabet: "#2456a6", amazon: "#c2620a", apple: "#666055", meta: "#1e5fbf", microsoft: "#0e7c86", nvidia: "#1e7a40", oracle: "#b23a2e", tesla: "#c2498a", intel: "#8a5a2b", openai: "#1b1917", anthropic: "#a33b3b", deepseek: "#5b7a2e", xai: "#6d4fc2", mistral: "#9a6a00" };
+  function colorFor(label) {
+    var c = d.companies.find(function (x) { return label.indexOf(x.name) === 0; });
+    return c ? LINE_COLORS[c.id] : null;
+  }
   function drawHC() {
     var mode = document.getElementById("hc-mode").value;
     var log = document.getElementById("log-toggle").checked;
     var series;
     if (mode === "yoy") {
-      series = AIW.yoySeries(d.companies, d.headcount).map(function (s, i) {
-        s.color = LINE_COLORS[d.companies.filter(function (c) { return (byCo[c.id] || []).length > 1; })[i]?.id] || AIW.PALETTE[i % AIW.PALETTE.length];
-        return s;
-      });
+      series = AIW.yoySeries(d.companies, d.headcount).map(function (s) { s.color = colorFor(s.label); return s; });
       AIW.lineChart(document.getElementById("headcount-lines"), series, {
-        height: 380,
+        height: 400,
         yFmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + "%"; },
+        xLabel: "Fiscal year-end (varies by company)"
+      });
+    } else if (mode === "indexed") {
+      series = AIW.indexedSeries(d.companies, d.headcount).map(function (s) { s.color = colorFor(s.label); return s; });
+      AIW.lineChart(document.getElementById("headcount-lines"), series, {
+        height: 400,
+        yFmt: function (v) { return Math.round(v); },
         xLabel: "Fiscal year-end (varies by company)"
       });
     } else {
@@ -159,6 +174,14 @@ AIW.loadAll().then(function (d) {
   drawHC();
   document.getElementById("hc-mode").addEventListener("change", drawHC);
   document.getElementById("log-toggle").addEventListener("change", drawHC);
+
+  var gap = AIW.impliedHiring(d.companies, d.headcount, d.events);
+  var gapRows = [];
+  gap.forEach(function (r) {
+    if (r.announcedLayoffs > 0) gapRows.push({ label: r.label, label2: r.period, value: -r.announcedLayoffs, color: AIW.LAYOFF_COLOR });
+    gapRows.push({ label: r.label, label2: r.period, value: r.impliedGrossHiring, color: AIW.HIRING_COLOR });
+  });
+  AIW.signedBarChart(document.getElementById("hiring-gap"), gapRows, { height: 460 });
 
   var nhc = AIW.netHeadcountChange(d.companies, d.headcount);
   AIW.signedBarChart(document.getElementById("net-hc"), nhc.map(function (r) {

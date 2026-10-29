@@ -82,7 +82,8 @@
     opts = opts || {};
     rows = (rows || []).filter(function (r) { return r && isFinite(r.value); });
     var W = container.clientWidth || 900, H = opts.height || 300;
-    var padL = 70, padR = 70, padT = 20, padB = 34;
+    var rotate = rows.length > 7;
+    var padL = 70, padR = 70, padT = 20, padB = rotate ? 78 : 34;
     var maxAbs = 1;
     rows.forEach(function (r) { maxAbs = Math.max(maxAbs, Math.abs(r.value)); });
     if (!rows.length) { container.innerHTML = '<p class="muted small">No data.</p>'; return; }
@@ -106,12 +107,15 @@
       var y = r.value >= 0 ? zeroY - h : zeroY;
       svg.appendChild(svgEl("rect", {
         x: x, y: y, width: w, height: Math.max(h, 1.5),
-        fill: r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR, rx: 2
+        fill: r.color || (r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR), rx: 2
       }));
-      var v = txt(svg, x + w / 2, r.value >= 0 ? y - 6 : y + h + 13, fmtSigned(r.value), {
-        "text-anchor": "middle", fill: r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR, "font-weight": 700, "font-size": 11.5
+      txt(svg, x + w / 2, r.value >= 0 ? y - 6 : y + h + 13, fmtSigned(r.value), {
+        "text-anchor": "middle", fill: r.color || (r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR), "font-weight": 700, "font-size": 11
       });
-      var l = txt(svg, x + w / 2, H - padB + 18, r.label, { "text-anchor": "middle", "font-size": 11 });
+      var lx = x + w / 2, ly = H - padB + (rotate ? 14 : 18);
+      var t = txt(svg, lx, ly, r.label, { "text-anchor": rotate ? "end" : "middle", "font-size": rotate ? 9.5 : 11 });
+      if (rotate) t.setAttribute("transform", "rotate(-32 " + lx + " " + ly + ")");
+      if (r.label2 && !rotate) txt(svg, lx, H - padB + 30, r.label2, { "text-anchor": "middle", "font-size": 9.5 });
     });
     container.innerHTML = "";
     container.appendChild(svg);
@@ -209,8 +213,10 @@
   /* Multi-series line chart, Artificial-Analysis-style: x = date, y = value, square markers, top-right legend. */
   function lineChart(container, series, opts) {
     opts = opts || {};
+    series = (series || []).filter(function (s) { return s.points && s.points.length; });
     var W = container.clientWidth || 900, H = opts.height || 380;
-    var padL = 64, padR = 150, padT = 14, padB = 40;
+    var legendBelow = series.length > 8;
+    var padL = 64, padR = legendBelow ? 16 : 150, padT = 14, padB = legendBelow ? 70 : 40;
     var allPts = [];
     series.forEach(function (s) { s.points.forEach(function (p) { allPts.push(p); }); });
     if (!allPts.length) { container.textContent = "No data"; return; }
@@ -244,12 +250,23 @@
         svg.appendChild(svgEl("rect", { x: X(p[0]) - 2.6, y: Y(p[1]) - 2.6, width: 5.2, height: 5.2, fill: color }));
       });
     });
-    var lx = W - padR + 8, ly = padT + 6;
-    series.forEach(function (s, i) {
-      var color = s.color || PALETTE[i % PALETTE.length];
-      svg.appendChild(svgEl("line", { x1: lx, y1: ly + i * 17, x2: lx + 16, y2: ly + i * 17, stroke: color, "stroke-width": 2, "stroke-dasharray": s.dashed ? "4 2" : "none" }));
-      var t = txt(svg, lx + 22, ly + i * 17 + 4, s.label, { "font-size": 10.5, fill: INK });
-    });
+    if (legendBelow) {
+      var cols = 3, lx0 = padL, ly0 = H - padB + 18;
+      series.forEach(function (s, i) {
+        var color = s.color || PALETTE[i % PALETTE.length];
+        var cx = lx0 + (i % cols) * ((W - padL - padR) / cols);
+        var cy = ly0 + Math.floor(i / cols) * 16;
+        svg.appendChild(svgEl("line", { x1: cx, y1: cy, x2: cx + 14, y2: cy, stroke: color, "stroke-width": 2, "stroke-dasharray": s.dashed ? "4 2" : "none" }));
+        txt(svg, cx + 20, cy + 4, s.label, { "font-size": 10, fill: INK });
+      });
+    } else {
+      var lx = W - padR + 8, ly = padT + 6;
+      series.forEach(function (s, i) {
+        var color = s.color || PALETTE[i % PALETTE.length];
+        svg.appendChild(svgEl("line", { x1: lx, y1: ly + i * 17, x2: lx + 16, y2: ly + i * 17, stroke: color, "stroke-width": 2, "stroke-dasharray": s.dashed ? "4 2" : "none" }));
+        txt(svg, lx + 22, ly + i * 17 + 4, s.label, { "font-size": 10.5, fill: INK });
+      });
+    }
     container.innerHTML = "";
     container.appendChild(svg);
   }
@@ -328,7 +345,7 @@
     container.appendChild(svg);
   }
 
-  /* YoY % change series per company (indexed alternative for the line chart). */
+  /* YoY % change series per company. */
   function yoySeries(companies, headcount) {
     var byCo = {};
     headcount.forEach(function (s) { (byCo[s.company] = byCo[s.company] || []).push(s); });
@@ -340,8 +357,54 @@
         if (dt < 0.5) continue;
         out.push([pts[i].as_of, (pts[i].employees / pts[i - 1].employees - 1) * 100]);
       }
-      return { label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""), points: out };
+      return { label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""), points: out, color: null };
     }).filter(function (s) { return s.points.length; });
+  }
+
+  /* Indexed headcount (first point = 100): comparable across companies of different sizes. */
+  function indexedSeries(companies, headcount) {
+    var byCo = {};
+    headcount.forEach(function (s) { (byCo[s.company] = byCo[s.company] || []).push(s); });
+    return companies.map(function (c) {
+      var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a.as_of.localeCompare(b.as_of); });
+      if (!pts.length) return null;
+      var base = pts[0].employees;
+      return {
+        label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""),
+        points: pts.map(function (p) { return [p.as_of, p.employees / base * 100]; }),
+        dashed: pts.some(function (p) { return p.is_estimate; })
+      };
+    }).filter(Boolean);
+  }
+
+  /* Implied gross hiring per company = YoY net headcount change + announced layoffs in the window.
+     Uses filings (net) + announced events to estimate actual hiring — fixes the announced-hiring gap. */
+  function impliedHiring(companies, headcount, events) {
+    var byCo = {};
+    headcount.forEach(function (s) { (byCo[s.company] = byCo[s.company] || []).push(s); });
+    var rows = [];
+    companies.forEach(function (c) {
+      var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a.as_of.localeCompare(b.as_of); });
+      if (pts.length < 2) return;
+      var last = pts[pts.length - 1], prev = pts[pts.length - 2];
+      var dtYears = (+new Date(last.as_of) - +new Date(prev.as_of)) / (365.25 * 86400000);
+      if (dtYears < 0.5) return;
+      var y0 = prev.as_of.slice(0, 4), y1 = last.as_of.slice(0, 4);
+      var layoffs = events.filter(function (e) {
+        return e.type === "layoff" && e.size && e.company === c.id &&
+          e.date.slice(0, 4) >= y0 && e.date.slice(0, 4) <= y1;
+      }).reduce(function (a, e) { return a + e.size; }, 0);
+      var net = last.employees - prev.employees;
+      rows.push({
+        company: c.id,
+        label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""),
+        announcedLayoffs: layoffs,
+        impliedGrossHiring: net + layoffs,
+        netChange: net,
+        period: y0 + "→" + y1
+      });
+    });
+    return rows.sort(function (a, b) { return b.impliedGrossHiring - a.impliedGrossHiring; });
   }
 
   /* Latest fiscal-year net headcount change per company, derived from the headcount series (signed). */
@@ -431,7 +494,8 @@
     fmt: fmt, fmtSigned: fmtSigned, signed: signed, esc: esc,
     companyName: companyName, companyTicker: companyTicker,
     signedBarChart: signedBarChart, netFlowChart: netFlowChart, companyEvolution: companyEvolution,
-    barChart: barChart, lineChart: lineChart, eventScatter: eventScatter, netHeadcountChange: netHeadcountChange, yoySeries: yoySeries,
+    barChart: barChart, lineChart: lineChart, eventScatter: eventScatter, netHeadcountChange: netHeadcountChange,
+    yoySeries: yoySeries, indexedSeries: indexedSeries, impliedHiring: impliedHiring,
     eventsTable: eventsTable, companiesTable: companiesTable,
     badges: badges, sourceLinks: sourceLinks,
     PALETTE: PALETTE, LAYOFF_COLOR: LAYOFF_COLOR, HIRING_COLOR: HIRING_COLOR, AI_COLOR: AI_COLOR
