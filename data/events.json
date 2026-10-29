@@ -15,9 +15,16 @@
       "scope": "Corporate, retail, devices and HR roles; first wave of the 2022-2023 downsizing.",
       "reason": "Overhiring during pandemic demand peak; cost reduction.",
       "ai_related": false,
+      "confidence": "high",
       "sources": [
-        { "title": "Reuters (via Yahoo Finance): Amazon plans second round of corporate job cuts", "url": "https://finance.yahoo.com/news/amazon-plans-second-round-corporate-233629672.html" },
-        { "title": "TechCrunch: Amazon to cut 18,000 jobs as tech layoffs continue", "url": "https://techcrunch.com/2023/01/05/amazon-to-cut-18000-jobs-as-tech-layoffs-continue/" }
+        {
+          "title": "Reuters (via Yahoo Finance): Amazon plans second round of corporate job cuts",
+          "url": "https://finance.yahoo.com/news/amazon-plans-second-round-corporate-233629672.html"
+        },
+        {
+          "title": "TechCrunch: Amazon to cut 18,000 jobs as tech layoffs continue",
+          "url": "https://techcrunch.com/2023/01/05/amazon-to-cut-18000-jobs-as-tech-layoffs-continue/"
+        }
       ]
     },
     {
@@ -32,10 +39,20 @@
       "scope": "Second, larger wave (AWS, stores, HR, recruiting) bringing the 2022-2023 total to ~27,000.",
       "reason": "Continued cost reduction after pandemic overhiring.",
       "ai_related": false,
+      "confidence": "high",
       "sources": [
-        { "title": "NPR: Amazon CEO says company will lay off more than 18,000 workers", "url": "https://www.npr.org/2023/01/04/1147034858/amazon-ceo-says-company-will-layoff-more-than-18-000-workers" },
-        { "title": "BBC: Amazon to axe 18,000 jobs as it cuts costs", "url": "https://www.bbc.com/news/business-64171008" },
-        { "title": "VOA: Amazon Cuts 9,000 More Jobs, Bringing 2023 Total to 27,000", "url": "https://www.voanews.com/a/amazon-cuts-9-000-more-jobs-bringing-2023-total-to-27-000-/7013720.html" }
+        {
+          "title": "NPR: Amazon CEO says company will lay off more than 18,000 workers",
+          "url": "https://www.npr.org/2023/01/04/1147034858/amazon-ceo-says-company-will-layoff-more-than-18-000-workers"
+        },
+        {
+          "title": "BBC: Amazon to axe 18,000 jobs as it cuts costs",
+          "url": "https://www.bbc.com/news/business-64171008"
+        },
+        {
+          "title": "VOA: Amazon Cuts 9,000 More Jobs, Bringing 2023 Total to 27,000",
+          "url": "https://www.voanews.com/a/amazon-cuts-9-000-more-jobs-bringing-2023-total-to-27-000-/7013720.html"
+        }
       ]
     },
     {
@@ -50,8 +67,12 @@
       "scope": "Company-wide; ~13% of workforce; hiring freeze extended through Q1 2023.",
       "reason": "Revenue slowdown, ad-market downturn, cost discipline after pandemic hiring spree.",
       "ai_related": false,
+      "confidence": "high",
       "sources": [
-        { "title": "Meta Newsroom: Mark Zuckerberg's Message to Meta Employees (Nov 9, 2022)", "url": "https://about.fb.com/news/2022/11/mark-zuckerberg-layoff-message-to-employees/" }
+        {
+          "title": "Meta Newsroom: Mark Zuckerberg's Message to Meta Employees (Nov 9, 2022)",
+          "url": "https://about.fb.com/news/2022/11/mark-zuckerberg-layoff-message-to-employees/"
+        }
       ]
     },
     {
@@ -66,9 +87,16 @@
       "scope": "Across engineering, HR and other functions; $1.2B charge; cuts through end of FY23 Q3.",
       "reason": "Slower revenue growth and macro uncertainty.",
       "ai_related": false,
+      "confidence": "high",
       "sources": [
-        { "title": "CNBC: Microsoft is laying off 10,000 employees", "url": "https://www.cnbc.com/2023/01/18/microsoft-is-laying-off-10000-employees.html" },
-        { "title": "The Verge: Microsoft announces big layoffs that will affect 10,000 employees", "url": "https://www.theverge.com/2023/1/18/23560315/microsoft-job-cuts-layoffs-2023-tech" }
+        {
+          "title": "CNBC: Microsoft is laying off 10,000 employees",
+          "url": "https://www.cnbc.com/2023/01/18/microsoft-is-laying-off-10000-employees.html"
+        },
+        {
+          "title": "The Verge: Microsoft announces big layoffs that will affect 10,000 employees",
+          "url": "https://www.theverge.com/2023/1/18/23560315/microsoft-job-cuts-layoffs-2023-tech"
+        }
       ]
     },
     {
@@ -83,10 +111,20 @@
       "scope": "Across Alphabet product areas, functions, levels and regions.",
       "reason": "Headcount hired for a different economic reality; rigorous review of roles and priorities.",
       "ai_related": false,
+      "confidence": "high",
       "sources": [
-        { "title": "Google blog (Sundar Pichai): A difficult decision to set us up for the future", "url": "https://blog.google/company-news/inside-google/message-ceo/january-update/" },
-        { "title": "CNBC: Google parent to lay off 12,000 workers", "url": "https://www.cnbc.com/2023/01/20/google-parent-to-lay-off-12000-workers-memo.html" },
-        { "title": "TechCrunch: Google parent Alphabet cuts 6% of its workforce, impacting 12,000 people", "url": "https://techcrunch.com/2023/01/20/google-parent-alphabet-cuts-6-of-its-workforce-impacting-12000-people/" }
+        {
+          "title": "Google blog (Sundar Pichai): A difficult decision to set us up for the future",
+          "url": "https://blog.google/company-news/inside-google/message-ceo/january-update/"
+        },
+        {
+          "title": "CNBC: Google parent to lay off 12,000 workers",
+          "url": "https://www.cnbc.com/2023/01/20/google-parent-to-lay-off-12000-workers-memo.html"
+        },
+        {
+          "title": "TechCrunch: Google parent Alphabet cuts 6% of its workforce, impacting 12,000 people",
+          "url": "https://techcrunch.com/2023/01/20/google-parent-alphabet-cuts-6-of-its-workforce-impacting-12000-people/"
+        }
       ]
     },
     {
@@ -101,10 +139,20 @@
       "scope": "Second wave of the 'Year of Efficiency': tech groups in April, business groups in May; ~5,000 open roles closed.",
       "reason": "'Year of Efficiency': leaner, flatter organization after 2022 slowdown.",
       "ai_related": false,
+      "confidence": "high",
       "sources": [
-        { "title": "Meta Newsroom: Update on Meta's Year of Efficiency (Mar 14, 2023)", "url": "https://about.fb.com/news/2023/03/mark-zuckerberg-meta-year-of-efficiency/" },
-        { "title": "CNBC: Meta to lay off 10,000 more workers after initial cuts in November", "url": "https://www.cnbc.com/2023/03/14/meta-layoffs-10000-more-workers-to-be-cut-in-restructuring.html" },
-        { "title": "BBC: Meta lay-offs: Facebook owner to cut 10,000 staff", "url": "https://www.bbc.com/news/technology-64954124" }
+        {
+          "title": "Meta Newsroom: Update on Meta's Year of Efficiency (Mar 14, 2023)",
+          "url": "https://about.fb.com/news/2023/03/mark-zuckerberg-meta-year-of-efficiency/"
+        },
+        {
+          "title": "CNBC: Meta to lay off 10,000 more workers after initial cuts in November",
+          "url": "https://www.cnbc.com/2023/03/14/meta-layoffs-10000-more-workers-to-be-cut-in-restructuring.html"
+        },
+        {
+          "title": "BBC: Meta lay-offs: Facebook owner to cut 10,000 staff",
+          "url": "https://www.bbc.com/news/technology-64954124"
+        }
       ]
     },
     {
@@ -119,10 +167,20 @@
       "scope": "Global; 'more than 10%' of the 140,473 employees reported at end-2023; internal data later showed >=14% cut in 2024.",
       "reason": "Cost reductions and productivity ahead of the next growth phase (robotaxi / Model 2).",
       "ai_related": false,
+      "confidence": "medium",
       "sources": [
-        { "title": "CNBC: Tesla will lay off more than 10% of global workforce: Read the Elon Musk memo", "url": "https://www.cnbc.com/2024/04/15/tesla-shares-dip-in-premarket-trade-on-global-layoff-reports.html" },
-        { "title": "NPR: Tesla announces it's laying off more than 10% of its global workforce", "url": "https://www.npr.org/2024/04/16/1244991217/tesla-announces-it-s-laying-off-more-than-10-of-its-global-workforce" },
-        { "title": "CNBC: Tesla internal data shows company has slashed at least 14% of workforce this year", "url": "https://www.cnbc.com/2024/06/21/tesla-has-downsized-by-at-least-14percent-this-year-internal-number-shows.html" }
+        {
+          "title": "CNBC: Tesla will lay off more than 10% of global workforce: Read the Elon Musk memo",
+          "url": "https://www.cnbc.com/2024/04/15/tesla-shares-dip-in-premarket-trade-on-global-layoff-reports.html"
+        },
+        {
+          "title": "NPR: Tesla announces it's laying off more than 10% of its global workforce",
+          "url": "https://www.npr.org/2024/04/16/1244991217/tesla-announces-it-s-laying-off-more-than-10-of-its-global-workforce"
+        },
+        {
+          "title": "CNBC: Tesla internal data shows company has slashed at least 14% of workforce this year",
+          "url": "https://www.cnbc.com/2024/06/21/tesla-has-downsized-by-at-least-14percent-this-year-internal-number-shows.html"
+        }
       ]
     },
     {
@@ -137,10 +195,20 @@
       "scope": "Company-wide; part of a $10B cost-savings plan for 2025; dividend suspended.",
       "reason": "Turnaround after $1.6B Q2 2024 net loss; high costs, low margins vs. Nvidia/AMD.",
       "ai_related": false,
+      "confidence": "high",
       "sources": [
-        { "title": "Intel Newsroom: Actions to Accelerate our Progress (Aug 1, 2024)", "url": "https://newsroom.intel.com/corporate/actions-accelerate-our-progress" },
-        { "title": "AP (via Yahoo Finance): Chipmaker Intel to cut 15,000 jobs", "url": "https://finance.yahoo.com/news/intel-cut-more-15-workforce-203625717.html" },
-        { "title": "The Verge: Intel is laying off over 15,000 employees", "url": "https://www.theverge.com/2024/8/1/24210656/intel-is-laying-off-over-10000-employees-and-will-cut-10-billion-in-costs" }
+        {
+          "title": "Intel Newsroom: Actions to Accelerate our Progress (Aug 1, 2024)",
+          "url": "https://newsroom.intel.com/corporate/actions-accelerate-our-progress"
+        },
+        {
+          "title": "AP (via Yahoo Finance): Chipmaker Intel to cut 15,000 jobs",
+          "url": "https://finance.yahoo.com/news/intel-cut-more-15-workforce-203625717.html"
+        },
+        {
+          "title": "The Verge: Intel is laying off over 15,000 employees",
+          "url": "https://www.theverge.com/2024/8/1/24210656/intel-is-laying-off-over-10000-employees-and-will-cut-10-billion-in-costs"
+        }
       ]
     },
     {
@@ -155,9 +223,16 @@
       "scope": "Product, engineering, sales and support roles.",
       "reason": "Organizational alignment and AI-driven efficiency amid ~$80B FY25 AI capex.",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "CNBC: Microsoft laying off about 9,000 employees in latest round of cuts (cites May 6,000)", "url": "https://www.cnbc.com/2025/07/02/microsoft-laying-off-about-9000-employees-in-latest-round-of-cuts.html" },
-        { "title": "Fox Business: Microsoft eyes another wave of layoffs (2025 total ~15,000)", "url": "https://www.foxbusiness.com/economy/microsoft-eyes-another-wave-of-layoffs-hit-5000-workers-next-week" }
+        {
+          "title": "CNBC: Microsoft laying off about 9,000 employees in latest round of cuts (cites May 6,000)",
+          "url": "https://www.cnbc.com/2025/07/02/microsoft-laying-off-about-9000-employees-in-latest-round-of-cuts.html"
+        },
+        {
+          "title": "Fox Business: Microsoft eyes another wave of layoffs (2025 total ~15,000)",
+          "url": "https://www.foxbusiness.com/economy/microsoft-eyes-another-wave-of-layoffs-hit-5000-workers-next-week"
+        }
       ]
     },
     {
@@ -172,8 +247,12 @@
       "scope": "Cloud, gaming (Xbox incl. studio closures), customer support, sales, mixed reality; ~9,100 roles across Xbox/ZeniMax/King/Turn 10.",
       "reason": "Largest round since 2023; efficiency push to fund AI investment.",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "CNBC: Microsoft laying off about 9,000 employees in latest round of cuts", "url": "https://www.cnbc.com/2025/07/02/microsoft-laying-off-about-9000-employees-in-latest-round-of-cuts.html" }
+        {
+          "title": "CNBC: Microsoft laying off about 9,000 employees in latest round of cuts",
+          "url": "https://www.cnbc.com/2025/07/02/microsoft-laying-off-about-9000-employees-in-latest-round-of-cuts.html"
+        }
       ]
     },
     {
@@ -188,10 +267,20 @@
       "scope": "Core workforce reduction to ~75,000 by end-2025 (from ~108,900 at end-2024; ~25,000 total cuts incl. attrition); management layers cut ~50%.",
       "reason": "Lip-Bu Tan turnaround: 'no more blank checks', deleveraging, focus on engineering.",
       "ai_related": false,
+      "confidence": "medium",
       "sources": [
-        { "title": "Intel Newsroom: Lip-Bu Tan: Steps in the Right Direction (Jul 24, 2025)", "url": "https://newsroom.intel.com/corporate/lip-bu-tan-steps-in-the-right-direction" },
-        { "title": "SF Chronicle: 'No more blank checks': Intel to cut 25,000 jobs", "url": "https://www.sfchronicle.com/tech/article/intel-layoffs-25000-rto-20786261.php" },
-        { "title": "Fortune: Intel plans to slash 25,000 jobs in 2025", "url": "https://fortune.com/2025/07/25/intel-layoffs-ceo-staff-memo-stock-price/" }
+        {
+          "title": "Intel Newsroom: Lip-Bu Tan: Steps in the Right Direction (Jul 24, 2025)",
+          "url": "https://newsroom.intel.com/corporate/lip-bu-tan-steps-in-the-right-direction"
+        },
+        {
+          "title": "SF Chronicle: 'No more blank checks': Intel to cut 25,000 jobs",
+          "url": "https://www.sfchronicle.com/tech/article/intel-layoffs-25000-rto-20786261.php"
+        },
+        {
+          "title": "Fortune: Intel plans to slash 25,000 jobs in 2025",
+          "url": "https://fortune.com/2025/07/25/intel-layoffs-ceo-staff-memo-stock-price/"
+        }
       ]
     },
     {
@@ -206,10 +295,20 @@
       "scope": "~4% of ~350,000 corporate workforce; largest round since the 27,000 cuts of late 2022; ~$1.8B severance charge.",
       "reason": "Company explicitly cited AI and generative-AI-driven efficiency; removing management layers.",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "CNBC: Amazon laying off about 14,000 corporate workers as it invests more in AI", "url": "https://www.cnbc.com/2025/10/28/amazon-layoffs-corporate-workers-ai.html" },
-        { "title": "BBC: Amazon confirms massive job losses in corporate division", "url": "https://www.bbc.com/news/articles/c1m3zm9jnl1o" },
-        { "title": "Reuters (via Yahoo Finance): Amazon targets as many as 30,000 corporate job cuts", "url": "https://finance.yahoo.com/news/exclusive-amazon-targets-many-30-184252368.html" }
+        {
+          "title": "CNBC: Amazon laying off about 14,000 corporate workers as it invests more in AI",
+          "url": "https://www.cnbc.com/2025/10/28/amazon-layoffs-corporate-workers-ai.html"
+        },
+        {
+          "title": "BBC: Amazon confirms massive job losses in corporate division",
+          "url": "https://www.bbc.com/news/articles/c1m3zm9jnl1o"
+        },
+        {
+          "title": "Reuters (via Yahoo Finance): Amazon targets as many as 30,000 corporate job cuts",
+          "url": "https://finance.yahoo.com/news/exclusive-amazon-targets-many-30-184252368.html"
+        }
       ]
     },
     {
@@ -224,9 +323,16 @@
       "scope": "Second round of the planned ~30,000 corporate cuts; ~10% of corporate workforce across both rounds; all 72 Amazon Go/Fresh stores closed.",
       "reason": "'Reducing layers, increasing ownership, removing bureaucracy'; reallocating to AI.",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "CNBC: Amazon layoffs: 16,000 jobs to be cut in latest anti-bureaucracy push", "url": "https://www.cnbc.com/2026/01/28/amazon-layoffs-anti-bureaucracy-ai.html" },
-        { "title": "GeekWire: Amazon confirms 16,000 more corporate job cuts, bringing total to 30,000 since October", "url": "https://www.geekwire.com/2026/amazon-confirms-16000-more-job-cuts-bringing-total-layoffs-to-30000-since-october/" }
+        {
+          "title": "CNBC: Amazon layoffs: 16,000 jobs to be cut in latest anti-bureaucracy push",
+          "url": "https://www.cnbc.com/2026/01/28/amazon-layoffs-anti-bureaucracy-ai.html"
+        },
+        {
+          "title": "GeekWire: Amazon confirms 16,000 more corporate job cuts, bringing total to 30,000 since October",
+          "url": "https://www.geekwire.com/2026/amazon-confirms-16000-more-job-cuts-bringing-total-layoffs-to-30000-since-october/"
+        }
       ]
     },
     {
@@ -241,8 +347,12 @@
       "scope": "Reality Labs / metaverse-related roles; ~10% of those teams.",
       "reason": "Efficiency while focusing on generative AI.",
       "ai_related": true,
+      "confidence": "medium",
       "sources": [
-        { "title": "CNBC: Meta layoffs starting this week stress harsh AI reality inside Zuckerberg's company", "url": "https://www.cnbc.com/2026/05/18/metas-layoffs-starting-this-week-underscore-zuckerbergs-ai-reality-.html" }
+        {
+          "title": "CNBC: Meta layoffs starting this week stress harsh AI reality inside Zuckerberg's company",
+          "url": "https://www.cnbc.com/2026/05/18/metas-layoffs-starting-this-week-underscore-zuckerbergs-ai-reality-.html"
+        }
       ]
     },
     {
@@ -257,11 +367,24 @@
       "scope": "Company-wide, effective May 20, 2026; 6,000 open roles also cancelled; largest round since 2023.",
       "reason": "Offset ~$115-145B 2026 capex for Meta Superintelligence Labs and AI; efficiency.",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "CNBC: Meta will cut 10% of workforce as company pushes deeper into AI", "url": "https://www.cnbc.com/2026/04/23/meta-will-cut-10percent-of-workforce-as-it-pushes-more-into-ai.html" },
-        { "title": "BBC: Meta to cut one in 10 jobs after spending billions on AI", "url": "https://www.bbc.com/news/articles/crm1y89vek8o" },
-        { "title": "Variety: Meta Laying Off 8,000 Employees, 10% of Workforce, Amid Surge in Spending on AI", "url": "https://variety.com/2026/digital/news/meta-layoffs-8000-employees-ai-1236729003/" },
-        { "title": "Al Jazeera: Meta cuts 8,000 jobs in sweeping global layoffs", "url": "https://www.aljazeera.com/economy/2026/5/20/meta-cuts-8000-jobs-in-sweeping-global-layoffs" }
+        {
+          "title": "CNBC: Meta will cut 10% of workforce as company pushes deeper into AI",
+          "url": "https://www.cnbc.com/2026/04/23/meta-will-cut-10percent-of-workforce-as-it-pushes-more-into-ai.html"
+        },
+        {
+          "title": "BBC: Meta to cut one in 10 jobs after spending billions on AI",
+          "url": "https://www.bbc.com/news/articles/crm1y89vek8o"
+        },
+        {
+          "title": "Variety: Meta Laying Off 8,000 Employees, 10% of Workforce, Amid Surge in Spending on AI",
+          "url": "https://variety.com/2026/digital/news/meta-layoffs-8000-employees-ai-1236729003/"
+        },
+        {
+          "title": "Al Jazeera: Meta cuts 8,000 jobs in sweeping global layoffs",
+          "url": "https://www.aljazeera.com/economy/2026/5/20/meta-cuts-8000-jobs-in-sweeping-global-layoffs"
+        }
       ]
     },
     {
@@ -276,11 +399,24 @@
       "scope": "Workforce fell from ~162,000 (May 2025) to 141,000 (May 31, 2026); ~$1.84B severance/exit costs; reports of ~30,000 gross terminations Mar 31, 2026 in several waves.",
       "reason": "Annual filing: 'The adoption and deployment of AI technologies across our operations have resulted, and may continue to result, in reductions to our workforce.'",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "Reuters (via Yahoo Finance): Oracle workforce shrinks by about 21,000 employees amid AI adoption", "url": "https://finance.yahoo.com/news/reuters-oracle-workforce-shrinks-13-204431510.html" },
-        { "title": "CNBC: Oracle sheds 21,000 roles over the past year amid wave of AI layoffs", "url": "https://www.cnbc.com/2026/06/23/oracle-ai-job-cuts-layoffs-21000.html" },
-        { "title": "Bloomberg: Oracle Layoffs Fueled by AI, Reduces Workforce by 21,000", "url": "https://www.bloomberg.com/news/articles/2026-06-22/oracle-layoffs-fueled-by-ai-reduces-workforce-by-21-000" },
-        { "title": "BBC: Tech giant Oracle cuts 21,000 jobs as it embraces AI", "url": "https://www.bbc.com/news/articles/c4gy0x0j5deo" }
+        {
+          "title": "Reuters (via Yahoo Finance): Oracle workforce shrinks by about 21,000 employees amid AI adoption",
+          "url": "https://finance.yahoo.com/news/reuters-oracle-workforce-shrinks-13-204431510.html"
+        },
+        {
+          "title": "CNBC: Oracle sheds 21,000 roles over the past year amid wave of AI layoffs",
+          "url": "https://www.cnbc.com/2026/06/23/oracle-ai-job-cuts-layoffs-21000.html"
+        },
+        {
+          "title": "Bloomberg: Oracle Layoffs Fueled by AI, Reduces Workforce by 21,000",
+          "url": "https://www.bloomberg.com/news/articles/2026-06-22/oracle-layoffs-fueled-by-ai-reduces-workforce-by-21-000"
+        },
+        {
+          "title": "BBC: Tech giant Oracle cuts 21,000 jobs as it embraces AI",
+          "url": "https://www.bbc.com/news/articles/c4gy0x0j5deo"
+        }
       ]
     },
     {
@@ -295,9 +431,16 @@
       "scope": "Voluntary retirement program for ~8,750 US employees (~7% of US workforce of ~125,000); first voluntary buyout program in 51 years.",
       "reason": "Cost reduction amid AI capex; reports of up to 60,000 further voluntary buyouts under consideration.",
       "ai_related": true,
+      "confidence": "medium",
       "sources": [
-        { "title": "Invezz: Big Tech layoffs 2026 - Amazon, Meta, Microsoft and the AI trade-off", "url": "https://invezz.com/news/2026/05/04/is-big-techs-725b-ai-splurge-being-funded-by-mass-layoffs/" },
-        { "title": "NBC News: Meta says it will lay off 10% of its workforce (cites Microsoft buyouts)", "url": "https://www.nbcnews.com/tech/tech-news/meta-layoffs-ai-memo-rcna341683" }
+        {
+          "title": "Invezz: Big Tech layoffs 2026 - Amazon, Meta, Microsoft and the AI trade-off",
+          "url": "https://invezz.com/news/2026/05/04/is-big-techs-725b-ai-splurge-being-funded-by-mass-layoffs/"
+        },
+        {
+          "title": "NBC News: Meta says it will lay off 10% of its workforce (cites Microsoft buyouts)",
+          "url": "https://www.nbcnews.com/tech/tech-news/meta-layoffs-ai-memo-rcna341683"
+        }
       ]
     },
     {
@@ -312,10 +455,20 @@
       "scope": "Mustafa Suleyman (DeepMind/Inflection co-founder) as EVP & CEO of new Microsoft AI org; Karén Simonyan as chief scientist; several Inflection team members joined (de-facto acqui-hire of Inflection AI).",
       "reason": "Consolidate consumer AI (Copilot, Bing, Edge) and compete with Google.",
       "ai_related": true,
+      "confidence": "medium",
       "sources": [
-        { "title": "Official Microsoft Blog: Mustafa Suleyman joins Microsoft to lead Copilot (Mar 19, 2024)", "url": "https://blogs.microsoft.com/blog/2024/03/19/mustafa-suleyman-deepmind-and-inflection-co-founder-joins-microsoft-to-lead-copilot/" },
-        { "title": "TechCrunch: Microsoft hires Inflection founders to run new consumer AI division", "url": "https://techcrunch.com/2024/03/19/microsoft-hires-inflection-founders-to-run-new-consumer-ai-division/" },
-        { "title": "Bloomberg: Microsoft Hires DeepMind Co-Founder Suleyman to Run Consumer AI", "url": "https://www.bloomberg.com/news/articles/2024-03-19/microsoft-hires-deepmind-co-founder-suleyman-to-run-consumer-ai" }
+        {
+          "title": "Official Microsoft Blog: Mustafa Suleyman joins Microsoft to lead Copilot (Mar 19, 2024)",
+          "url": "https://blogs.microsoft.com/blog/2024/03/19/mustafa-suleyman-deepmind-and-inflection-co-founder-joins-microsoft-to-lead-copilot/"
+        },
+        {
+          "title": "TechCrunch: Microsoft hires Inflection founders to run new consumer AI division",
+          "url": "https://techcrunch.com/2024/03/19/microsoft-hires-inflection-founders-to-run-new-consumer-ai-division/"
+        },
+        {
+          "title": "Bloomberg: Microsoft Hires DeepMind Co-Founder Suleyman to Run Consumer AI",
+          "url": "https://www.bloomberg.com/news/articles/2024-03-19/microsoft-hires-deepmind-co-founder-suleyman-to-run-consumer-ai"
+        }
       ]
     },
     {
@@ -330,10 +483,20 @@
       "scope": "$14.3B for 49% of Scale AI; Alexandr Wang joined as Chief AI Officer to lead Meta Superintelligence Labs; Nat Friedman co-lead on products; multimillion-dollar packages for top AI researchers.",
       "reason": "Superintelligence race: recruit frontier AI talent and compute/data expertise.",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "Fortune: Meta ramps up AI efforts by paying $14.3 billion for 49% of Scale", "url": "https://fortune.com/2025/06/13/meta-scale-ai-alexandr-wang-superintelligence-team/" },
-        { "title": "LA Times: Meta invests $14.3 billion in AI firm Scale, recruits chief for 'superintelligence' team", "url": "https://www.latimes.com/business/story/2025-06-13/meta-invests-14-3b-in-ai-firm-scale-and-recruits-its-ceo-for-superintelligence-team" },
-        { "title": "CNBC: Meta hired Alexandr Wang to build AI", "url": "https://www.cnbc.com/2026/06/14/meta-hired-alexandr-wang-to-build-ai-its-zuckerbergs-job-to-sell-it.html" }
+        {
+          "title": "Fortune: Meta ramps up AI efforts by paying $14.3 billion for 49% of Scale",
+          "url": "https://fortune.com/2025/06/13/meta-scale-ai-alexandr-wang-superintelligence-team/"
+        },
+        {
+          "title": "LA Times: Meta invests $14.3 billion in AI firm Scale, recruits chief for 'superintelligence' team",
+          "url": "https://www.latimes.com/business/story/2025-06-13/meta-invests-14-3b-in-ai-firm-scale-and-recruits-its-ceo-for-superintelligence-team"
+        },
+        {
+          "title": "CNBC: Meta hired Alexandr Wang to build AI",
+          "url": "https://www.cnbc.com/2026/06/14/meta-hired-alexandr-wang-to-build-ai-its-zuckerbergs-job-to-sell-it.html"
+        }
       ]
     },
     {
@@ -348,9 +511,16 @@
       "scope": "Plan to grow from ~4,500 to ~8,000 employees by end-2026 (~12 hires/day) across engineering, product, research and enterprise sales; >1M sq ft of SF office space secured.",
       "reason": "Enterprise competition with Anthropic (Ramp data: Anthropic wins ~73% of first-time AI buyers).",
       "ai_related": true,
+      "confidence": "medium",
       "sources": [
-        { "title": "Financial Times report (via Fortune): OpenAI plans to almost double its headcount this year", "url": "https://fortune.com/2026/03/21/openai-double-headcount-this-year-sam-altman-anthropic-google/" },
-        { "title": "Seeking Alpha: OpenAI to double employee count to take on Anthropic (FT)", "url": "https://seekingalpha.com/news/4567136-openai-double-employee-count-take-anthropic" }
+        {
+          "title": "Financial Times report (via Fortune): OpenAI plans to almost double its headcount this year",
+          "url": "https://fortune.com/2026/03/21/openai-double-headcount-this-year-sam-altman-anthropic-google/"
+        },
+        {
+          "title": "Seeking Alpha: OpenAI to double employee count to take on Anthropic (FT)",
+          "url": "https://seekingalpha.com/news/4567136-openai-double-employee-count-take-anthropic"
+        }
       ]
     },
     {
@@ -365,10 +535,20 @@
       "scope": "Grew past 3,500 employees (company spokesperson, Sept 2026) and poaching senior talent (e.g. Andrej Karpathy joined pre-training May 2026; John Jumper from DeepMind June 2026); announced Dublin expansion with 200 new jobs by 2027.",
       "reason": "Enterprise demand for Claude; scaling research, engineering, sales, safety.",
       "ai_related": true,
+      "confidence": "medium",
       "sources": [
-        { "title": "Exploding Topics: Anthropic had more than 3,500 employees in September 2026 (WSJ/spokesperson)", "url": "https://explodingtopics.com/blog/anthropic-employees" },
-        { "title": "Epoch AI companies database (Anthropic 3,328 on Apr 6, 2026)", "url": "https://epoch.ai/data/ai_companies_staff_reports.csv" },
-        { "title": "Silicon Republic: Anthropic to create 200 new jobs in Dublin by 2027", "url": "https://www.siliconrepublic.com/business/openai-double-headcount-by-end-of-year-reports-ft-ai-anthropic" }
+        {
+          "title": "Exploding Topics: Anthropic had more than 3,500 employees in September 2026 (WSJ/spokesperson)",
+          "url": "https://explodingtopics.com/blog/anthropic-employees"
+        },
+        {
+          "title": "Epoch AI companies database (Anthropic 3,328 on Apr 6, 2026)",
+          "url": "https://epoch.ai/data/ai_companies_staff_reports.csv"
+        },
+        {
+          "title": "Silicon Republic: Anthropic to create 200 new jobs in Dublin by 2027",
+          "url": "https://www.siliconrepublic.com/business/openai-double-headcount-by-end-of-year-reports-ft-ai-anthropic"
+        }
       ]
     },
     {
@@ -383,8 +563,12 @@
       "scope": "Public commitment to 'at least double' headcount in all departments (from ~300, June 2026) plus compute expansion.",
       "reason": "Scale after Mythos-related market shock and $7-8B fundraising.",
       "ai_related": true,
+      "confidence": "low",
       "sources": [
-        { "title": "Epoch AI companies database: DeepSeek plans to at least double headcount (Aug 2026)", "url": "https://epoch.ai/data/ai_companies_staff_reports.csv" }
+        {
+          "title": "Epoch AI companies database: DeepSeek plans to at least double headcount (Aug 2026)",
+          "url": "https://epoch.ai/data/ai_companies_staff_reports.csv"
+        }
       ]
     },
     {
@@ -399,11 +583,24 @@
       "scope": "SpaceX acquired xAI in a record $1.25T combined-valuation merger (completed Feb 2, 2026, Nevada records); xAI (Grok, Colossus) folded into SpaceX's AI segment (>22,000 SpaceX FTEs as of Mar 31, 2026 IPO filing).",
       "reason": "Unify AI and space ambitions; fund xAI's ~$1B/month compute burn with SpaceX revenue; mega-IPO.",
       "ai_related": true,
+      "confidence": "high",
       "sources": [
-        { "title": "Reuters (via Yahoo Finance): SpaceX acquires xAI in record-setting deal", "url": "https://finance.yahoo.com/news/musks-spacex-merge-xai-combined-212210116.html" },
-        { "title": "CNBC: Musk's xAI, SpaceX combo is the biggest merger of all time, valued at $1.25 trillion", "url": "https://www.cnbc.com/2026/02/03/musk-xai-spacex-biggest-merger-ever.html" },
-        { "title": "Bloomberg: SpaceX Acquires xAI as Musk Prepares for Mega IPO", "url": "https://www.bloomberg.com/news/articles/2026-02-02/elon-musk-s-spacex-said-to-combine-with-xai-ahead-of-mega-ipo" },
-        { "title": "TechCrunch: Elon Musk's SpaceX officially acquires xAI", "url": "https://techcrunch.com/2026/02/02/elon-musk-spacex-acquires-xai-data-centers-space-merger/" }
+        {
+          "title": "Reuters (via Yahoo Finance): SpaceX acquires xAI in record-setting deal",
+          "url": "https://finance.yahoo.com/news/musks-spacex-merge-xai-combined-212210116.html"
+        },
+        {
+          "title": "CNBC: Musk's xAI, SpaceX combo is the biggest merger of all time, valued at $1.25 trillion",
+          "url": "https://www.cnbc.com/2026/02/03/musk-xai-spacex-biggest-merger-ever.html"
+        },
+        {
+          "title": "Bloomberg: SpaceX Acquires xAI as Musk Prepares for Mega IPO",
+          "url": "https://www.bloomberg.com/news/articles/2026-02-02/elon-musk-s-spacex-said-to-combine-with-xai-ahead-of-mega-ipo"
+        },
+        {
+          "title": "TechCrunch: Elon Musk's SpaceX officially acquires xAI",
+          "url": "https://techcrunch.com/2026/02/02/elon-musk-spacex-acquires-xai-data-centers-space-merger/"
+        }
       ]
     }
   ]

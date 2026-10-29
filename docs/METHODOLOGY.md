@@ -18,7 +18,23 @@ An **event** (`data/events.json`) is a publicly announced workforce action:
 - `type: "layoff"` — an announced reduction in force with a stated or derivable size (e.g. "10% of workforce", "~15,000 roles").
 - `type: "hiring"` — an announced hiring plan with a quantified target (e.g. OpenAI's plan to grow from ~4,500 to ~8,000), a landmark talent acquisition/acqui-hire, or a merger that absorbs another company's workforce.
 
-Each event carries: `date` (effective/announced), `size` (roles, `null` when not quantifiable) with `size_is_estimate`, optional `percent_of_workforce`, `scope`, `reason`, an `ai_related` flag, and **≥1 source URL**.
+Each event carries: `date` (effective/announced), `size` (roles, `null` when not quantifiable) with `size_is_estimate`, optional `percent_of_workforce`, `scope`, `reason`, an `ai_related` flag, a **`confidence` tier**, and **≥1 source URL**.
+
+### Confidence tiers (robustness)
+
+Every event is tagged with one of three tiers, shown on the site and filterable on LayoffsBench:
+
+| Tier | Meaning | Typical source |
+|---|---|---|
+| `high` | The company itself stated the number | Newsroom post, CEO memo, SEC filing (10-K/10-Q/8-K) |
+| `medium` | Reputable wire outlet reporting unconfirmed figures | Reuters, Bloomberg, CNBC, BBC, AP, FT, WSJ citing sources/memos |
+| `low` | Single secondary source or aggregator | One outlet, or tracker-derived; directional only |
+
+Current mix: 12 high, 10 medium, 1 low (of 23 events). Figures marked `size_is_estimate` additionally carry the "~"/"about" qualifier.
+
+### Signed convention
+
+Layoffs are counted **negative**, hirings **positive** (`signed = -size` for layoffs, `+size` for hirings). All charts and tables use this convention; the Total view shows the net flow by quarter and a per-company evolution timeline.
 
 ### The `ai_related` flag
 
@@ -51,7 +67,8 @@ Public companies: official employee counts from the latest 10-K/10-Q (note fisca
 ## Known limitations
 
 - **Announced ≠ realized.** Announced layoff counts include attrition and unfilled-role closures in some company framings (e.g. Intel's "workforce reductions and attrition"); we record the announced figure and describe the nuance in `scope`.
-- **Layoffs and hirings are different units.** A "layoff" is a lost role; a "hiring plan" is a target that may not be filled. The net view is indicative, not a headcount delta.
+- **Layoffs and hirings are different units.** A "layoff" is a lost role; a "hiring plan" is a target that may not be filled (e.g. OpenAI's 4,500→8,000 plan). The net view is indicative, not a headcount delta.
+- **Coverage is announcement-driven, not census-driven.** We capture events big enough to be publicly announced; small rolling cuts (e.g. Google's unannounced 2026 reductions, estimated 1.5–3k) are undercounted. Cross-check against Layoffs.fyi/TrueUp industry totals (which count differently) before quoting.
 - **Layoffs.fyi-style trackers count differently** (per-company rolling cuts vs. single announcements), so our totals will not match theirs exactly.
 - **Point-in-time headcount** for private labs can vary widely between sources (e.g. Anthropic estimates range ~2,500–5,000 across 2026); we pick the most authoritative dated figure and link it.
 - **Amazon's workforce is ~90% logistics/warehouse**; its corporate layoff percentages apply to a ~350k corporate base, not the 1.5M+ total — percentages in events refer to the stated base.

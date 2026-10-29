@@ -100,7 +100,7 @@ def validate_events(doc, company_ids, errors):
     seen = set()
     for i, ev in enumerate(events):
         p = f"events[{i}]"
-        for key in ("id", "type", "company", "date", "announced", "size", "size_is_estimate", "scope", "reason", "ai_related", "sources"):
+        for key in ("id", "type", "company", "date", "announced", "size", "size_is_estimate", "scope", "reason", "ai_related", "confidence", "sources"):
             if key not in ev:
                 fail(f"{p}: missing required key '{key}'", errors)
         eid = ev.get("id", "")
@@ -126,6 +126,8 @@ def validate_events(doc, company_ids, errors):
             fail(f"{p}.percent_of_workforce: must be a number in (0, 100] or null", errors)
         if not isinstance(ev.get("ai_related"), bool):
             fail(f"{p}.ai_related: must be boolean", errors)
+        if ev.get("confidence") not in ("high", "medium", "low"):
+            fail(f"{p}.confidence: must be 'high', 'medium' or 'low', got {ev.get('confidence')!r}", errors)
         check_sources(ev.get("sources"), f"{p}.sources", errors)
         if ev.get("type") == "layoff" and size is None:
             fail(f"{p}: layoff events should carry a size when known (use size=null only for symbolic events)", errors)

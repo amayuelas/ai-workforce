@@ -4,44 +4,67 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Workforce Tracker — Total</title>
-<meta name="description" content="Tracking layoffs and hiring at the main tech companies and AI labs: LayoffsBench, HiringsBench, and the aggregate Total.">
+<meta name="description" content="Tracking layoffs (negative) and hiring (positive) at the main tech companies and AI labs: LayoffsBench, HiringsBench, and the aggregate Total.">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 </head>
 <body>
 <main>
-  <h1>⚖️ AI Workforce Tracker <span class="muted small">— Total</span></h1>
-  <p class="subtitle">Aggregate view of workforce moves at the main tech companies and AI labs.
-    Split views: <a href="layoffs.html">LayoffsBench</a> · <a href="hirings.html">HiringsBench</a>.
-    Data and sources: <a href="https://github.com/amayuelas/ai-workforce/tree/main/data">github.com/amayuelas/ai-workforce/data</a>.</p>
+  <div class="hero">
+    <div class="kicker">Open data · sourced · updated 2026-10-29</div>
+    <h1>AI Workforce Tracker</h1>
+    <p class="lede">How the workforce of the main tech companies and AI labs is moving — layoffs counted
+      <strong class="neg">negative</strong>, hirings <strong class="pos">positive</strong>. Three views:
+      <a href="layoffs.html">LayoffsBench</a>, <a href="hirings.html">HiringsBench</a>, and this aggregate
+      <strong>Total</strong>. Every figure links to its source in
+      <a href="https://github.com/amayuelas/ai-workforce/tree/main/data">data/</a>.</p>
+  </div>
 
   <section class="cards" id="kpis"></section>
 
-  <h2>Net workforce change by year (announced)</h2>
-  <div class="panel"><div id="net-chart"></div>
-    <div class="legend"><span class="l-red">net layoffs</span><span class="l-green">net hiring</span></div>
+  <h2><span class="no">01</span>Net workforce flow by quarter</h2>
+  <div class="panel">
+    <div id="netflow-chart"></div>
+    <div class="legend"><span class="l-red">layoffs (negative)</span><span class="l-green">hirings (positive)</span><span class="l-line">zero line</span></div>
+    <p class="cap">Announced roles per quarter across the 14 tracked companies. Bars left of zero are layoffs, right are hirings.</p>
   </div>
 
-  <h2>Layoffs vs hirings by year (announced roles)</h2>
-  <div class="panel"><div id="timeline-chart"></div>
-    <div class="legend"><span class="l-red">layoffs</span><span class="l-green">hirings</span></div>
+  <h2><span class="no">02</span>Signed net change by year</h2>
+  <div class="panel">
+    <div id="net-year-chart"></div>
+    <p class="cap">Net = hirings − layoffs per calendar year, announced figures. 2026 hiring plans are targets, not realized hires.</p>
   </div>
 
-  <h2>Largest layoff announcements (tracked companies)</h2>
+  <h2><span class="no">03</span>Company evolution since 2022</h2>
+  <div class="panel">
+    <div id="evolution"></div>
+    <p class="cap">Benchmark-style rows: each company's announced events as signed quarterly steps, ordered by net change. Right column shows net announced roles and latest reported headcount.</p>
+  </div>
+
+  <h2><span class="no">04</span>Largest layoff announcements</h2>
   <div class="panel"><div id="top-layoffs"></div></div>
 
-  <h2>Tracked companies</h2>
+  <h2><span class="no">05</span>How robust is this tracker?</h2>
   <div class="panel">
+    <div class="tiers" id="tiers"></div>
+    <p class="small muted">Every event carries a <strong>confidence tier</strong>: <strong>high</strong> = company-stated (newsroom, CEO memo, SEC filing) ·
+      <strong>medium</strong> = reputable wire reporting of unconfirmed figures · <strong>low</strong> = single secondary source / estimate.
+      Known limits — announced ≠ realized, layoffs and hiring plans are different units, private-lab headcounts are estimates, and fiscal years end on different dates —
+      are documented in <a href="https://github.com/amayuelas/ai-workforce/blob/main/docs/METHODOLOGY.md">docs/METHODOLOGY.md</a>.</p>
+  </div>
+
+  <h2><span class="no">06</span>Tracked companies</h2>
+  <div class="panel" style="overflow-x:auto">
     <table class="data">
       <thead><tr><th>Company</th><th>Type</th><th>Segment</th><th class="num">Latest headcount</th><th>Why tracked</th></tr></thead>
       <tbody id="companies-body"></tbody>
     </table>
   </div>
 
-  <h2>All events (newest first)</h2>
+  <h2><span class="no">07</span>All events, newest first</h2>
   <div class="panel" style="overflow-x:auto">
     <table class="data">
-      <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
+      <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Signed size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
       <tbody id="events-body"></tbody>
     </table>
   </div>
@@ -55,30 +78,53 @@ AIW.loadAll().then(function (d) {
 
   var layoffs = d.events.filter(function (e) { return e.type === "layoff"; });
   var hirings = d.events.filter(function (e) { return e.type === "hiring"; });
-  var sizedLayoffs = layoffs.filter(function (e) { return e.size; });
-  var aiLayoffs = sizedLayoffs.filter(function (e) { return e.ai_related; });
-  var totalLaid = sizedLayoffs.reduce(function (a, e) { return a + e.size; }, 0);
-  var totalAI = aiLayoffs.reduce(function (a, e) { return a + e.size; }, 0);
+  var sized = d.events.filter(function (e) { return e.size; });
+  var laid = layoffs.filter(function (e) { return e.size; });
+  var aiLaid = laid.filter(function (e) { return e.ai_related; });
+  var totalLaid = laid.reduce(function (a, e) { return a + e.size; }, 0);
+  var totalAI = aiLaid.reduce(function (a, e) { return a + e.size; }, 0);
   var totalHired = hirings.reduce(function (a, e) { return a + (e.size || 0); }, 0);
   var net = totalHired - totalLaid;
+  var confCount = { high: 0, medium: 0, low: 0 };
+  d.events.forEach(function (e) { confCount[e.confidence] = (confCount[e.confidence] || 0) + 1; });
 
   document.getElementById("kpis").innerHTML = [
-    { label: "Tracked companies", value: AIW.fmt(d.companies.length), cls: "blue", hint: "Big Tech + frontier AI labs" },
-    { label: "Announced layoffs (tracked)", value: AIW.fmt(totalLaid), cls: "red", hint: layoffs.length + " events since 2022" },
-    { label: "…of which AI-attributed", value: AIW.fmt(totalAI), cls: "red", hint: Math.round(100 * totalAI / totalLaid) + "% of announced layoffs" },
-    { label: "Announced hiring plans", value: AIW.fmt(totalHired), cls: "green", hint: hirings.length + " hiring events" },
-    { label: "Net (hiring − layoffs)", value: AIW.fmtSigned(net), cls: net < 0 ? "red" : "green", hint: "announced figures, not net headcount" }
+    { label: "Tracked companies", value: AIW.fmt(d.companies.length), cls: "ink c-ink", hint: "9 big tech · 5 AI labs" },
+    { label: "Announced layoffs", value: "−" + AIW.fmt(totalLaid), cls: "red c-red", hint: layoffs.length + " events since 2022" },
+    { label: "AI-attributed layoffs", value: "−" + AIW.fmt(totalAI), cls: "red c-red", hint: Math.round(100 * totalAI / totalLaid) + "% of announced layoff roles" },
+    { label: "Announced hiring plans", value: "+" + AIW.fmt(totalHired), cls: "green c-green", hint: hirings.length + " hiring events (targets where planned)" },
+    { label: "Net announced flow", value: AIW.fmtSigned(net), cls: net < 0 ? "red c-red" : "green c-green", hint: "hirings − layoffs, announced figures" },
+    { label: "Source confidence", value: confCount.high + "/" + d.events.length, cls: "violet c-violet", hint: "events at high confidence (company-stated)" }
   ].map(function (k) {
-    return '<div class="card"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
+    return '<div class="card ' + k.cls + '"><div class="label">' + k.label + '</div><div class="value ' + k.cls.split(" ")[0].replace("c-", "") + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
   }).join("");
 
-  AIW.netChart(document.getElementById("net-chart"), d.events);
-  AIW.stackedTimeline(document.getElementById("timeline-chart"), d.events);
+  AIW.netFlowChart(document.getElementById("netflow-chart"), d.events, { rowH: 36 });
 
-  var top = sizedLayoffs.slice().sort(function (a, b) { return b.size - a.size; }).slice(0, 8).map(function (e) {
+  var byYear = {};
+  sized.forEach(function (e) {
+    var y = e.date.slice(0, 4);
+    byYear[y] = (byYear[y] || 0) + AIW.signed(e);
+  });
+  var yRows = Object.keys(byYear).sort().map(function (y) {
+    return { label: y, value: byYear[y] };
+  });
+  AIW.signedBarChart(document.getElementById("net-year-chart"), yRows, { height: 300 });
+
+  AIW.companyEvolution(document.getElementById("evolution"), d.companies, d.events, d.headcount);
+
+  var top = laid.slice().sort(function (a, b) { return b.size - a.size; }).slice(0, 8).map(function (e) {
     return { label: AIW.companyName(d.companies, e.company), label2: e.date, value: e.size, color: e.ai_related ? AIW.AI_COLOR : AIW.LAYOFF_COLOR };
   });
-  AIW.barChart(document.getElementById("top-layoffs"), top, { height: 340 });
+  AIW.barChart(document.getElementById("top-layoffs"), top, { height: 320 });
+
+  document.getElementById("tiers").innerHTML = [
+    { name: "High — company-stated", desc: "Newsroom post, CEO memo, or SEC filing states the number.", n: confCount.high + " of " + d.events.length + " events" },
+    { name: "Medium — wire-reported", desc: "Reuters/Bloomberg/CNBC/BBC/AP/FT/WSJ citing sources or memos; estimates flagged.", n: confCount.medium + " events" },
+    { name: "Low — single secondary source", desc: "One aggregator/secondary outlet; treat as directional only.", n: confCount.low + " events" }
+  ].map(function (t) {
+    return '<div class="tier"><div class="t-name">' + t.name + '</div><div class="t-desc">' + t.desc + '</div><div class="t-num">' + t.n + "</div></div>";
+  }).join("");
 
   AIW.companiesTable(document.getElementById("companies-body"), d.companies, d.headcount);
   AIW.eventsTable(document.getElementById("events-body"), d.companies, d.events, null);
