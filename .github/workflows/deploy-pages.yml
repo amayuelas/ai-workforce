@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, vibe/ai-workforce-tracker-9b4424]
   workflow_dispatch:
 
 permissions:
