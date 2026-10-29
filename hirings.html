@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HiringsBench — AI Workforce Tracker</title>
 <meta name="description" content="HiringsBench: announced hiring plans and AI talent moves (positive flow) plus net headcount growth from filings — the reliable hiring signal.">
-<link rel="stylesheet" href="assets/css/style.css?v=28">
+<link rel="stylesheet" href="assets/css/style.css?v=29">
 </head>
 <body>
 <main>
@@ -28,13 +28,14 @@
   <h2><span class="no">02</span>Announced hiring events timeline (positive)</h2>
   <div class="panel">
     <div id="scatter"></div>
-    <p class="cap">One bubble per announced hiring plan / talent move; bubble size = announced roles where quantified. Lower bound only.</p>
+    <div class="legend"><span class="l-green">hiring plan / talent move (area = roles)</span><span class="l-hollow">dashed hollow = shown for context, not counted</span></div>
+    <p class="cap">One bubble per announced hiring plan or talent move; small fixed-size bubbles are unquantified (acqui-hires, mergers). Hollow bubbles are internal redeployments of existing staff and a multi-lab estimate that overlaps the per-lab plans. They are not new hires, so they stay out of the totals.</p>
   </div>
 
   <h2><span class="no">03</span>Announced quantified plans by quarter (positive)</h2>
   <div class="panel">
     <div id="year-chart"></div>
-    <p class="cap">Only publicly announced, quantified plans — all landed in 2026, hence quarterly grouping (Q1 OpenAI +3,500; Q2 Meta +7,000, AI labs +6,200; Q3 Microsoft Frontier +6,000, DeepSeek +300, Anthropic +500). Compare with 01 — the gap is the unannounced hiring.</p>
+    <p class="cap" id="q-cap"></p>
   </div>
 
   <h2><span class="no">04</span>All hiring events, newest first</h2>
@@ -46,49 +47,48 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=28"></script>
+<script src="assets/js/app.js?v=29"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("HiringsBench"));
   document.querySelector("main").insertAdjacentHTML("beforeend", AIW.footer(d.updated));
-
   var hirings = d.events.filter(function (e) { return e.type === "hiring"; });
-  var quantified = hirings.filter(function (e) { return e.size; });
+  var quantified = hirings.filter(function (e) { return AIW.counted(e); });
   var total = quantified.reduce(function (a, e) { return a + e.size; }, 0);
   var firstYear = hirings.map(function (e) { return e.date; }).sort()[0].slice(0, 4);
-
   var nhc = AIW.netHeadcountChange(d.companies, d.headcount);
   var grown = nhc.filter(function (r) { return r.value > 0; }).reduce(function (a, r) { return a + r.value; }, 0);
-
-  document.getElementById("kpis").innerHTML = [
-    { label: "Announced hiring events", value: AIW.fmt(hirings.length), cls: "green", hint: "since " + firstYear + " — announced only" },
-    { label: "Quantified announced plans", value: "+" + AIW.fmt(total), cls: "green", hint: "lower bound — most hiring unannounced" },
-    { label: "Companies that grew YoY", value: AIW.fmt(nhc.filter(function (r) { return r.value > 0; }).length) + " of " + nhc.length, cls: "ink", hint: "per latest 10-K vs prior year" },
-    { label: "Net headcount added (growers)", value: "+" + AIW.fmt(grown), cls: "green", hint: "sum of positive YoY changes, filings" }
-  ].map(function (k) {
-    return '<div class="stat"><div class="v ' + k.cls + '">' + k.value + '</div><div class="l">' + k.label + '</div><div class="h">' + k.hint + "</div></div>";
-  }).join("");
-
-  AIW.signedBarChart(document.getElementById("net-hc"), nhc.map(function (r) {
-    return { label: r.label, label2: r.as_of.slice(0, 4), value: r.value };
-  }), { height: 380 });
-
-  AIW.eventScatter(document.getElementById("scatter"), d.companies, hirings, "hiring");
-
+  var gap = AIW.impliedHiring(d.companies, d.headcount, d.events);
+  var implied = gap.reduce(function (a, r) { return a + Math.max(0, r.impliedGrossHiring); }, 0);
+  AIW.statline(document.getElementById("kpis"), [
+    { label: "Quantified announced plans", value: "+" + AIW.fmt(total), cls: "green", hint: quantified.length + " of " + hirings.length + " events since " + firstYear + " · lower bound" },
+    { label: "Companies that grew, latest FY", value: AIW.fmt(nhc.filter(function (r) { return r.value > 0; }).length) + " of " + nhc.length, cls: "ink", hint: "10-K/10-Q vs a year earlier" },
+    { label: "Net headcount added (growers)", value: "+" + AIW.fmt(grown), cls: "green", hint: "sum of positive YoY changes, filings" },
+    { label: "Implied gross hiring, latest FY", value: "≥ " + AIW.fmt(implied), cls: "green", hint: "net change + layoffs in window, public cos." }
+  ]);
   var byQ = {};
   quantified.forEach(function (e) {
-    var m = parseInt(e.date.slice(5, 7), 10);
-    var q = e.date.slice(0, 4) + "-Q" + Math.ceil(m / 3);
-    byQ[q] = (byQ[q] || 0) + e.size;
+    var q = AIW.quarterOf(e.date);
+    byQ[q] = byQ[q] || { v: 0, who: [] };
+    byQ[q].v += e.size;
+    byQ[q].who.push(AIW.companyName(d.companies, e.company) + " +" + AIW.fmt(e.size));
   });
-  var qRows = Object.keys(byQ).sort().map(function (q) { return { label: q, value: byQ[q] }; });
-  AIW.signedBarChart(document.getElementById("year-chart"),
-    qRows.length ? qRows : [{ label: "—", value: 0 }], { height: 280 });
-
+  var qRows = AIW.quarterRange(Object.keys(byQ)).map(function (q) {
+    var r = byQ[q] || { v: 0, who: [] };
+    return { label: q, value: r.v, tip: q + " · " + (r.who.join(", ") || "no quantified plans") };
+  });
+  document.getElementById("q-cap").textContent = "Only publicly announced, quantified plans from new hiring, by quarter (hover for the companies). " +
+    "Every one landed in 2026. Compare with 01: the gap between the two is the hiring nobody announces.";
+  function drawCharts() {
+    AIW.signedBarChart(document.getElementById("net-hc"), AIW.netChangeRows(nhc), { height: 340 });
+    AIW.eventScatter(document.getElementById("scatter"), d.companies, hirings, "hiring");
+    AIW.signedBarChart(document.getElementById("year-chart"), qRows.length ? qRows : [{ label: "—", value: 0 }], { height: 260 });
+  }
+  drawCharts();
+  AIW.onResize(drawCharts);
   AIW.eventsTable(document.getElementById("events-body"), d.companies, hirings, "hiring");
 });
 </script>
-
 <script>
 /* Warm the cache: fetch sibling pages + data at idle so navigation feels instant. */
 (function () {
@@ -97,7 +97,7 @@ AIW.loadAll().then(function (d) {
   function warm() {
     pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
     ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {
-      fetch(d, { cache: "force-cache" }).catch(function () {});
+      fetch(d).catch(function () {});
     });
   }
   if ("requestIdleCallback" in window) requestIdleCallback(warm); else setTimeout(warm, 300);

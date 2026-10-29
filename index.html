@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=28">
+<link rel="stylesheet" href="assets/css/style.css?v=29">
 </head>
 <body>
 <main>
@@ -26,27 +26,27 @@
     <div class="filters">
       <label for="hc-mode">Metric</label>
       <select id="hc-mode">
-        <option value="indexed" selected>Indexed (first year = 100) — default</option>
-        <option value="yoy">YoY change (%)</option>
-        <option value="level">Headcount (thousands) — auto log scale</option>
+        <option value="indexed" selected>Indexed growth (FY2015 = 100, log scale)</option>
+        <option value="yoy">Year-over-year change (%)</option>
+        <option value="level">Headcount (log scale, incl. AI-lab estimates)</option>
       </select>
-      <label><input type="checkbox" id="log-toggle"> log scale (only affects Headcount mode — auto-on there; Indexed/YoY are unaffected)</label>
+      <span class="small muted">Hover or click a line, label or legend entry to highlight a company.</span>
     </div>
     <div id="headcount-lines"></div>
-    <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Each company is indexed to its first reported year (2015 or 2016) = 100, so all histories start on the left edge. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M, so Headcount mode always uses log scale.</p>
+    <p class="cap" id="hc-cap"></p>
   </div>
 
-  <h2><span class="no">02</span>Announced layoffs vs implied actual hiring</h2>
+  <h2><span class="no">02</span>Announced layoffs vs implied gross hiring, latest fiscal year</h2>
   <div class="panel">
     <div id="hiring-gap"></div>
-    <p class="cap">Per company, latest fiscal year: red = announced layoffs, green = <strong>implied gross hiring</strong> = net headcount change (10-K) + announced layoffs. Announced hiring plans look tiny because most hiring is never announced — the filings-based estimate is the real number. Year-end net change mixes both plus attrition and M&amp;A across all areas of the company, which is why it differs from either bar.</p>
+    <div class="legend"><span class="l-red">layoffs counted in the fiscal year</span><span class="l-green">implied gross hiring = net change + those layoffs</span><span class="l-gray">headcount fell by more than announced layoffs explain</span></div>
+    <p class="cap">Per company, over its latest full fiscal year in the filings (hover a bar for the exact window). Only layoffs dated inside that window are counted. Implied gross hiring is a <em>lower bound</em>: it ignores attrition, so real hiring is higher still. Announced hiring plans look tiny next to it because most hiring is never announced.</p>
   </div>
 
   <h2><span class="no">03</span>Latest net headcount change (YoY, from filings)</h2>
   <div class="panel">
     <div id="net-hc"></div>
-    <p class="cap">Signed year-over-year change in reported headcount per company (latest two fiscal year-ends). Negative = smaller workforce than a year earlier. Mixes hiring, layoffs, attrition and M&amp;A — that's why events (04) matter too.</p>
+    <p class="cap">Signed change in reported headcount over each company's latest fiscal year (hover for the % change and the two filing dates). Negative = smaller workforce than a year earlier. It mixes hiring, layoffs, attrition and M&amp;A, which is why the announced events (05–07) matter too.</p>
   </div>
 
   <h2><span class="no">04</span>AI labs — latest estimate and announced plans</h2>
@@ -55,32 +55,34 @@
       <thead><tr><th>Lab</th><th class="num">Latest headcount (est.)</th><th class="num">As of</th><th class="num">Announced hiring plans</th><th>Note</th></tr></thead>
       <tbody id="labs-body"></tbody>
     </table>
-    <p class="cap">Private AI labs don't file with the SEC, so they have no headcount time series — these are single dated media estimates (dashed markers in the Headcount view of 01) and announced hiring plans from the event log. That's why the line charts in 01 cover the 9 public companies only.</p>
+    <p class="cap">Private AI labs don't file with the SEC, so they have no headcount time series. These are single dated media estimates (hollow markers in the Headcount view of 01) plus the announced hiring plans from the event log. That's why the indexed and YoY charts in 01 cover the 9 public companies only.</p>
   </div>
 
   <h2><span class="no">05</span>Announced events timeline</h2>
   <div class="panel">
     <div id="events-scatter"></div>
-    <div class="legend"><span class="l-red">layoff (bubble size = roles)</span><span class="l-green">hiring plan</span></div>
-    <p class="cap">Every announced layoff/hiring event since 2022, one bubble per event. Announcements only — small unannounced cuts are not visible here.</p>
+    <div class="legend"><span class="l-red">layoff (area = roles)</span><span class="l-violet">violet ring = AI-attributed layoff</span><span class="l-green">hiring plan</span><span class="l-hollow">dashed hollow = buyout offer (sized by eligible pool) or not counted</span></div>
+    <p class="cap">Every announced layoff/hiring event since 2022, one bubble per event. Announcements only, so small unannounced cuts don't show up here.</p>
   </div>
 
   <h2><span class="no">06</span>Net announced flow by quarter</h2>
   <div class="panel">
     <div id="netflow-chart"></div>
-    <div class="legend"><span class="l-red">layoffs (negative)</span><span class="l-green">hirings (positive)</span><span class="l-line">zero line</span></div>
-    <p class="cap">Announced roles per quarter across the 14 tracked companies.</p>
+    <p class="cap">Counted roles per quarter across the 14 tracked companies, both sides on the same scale. Quarters with no announcements are kept so the time axis stays honest. Excluded from the totals: buyout offers until acceptances are known, internal redeployments, and the multi-lab hiring estimate.</p>
   </div>
 
-  <h2><span class="no">07</span>Largest layoff announcements (negative)</h2>
-  <div class="panel"><div id="top-layoffs"></div></div>
+  <h2><span class="no">07</span>Largest layoff announcements</h2>
+  <div class="panel">
+    <div id="top-layoffs"></div>
+    <div class="legend"><span class="l-violet">AI-attributed</span><span class="l-red">other</span></div>
+  </div>
 
   <h2><span class="no">08</span>How robust is this tracker?</h2>
   <div class="panel">
     <div class="tiers" id="tiers"></div>
     <p class="small muted">Every event carries a <strong>confidence tier</strong>: <strong>high</strong> = company-stated (newsroom, CEO memo, SEC filing) ·
       <strong>medium</strong> = reputable wire reporting of unconfirmed figures · <strong>low</strong> = single secondary source.
-      Limits: announced ≠ realized; announced hiring ≠ actual hiring (use 01/02); private-lab headcounts are estimates; small unannounced cuts are undercounted.
+      Limits: announced ≠ realized; announced hiring ≠ actual hiring (use 01–03); private-lab headcounts are estimates; small unannounced cuts are undercounted.
       Full notes, coverage check vs external trackers, and known limits: <a href="methodology.html">methodology &amp; coverage page</a> · <a href="https://github.com/amayuelas/ai-workforce/blob/main/docs/METHODOLOGY.md">docs/METHODOLOGY.md</a>.</p>
   </div>
 
@@ -101,7 +103,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=28"></script>
+<script src="assets/js/app.js?v=29"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
@@ -109,104 +111,92 @@ AIW.loadAll().then(function (d) {
 
   var layoffs = d.events.filter(function (e) { return e.type === "layoff"; });
   var hirings = d.events.filter(function (e) { return e.type === "hiring"; });
-  var laid = layoffs.filter(function (e) { return e.size; });
-  var aiLaid = laid.filter(function (e) { return e.ai_related; });
-  var totalLaid = laid.reduce(function (a, e) { return a + e.size; }, 0);
-  var totalAI = aiLaid.reduce(function (a, e) { return a + e.size; }, 0);
-  var totalHired = hirings.reduce(function (a, e) { return a + (e.size || 0); }, 0);
+  var sum = function (evs) { return evs.reduce(function (a, e) { return a + AIW.counted(e); }, 0); };
+  var totalLaid = sum(layoffs);
+  var totalAI = sum(layoffs.filter(function (e) { return e.ai_related; }));
+  var totalHired = sum(hirings);
   var net = totalHired - totalLaid;
   var confCount = { high: 0, medium: 0, low: 0 };
   d.events.forEach(function (e) { confCount[e.confidence] = (confCount[e.confidence] || 0) + 1; });
+  var nBig = d.companies.filter(function (c) { return c.type === "big-tech"; }).length;
+  var nLab = d.companies.length - nBig;
 
-  var latest = {};
-  d.headcount.forEach(function (s) {
-    if (!latest[s.company] || s.as_of > latest[s.company].as_of) latest[s.company] = s;
-  });
-  var totalHC = d.companies.map(function (c) { return latest[c.id]; }).filter(Boolean)
-    .reduce(function (a, s) { return a + s.employees; }, 0);
+  var latest = AIW.latestSnapshots(d.headcount);
+  var nhc = AIW.netHeadcountChange(d.companies, d.headcount);
+  var netFiled = nhc.reduce(function (a, r) { return a + r.value; }, 0);
+  var grew = nhc.filter(function (r) { return r.value > 0; }).length;
+  var publicHC = d.companies.filter(function (c) { return c.type === "big-tech" && latest[c.id]; })
+    .reduce(function (a, c) { return a + latest[c.id].employees; }, 0);
 
-  document.getElementById("kpis").innerHTML = [
-    { label: "Tracked companies", value: AIW.fmt(d.companies.length), cls: "ink", hint: "9 big tech · 5 AI labs" },
-    { label: "Combined reported headcount", value: AIW.fmt(totalHC), cls: "ink", hint: "latest filings, mixed dates" },
-    { label: "Announced layoffs since 2022", value: "−" + AIW.fmt(totalLaid), cls: "red", hint: layoffs.length + " events · " + Math.round(100 * totalAI / totalLaid) + "% AI-attributed" },
-    { label: "Announced hiring plans", value: "+" + AIW.fmt(totalHired), cls: "green", hint: hirings.length + " events · lower bound only" },
-    { label: "Net announced flow", value: AIW.fmtSigned(net), cls: net < 0 ? "red c-red" : "green c-green", hint: "hirings − layoffs, announced" },
+  AIW.statline(document.getElementById("kpis"), [
+    { label: "Tracked companies", value: AIW.fmt(d.companies.length), cls: "ink", hint: nBig + " big tech · " + nLab + " AI labs" },
+    { label: "Big-tech reported headcount", value: AIW.fmt(publicHC), cls: "ink", hint: "latest 10-K/10-Q per company" },
+    { label: "Net headcount change, latest FY", value: AIW.fmtSigned(netFiled), cls: netFiled < 0 ? "red" : "green", hint: grew + " of " + nhc.length + " public companies grew" },
+    { label: "Announced layoffs since 2022", value: "−" + AIW.fmt(totalLaid), cls: "red", hint: layoffs.length + " events · " + Math.round(100 * totalAI / totalLaid) + "% of roles AI-attributed" },
+    { label: "Announced hiring plans", value: "+" + AIW.fmt(totalHired), cls: "green", hint: "lower bound · most hiring is unannounced" },
     { label: "High-confidence events", value: confCount.high + "/" + d.events.length, cls: "violet", hint: "company-stated figures" }
-  ].map(function (k) {
-    return '<div class="stat"><div class="v ' + k.cls + '">' + k.value + '</div><div class="l">' + k.label + '</div><div class="h">' + k.hint + "</div></div>";
-  }).join("");
+  ]);
 
-  var byCo = {};
-  d.headcount.forEach(function (s) {
-    (byCo[s.company] = byCo[s.company] || []).push([s.as_of, s.employees, s.is_estimate]);
-  });
-  var LINE_COLORS = { alphabet: "#2456a6", amazon: "#c2620a", apple: "#666055", meta: "#1e5fbf", microsoft: "#0e7c86", nvidia: "#1e7a40", oracle: "#b23a2e", tesla: "#c2498a", intel: "#8a5a2b", openai: "#1b1917", anthropic: "#a33b3b", deepseek: "#5b7a2e", xai: "#6d4fc2", mistral: "#9a6a00" };
-  function colorFor(label) {
-    var c = d.companies.find(function (x) { return label.indexOf(x.name) === 0; });
-    return c ? LINE_COLORS[c.id] : null;
-  }
+  var CAPS = {
+    indexed: "Each public company's 10-K headcount, indexed to its FY2015 count = 100 (NVIDIA: FY2016, ended Jan 2016). Log scale, so equal slopes mean equal growth rates: 200 = doubled, 50 = halved. Fiscal year-ends differ (Dec Alphabet/Amazon/Meta/Tesla/Intel · Jun Microsoft · Sep Apple · Jan NVIDIA · May Oracle); 2026 includes 10-Q quarter-end points where disclosed.",
+    yoy: "Change vs the filing one fiscal year earlier, per company. Quarter-end 10-Q points without a year-ago match are skipped, so every point is a true 12-month change.",
+    level: "Reported employees on a log scale. Amazon (~1.6M, mostly logistics) would flatten everyone else on a linear axis. AI labs are hollow markers: single dated media estimates (xAI = all SpaceX FTEs after the Feb 2026 merger), not filings."
+  };
   function drawHC() {
     var mode = document.getElementById("hc-mode").value;
-    var logToggle = document.getElementById("log-toggle");
-    if (mode === "level") logToggle.checked = true; /* levels are unreadable linear because of Amazon */
-    var log = logToggle.checked;
-    var series;
+    var el = document.getElementById("headcount-lines");
     if (mode === "yoy") {
-      series = AIW.yoySeries(d.companies, d.headcount).map(function (s) { s.color = colorFor(s.label); return s; });
-      AIW.lineChart(document.getElementById("headcount-lines"), series, {
-        height: 400,
-        yFmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + "%"; },
-        zeroLine: true,
+      AIW.lineChart(el, AIW.yoySeries(d.companies, d.headcount), {
+        height: 400, zeroLine: true, yLabel: "YoY %",
+        yFmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(Math.abs(v) < 10 && v % 1 ? 1 : 0) + "%"; },
         xLabel: "Fiscal year-end (varies by company)"
       });
     } else if (mode === "indexed") {
-      series = AIW.indexedSeries(d.companies, d.headcount).map(function (s) { s.color = colorFor(s.label); return s; });
-      AIW.lineChart(document.getElementById("headcount-lines"), series, {
-        height: 400,
-        yFmt: function (v) { return Math.round(v); },
+      AIW.lineChart(el, AIW.indexedSeries(d.companies, d.headcount), {
+        height: 420, log: true, refLine: 100, yTicks: [50, 100, 200, 500, 1000], yLabel: "index, FY2015 = 100",
+        yFmt: function (v) { return v >= 99.5 ? AIW.fmt(Math.round(v)) : v.toFixed(0); },
         xLabel: "Fiscal year-end (varies by company)"
       });
     } else {
-      series = d.companies.map(function (c) {
-        var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a[0].localeCompare(b[0]); });
-        return {
-          label: AIW.companyName(d.companies, c.id) + (c.ticker ? " " + c.ticker : ""),
-          color: LINE_COLORS[c.id],
-          dashed: pts.some(function (p) { return p[2]; }),
-          points: pts.map(function (p) { return [p[0], log ? Math.log10(p[1]) : p[1]]; })
-        };
-      }).filter(function (s) { return s.points.length; });
-      AIW.lineChart(document.getElementById("headcount-lines"), series, {
-        height: 400,
-        yFmt: log ? function (v) { return "10^" + Math.round(v); } : function (v) { return AIW.fmt(Math.round(v / 1000)) + "k"; },
+      AIW.lineChart(el, AIW.levelSeries(d.companies, d.headcount), {
+        height: 460, log: true, yTicks: [100, 300, 1000, 3000, 10000, 30000, 100000, 300000, 1000000, 3000000], yLabel: "employees",
+        yFmt: function (v) { return AIW.fmtCompact(v); },
         xLabel: "Fiscal year-end (varies by company)"
       });
     }
+    document.getElementById("hc-cap").textContent = CAPS[mode];
   }
-  drawHC();
   document.getElementById("hc-mode").addEventListener("change", drawHC);
-  document.getElementById("log-toggle").addEventListener("change", drawHC);
 
   var gap = AIW.impliedHiring(d.companies, d.headcount, d.events);
   var gapRows = [];
   gap.forEach(function (r) {
-    if (r.announcedLayoffs > 0) gapRows.push({ label: r.label, label2: r.period, value: -r.announcedLayoffs, color: AIW.LAYOFF_COLOR });
-    gapRows.push({ label: r.label, label2: r.period, value: r.impliedGrossHiring, color: AIW.HIRING_COLOR });
+    var win = " · FY window " + r.from + " → " + r.to;
+    gapRows.push({ group: r.company, label: r.short, value: -r.announcedLayoffs, color: AIW.LAYOFF_COLOR,
+      tip: r.label + " · layoffs counted in window: " + AIW.fmtSigned(-r.announcedLayoffs) + win });
+    var neg = r.impliedGrossHiring < 0;
+    gapRows.push({ group: r.company, label: r.short, value: r.impliedGrossHiring, color: neg ? AIW.GRAY : AIW.HIRING_COLOR,
+      tip: r.label + (neg
+        ? " · headcount fell " + AIW.fmt(-r.netChange) + ", " + AIW.fmt(-r.impliedGrossHiring) + " more than announced layoffs explain (attrition / unannounced cuts)"
+        : " · implied gross hiring ≥ " + AIW.fmt(r.impliedGrossHiring) + " (net " + AIW.fmtSigned(r.netChange) + " + layoffs " + AIW.fmt(r.announcedLayoffs) + ")") + win });
   });
-  AIW.signedBarChart(document.getElementById("hiring-gap"), gapRows, { height: 460 });
 
-  var nhc = AIW.netHeadcountChange(d.companies, d.headcount);
-  AIW.signedBarChart(document.getElementById("net-hc"), nhc.map(function (r) {
-    return { label: r.label, label2: r.as_of.slice(0, 4), value: r.value };
-  }), { height: 380 });
-
-  AIW.eventScatter(document.getElementById("events-scatter"), d.companies, d.events, null);
-  AIW.netFlowChart(document.getElementById("netflow-chart"), d.events, { rowH: 36 });
-
-  var top = laid.slice().sort(function (a, b) { return b.size - a.size; }).slice(0, 8).map(function (e) {
-    return { label: AIW.companyName(d.companies, e.company), label2: e.date, value: -e.size, color: e.ai_related ? AIW.AI_COLOR : AIW.LAYOFF_COLOR };
+  var countedLayoffs = layoffs.filter(function (e) { return AIW.counted(e); });
+  var top = countedLayoffs.slice().sort(function (a, b) { return b.size - a.size; }).slice(0, 8).map(function (e) {
+    return { label: AIW.companyName(d.companies, e.company), label2: e.date.slice(0, 7), value: -e.size, color: e.ai_related ? AIW.AI_COLOR : AIW.LAYOFF_COLOR,
+      tip: AIW.companyName(d.companies, e.company) + " · " + AIW.fmtSigned(-e.size) + " · " + e.date + (e.ai_related ? " · AI-attributed" : "") + (e.size_is_estimate ? " · estimate" : "") };
   });
-  AIW.signedBarChart(document.getElementById("top-layoffs"), top, { height: 320 });
+
+  function drawCharts() {
+    drawHC();
+    AIW.signedBarChart(document.getElementById("hiring-gap"), gapRows, { height: 400 });
+    AIW.signedBarChart(document.getElementById("net-hc"), AIW.netChangeRows(nhc), { height: 340 });
+    AIW.eventScatter(document.getElementById("events-scatter"), d.companies, d.events, null);
+    AIW.netFlowChart(document.getElementById("netflow-chart"), d.events, { rowH: 26 });
+    AIW.signedBarChart(document.getElementById("top-layoffs"), top, { height: 300 });
+  }
+  drawCharts();
+  AIW.onResize(drawCharts);
 
   document.getElementById("tiers").innerHTML = [
     { name: "High — company-stated", desc: "Newsroom post, CEO memo, or SEC filing states the number.", n: confCount.high + " of " + d.events.length + " events" },
@@ -217,24 +207,22 @@ AIW.loadAll().then(function (d) {
   }).join("");
 
   var labs = d.companies.filter(function (c) { return c.type === "ai-lab"; });
-  var latest = {};
-  d.headcount.forEach(function (s2) { if (!latest[s2.company] || s2.as_of > latest[s2.company].as_of) latest[s2.company] = s2; });
   var plans = {};
   d.events.forEach(function (e) {
-    if (e.type === "hiring" && e.size && labs.some(function (l) { return l.id === e.company; })) {
-      plans[e.company] = (plans[e.company] || 0) + e.size;
-    }
+    if (e.type === "hiring" && AIW.counted(e)) plans[e.company] = (plans[e.company] || 0) + AIW.counted(e);
   });
-  /* the AI-labs H1 +6,200 event is logged under anthropic but covers 4 labs — shown on that row */
+  var NOTES = {
+    xai: "Merged into SpaceX (Feb 2026); figure = all SpaceX FTEs, not xAI alone",
+    anthropic: "Plus a multi-lab estimate: Anthropic, OpenAI, Cohere and Mistral hired ~6,200 combined in H1 2026 (shown in 10, not counted)",
+    mistral: "LinkedIn-based estimate; sources range ~350 to ~1,760. Treat as order of magnitude"
+  };
   document.getElementById("labs-body").innerHTML = labs.map(function (c) {
     var hc = latest[c.id];
-    var note = c.id === "xai" ? "Merged into SpaceX (Feb 2026); figure = SpaceX total FTEs" :
-               c.id === "anthropic" ? "Also logged: Anthropic+OpenAI+Cohere+Mistral hired ~6,200 in H1 2026 (see 10)" : "";
     return "<tr><td><strong>" + AIW.esc(c.name) + "</strong></td>" +
       '<td class="num">' + (hc ? AIW.fmt(hc.employees) + ' <span class="badge est">est.</span>' : "—") + "</td>" +
       '<td class="num small">' + (hc ? AIW.esc(hc.as_of) : "—") + "</td>" +
       '<td class="num pos">' + (plans[c.id] ? "+" + AIW.fmt(plans[c.id]) : "—") + "</td>" +
-      '<td class="small muted">' + note + "</td></tr>";
+      '<td class="small muted">' + AIW.esc(NOTES[c.id] || "") + "</td></tr>";
   }).join("");
   AIW.companiesTable(document.getElementById("companies-body"), d.companies, d.headcount);
   AIW.eventsTable(document.getElementById("events-body"), d.companies, d.events, null);
@@ -249,7 +237,7 @@ AIW.loadAll().then(function (d) {
   function warm() {
     pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
     ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {
-      fetch(d, { cache: "force-cache" }).catch(function () {});
+      fetch(d).catch(function () {});
     });
   }
   if ("requestIdleCallback" in window) requestIdleCallback(warm); else setTimeout(warm, 300);

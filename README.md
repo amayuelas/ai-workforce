@@ -8,7 +8,7 @@ Three views:
 
 | View | Page | What it shows |
 |---|---|---|
-| **WorkforceBench** | [`index.html`](https://amayuelas.github.io/ai-workforce/) | Aggregate KPIs, quarterly net flow, company evolution timeline, robustness panel, all events |
+| **WorkforceBench** | [`index.html`](https://amayuelas.github.io/ai-workforce/) | Headcount evolution (indexed / YoY / levels), implied gross hiring vs layoffs, net change, AI labs, event timeline, quarterly net flow, robustness panel, all events |
 | **LayoffsBench** | [`layoffs.html`](https://amayuelas.github.io/ai-workforce/layoffs.html) | Announced layoffs by year and company, AI-attributed share, filterable event log |
 | **HiringsBench** | [`hirings.html`](https://amayuelas.github.io/ai-workforce/hirings.html) | Hiring plans, talent moves, latest reported headcount per company |
 
@@ -26,8 +26,9 @@ The full list with selection rationale lives in [`data/companies.json`](data/com
 All data is plain, reviewable JSON in [`data/`](data/):
 
 - `companies.json` — the tracked companies and why each is included
-- `events.json` — every layoff / hiring event: date, size, % of workforce, scope, reason, `ai_related` flag, and **at least one source URL per event**
-- `headcount.json` — latest reported headcount snapshots (SEC filings for public companies; labelled media estimates for private labs)
+- `events.json` — every layoff / hiring event: date, size, % of workforce, scope, reason, `ai_related` flag, and **at least one source URL per event**. Buyout offers count accepted departures only, and internal redeployments are listed but never counted as hiring (see `kind` in the methodology)
+- `headcount.json` — reported headcount over time: every 10-K count since FY2015 for public companies (plus 2026 10-Q points), and labelled media estimates for private labs
+- `coverage.json` — reconciliation of our layoff totals against external trackers (CI fails if it drifts from `events.json`)
 
 Schemas live in [`schemas/`](schemas/) and every change is checked in CI by [`scripts/validate_data.py`](scripts/validate_data.py), which enforces structure, cross-file references, date formats, and mandatory source links.
 
@@ -68,8 +69,9 @@ The site then lives at **https://amayuelas.github.io/ai-workforce/** (`layoffs.h
 
 ```
 ├── index.html / layoffs.html / hirings.html   # the three views (GitHub Pages root)
+├── methodology.html                           # confidence tiers, coverage check, known limits
 ├── assets/                                    # css + js (no external libraries)
-├── data/                                      # companies.json, events.json, headcount.json
+├── data/                                      # companies, events, headcount, coverage JSON
 ├── schemas/                                   # JSON schemas for the data files
 ├── scripts/validate_data.py                   # stdlib-only validator, run in CI
 ├── docs/METHODOLOGY.md                        # definitions, sourcing rules, caveats

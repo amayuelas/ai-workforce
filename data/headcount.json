@@ -1,8 +1,8 @@
 {
   "$schema": "../schemas/headcount.schema.json",
-  "version": 3,
+  "version": 4,
   "updated": "2026-10-29",
-  "note": "Time series of reported headcount, each point = the company's own annual employee count from its Form 10-K at fiscal year-end (fiscal year-ends differ: Dec 31 Alphabet/Amazon/Meta/Tesla, Jun 30 Microsoft, late Sep Apple, late Jan NVIDIA/Intel, May 31 Oracle; 2026 quarterly points where a 10-Q disclosed them). Private AI labs: single dated media estimates (is_estimate=true), shown only as markers. Indexed/YoY views use each company's first reported year as 100.",
+  "note": "Time series of reported headcount, each point = the company's own annual employee count from its Form 10-K at fiscal year-end (fiscal year-ends differ: Dec 31 Alphabet/Amazon/Meta/Tesla, Jun 30 Microsoft, late Sep Apple, late Jan NVIDIA, late Dec Intel, May 31 Oracle; 2026 quarterly points where a 10-Q disclosed them). Every public company starts at FY2015 (NVIDIA: FY2016, ended Jan 31, 2016). Private AI labs: single dated media estimates (is_estimate=true), shown only as markers. Indexed view uses each company's first reported point as 100; YoY compares points ~1 year apart.",
   "snapshots": [
     {
       "company": "alphabet",
@@ -474,6 +474,19 @@
     },
     {
       "company": "meta",
+      "as_of": "2015-12-31",
+      "employees": 12691,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
       "as_of": "2016-12-31",
       "employees": 17048,
       "is_estimate": false,
@@ -630,6 +643,19 @@
     },
     {
       "company": "microsoft",
+      "as_of": "2015-06-30",
+      "employees": 118000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Jun 30)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Jun 30)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "microsoft",
       "as_of": "2016-06-30",
       "employees": 114000,
       "is_estimate": false,
@@ -768,6 +794,45 @@
         {
           "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Jun 30 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "nvidia",
+      "as_of": "2018-01-28",
+      "employees": 11528,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end late Jan)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end late Jan)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "nvidia",
+      "as_of": "2017-01-29",
+      "employees": 10299,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end late Jan)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end late Jan)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "nvidia",
+      "as_of": "2016-01-31",
+      "employees": 9227,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end late Jan)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end late Jan)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
         }
       ]
     },

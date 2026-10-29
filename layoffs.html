@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LayoffsBench — AI Workforce Tracker</title>
 <meta name="description" content="LayoffsBench: announced layoffs (counted negative) at the main tech companies and AI labs, with AI attribution, confidence tiers and sources.">
-<link rel="stylesheet" href="assets/css/style.css?v=28">
+<link rel="stylesheet" href="assets/css/style.css?v=29">
 </head>
 <body>
 <main>
@@ -21,21 +21,31 @@
   <h2><span class="no">01</span>Layoff events timeline</h2>
   <div class="panel">
     <div id="scatter"></div>
-    <p class="cap">One bubble per announced layoff; bubble size = announced roles. Red = layoff, violet edge = AI-attributed.</p>
+    <div class="legend"><span class="l-red">layoff (area = roles)</span><span class="l-violet">violet ring = AI-attributed</span><span class="l-hollow">dashed hollow = buyout offer, sized by eligible pool</span></div>
+    <p class="cap">One bubble per announced layoff. Hover a bubble for the date, size and confidence tier.</p>
   </div>
 
-  <h2><span class="no">02</span>Announced layoffs by year (negative)</h2>
-  <div class="panel"><div id="year-chart"></div></div>
+  <h2><span class="no">02</span>Announced layoffs by year</h2>
+  <div class="panel">
+    <div id="year-chart"></div>
+    <div class="legend"><span class="l-violet">AI-attributed</span><span class="l-red">other</span></div>
+    <p class="cap" id="year-cap"></p>
+  </div>
 
-  <h2><span class="no">03</span>By company, cumulative announced (negative)</h2>
-  <div class="panel"><div id="company-chart"></div></div>
+  <h2><span class="no">03</span>By company, cumulative since 2022</h2>
+  <div class="panel">
+    <div id="company-chart"></div>
+    <div class="legend"><span class="l-violet">AI-attributed</span><span class="l-red">other</span></div>
+    <p class="cap">Counted roles per company. Buyout offers count accepted departures only: Microsoft's Oct 2026 offer to ~60,000 people stays out until acceptances are reported.</p>
+  </div>
 
   <h2><span class="no">04</span>Actual workforce change where filings show it</h2>
   <div class="panel">
     <div id="net-hc"></div>
-    <p class="cap">Signed YoY change in reported headcount (10-K) for companies that announced layoffs. Layoffs show up here only net of hiring/attrition — e.g. Microsoft stayed flat at 228,000 through ~15,000 announced 2025 cuts.</p>
+    <p class="cap">Signed change in reported headcount over each company's latest fiscal year (10-K/10-Q), for companies that announced layoffs. Layoffs show up here only net of hiring and attrition: Microsoft, for example, stayed flat at 228,000 through FY2025 despite ~15,000 announced cuts.</p>
   </div>
 
+  <h2><span class="no">05</span>All layoff events, newest first</h2>
   <div class="filters">
     <label for="f-company">Company</label>
     <select id="f-company"><option value="">All</option></select>
@@ -47,7 +57,6 @@
     <input type="search" id="f-search" placeholder="scope, reason…">
   </div>
 
-  <h2><span class="no">05</span>All layoff events, newest first</h2>
   <div class="panel" style="overflow-x:auto">
     <table class="data">
       <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Signed size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
@@ -56,59 +65,72 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=28"></script>
+<script src="assets/js/app.js?v=29"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("LayoffsBench"));
   document.querySelector("main").insertAdjacentHTML("beforeend", AIW.footer(d.updated));
-
   var layoffs = d.events.filter(function (e) { return e.type === "layoff"; });
-  var sized = layoffs.filter(function (e) { return e.size; });
-  var ai = sized.filter(function (e) { return e.ai_related; });
-  var total = sized.reduce(function (a, e) { return a + e.size; }, 0);
-  var totalAI = ai.reduce(function (a, e) { return a + e.size; }, 0);
-  var biggest = sized.slice().sort(function (a, b) { return b.size - a.size; })[0];
+  var counted = layoffs.filter(function (e) { return AIW.counted(e); });
+  var total = counted.reduce(function (a, e) { return a + e.size; }, 0);
+  var totalAI = counted.filter(function (e) { return e.ai_related; }).reduce(function (a, e) { return a + e.size; }, 0);
+  var biggest = counted.slice().sort(function (a, b) { return b.size - a.size; })[0];
   var firstYear = layoffs.map(function (e) { return e.date; }).sort()[0].slice(0, 4);
-
-  document.getElementById("kpis").innerHTML = [
+  var offers = layoffs.filter(function (e) { return e.kind === "buyout_offer"; });
+  AIW.statline(document.getElementById("kpis"), [
     { label: "Announced layoffs", value: "−" + AIW.fmt(total), cls: "red", hint: layoffs.length + " events since " + firstYear },
-    { label: "AI-attributed", value: "−" + AIW.fmt(totalAI), cls: "red", hint: Math.round(100 * totalAI / total) + "% of announced roles" },
-    { label: "Largest single event", value: "−" + AIW.fmt(biggest.size), cls: "red", hint: AIW.companyName(d.companies, biggest.company) + ", " + biggest.date },
+    { label: "AI-attributed", value: "−" + AIW.fmt(totalAI), cls: "violet", hint: Math.round(100 * totalAI / total) + "% of counted roles" },
+    { label: "Largest single event", value: "−" + AIW.fmt(biggest.size), cls: "red", hint: AIW.companyName(d.companies, biggest.company) + ", " + biggest.date.slice(0, 7) },
+    { label: "Buyout offers (not totals)", value: AIW.fmt(offers.reduce(function (a, e) { return a + e.eligible; }, 0)), cls: "ink", hint: "employees offered packages · " + offers.length + " programs" },
     { label: "Companies affected", value: AIW.fmt(new Set(layoffs.map(function (e) { return e.company; })).size), cls: "ink", hint: "of " + d.companies.length + " tracked" }
-  ].map(function (k) {
-    return '<div class="stat"><div class="v ' + k.cls + '">' + k.value + '</div><div class="l">' + k.label + '</div><div class="h">' + k.hint + "</div></div>";
-  }).join("");
-
-  AIW.eventScatter(document.getElementById("scatter"), d.companies, layoffs, "layoff");
+  ]);
 
   var byYear = {}, byCompany = {};
-  sized.forEach(function (e) {
-    var y = e.date.slice(0, 4);
-    byYear[y] = (byYear[y] || 0) + e.size;
-    byCompany[e.company] = (byCompany[e.company] || 0) + e.size;
+  counted.forEach(function (e) {
+    var y = e.date.slice(0, 4), k = e.ai_related ? "ai" : "other";
+    byYear[y] = byYear[y] || { ai: 0, other: 0 };
+    byYear[y][k] += e.size;
+    byCompany[e.company] = byCompany[e.company] || { ai: 0, other: 0 };
+    byCompany[e.company][k] += e.size;
   });
-  var yRows = Object.keys(byYear).sort().map(function (y) { return { label: y, value: -byYear[y] }; });
-  AIW.signedBarChart(document.getElementById("year-chart"), yRows, { height: 300 });
-
-  var compRows = Object.keys(byCompany).sort(function (a, b) { return byCompany[b] - byCompany[a]; }).map(function (id) {
-    return { label: AIW.companyName(d.companies, id), value: -byCompany[id], color: AIW.LAYOFF_COLOR };
+  function splitRows(map, keys, labelOf) {
+    var rows = [];
+    keys.forEach(function (k) {
+      var v = map[k] || { ai: 0, other: 0 }, name = labelOf(k), tot = v.ai + v.other;
+      rows.push({ group: k, label: name, value: -v.ai, color: AIW.AI_COLOR, valueLabel: v.ai ? AIW.fmtSigned(-v.ai) : "",
+        tip: name + " · AI-attributed " + AIW.fmtSigned(-v.ai) + " of " + AIW.fmtSigned(-tot) });
+      rows.push({ group: k, label: name, value: -v.other, color: AIW.LAYOFF_COLOR, valueLabel: v.other ? AIW.fmtSigned(-v.other) : "",
+        tip: name + " · not AI-attributed " + AIW.fmtSigned(-v.other) + " of " + AIW.fmtSigned(-tot) });
+    });
+    return rows;
+  }
+  var minY = +Object.keys(byYear).sort()[0], maxY = +Object.keys(byYear).sort().slice(-1)[0], years = [];
+  for (var y = minY; y <= maxY; y++) years.push(String(y));
+  var companiesSorted = Object.keys(byCompany).sort(function (a, b) {
+    return (byCompany[b].ai + byCompany[b].other) - (byCompany[a].ai + byCompany[a].other);
   });
-  AIW.signedBarChart(document.getElementById("company-chart"), compRows, { height: 340 });
-
+  var lastYear = years[years.length - 1];
+  var lastDate = layoffs.map(function (e) { return e.date; }).sort().slice(-1)[0];
+  document.getElementById("year-cap").textContent = "Counted roles by announcement year, split by AI attribution. " +
+    lastYear + " is year-to-date (latest event " + lastDate + ").";
   var nhc = AIW.netHeadcountChange(d.companies, d.headcount).filter(function (r) {
     return layoffs.some(function (e) { return e.company === r.company; });
   });
-  AIW.signedBarChart(document.getElementById("net-hc"), nhc.map(function (r) {
-    return { label: r.label, label2: r.as_of.slice(0, 4), value: r.value };
-  }), { height: 320 });
+  function drawCharts() {
+    AIW.eventScatter(document.getElementById("scatter"), d.companies, layoffs, "layoff");
+    AIW.signedBarChart(document.getElementById("year-chart"), splitRows(byYear, years, function (k) { return k; }), { height: 300 });
+    AIW.signedBarChart(document.getElementById("company-chart"), splitRows(byCompany, companiesSorted, function (k) { return AIW.companyName(d.companies, k); }), { height: 320 });
+    AIW.signedBarChart(document.getElementById("net-hc"), AIW.netChangeRows(nhc), { height: 320 });
+  }
+  drawCharts();
+  AIW.onResize(drawCharts);
 
   var sel = document.getElementById("f-company");
-  d.companies.forEach(function (c) {
+  d.companies.filter(function (c) { return layoffs.some(function (e) { return e.company === c.id; }); }).forEach(function (c) {
     var o = document.createElement("option");
     o.value = c.id; o.textContent = c.name;
     sel.appendChild(o);
   });
-
   function render() {
     var fc = sel.value, fai = document.getElementById("f-ai").value,
         fconf = document.getElementById("f-conf").value,
@@ -130,7 +152,6 @@ AIW.loadAll().then(function (d) {
   render();
 });
 </script>
-
 <script>
 /* Warm the cache: fetch sibling pages + data at idle so navigation feels instant. */
 (function () {
@@ -139,7 +160,7 @@ AIW.loadAll().then(function (d) {
   function warm() {
     pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
     ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {
-      fetch(d, { cache: "force-cache" }).catch(function () {});
+      fetch(d).catch(function () {});
     });
   }
   if ("requestIdleCallback" in window) requestIdleCallback(warm); else setTimeout(warm, 300);

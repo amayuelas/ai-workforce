@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Methodology &amp; coverage — AI Workforce Tracker</title>
 <meta name="description" content="How the AI Workforce Tracker measures layoffs and hirings, confidence tiers, and the coverage reconciliation against external trackers.">
-<link rel="stylesheet" href="assets/css/style.css?v=28">
+<link rel="stylesheet" href="assets/css/style.css?v=29">
 </head>
 <body>
 <main>
@@ -24,7 +24,7 @@
   <h2><span class="no">02</span>Coverage check — are we missing events?</h2>
   <div class="panel" style="overflow-x:auto">
     <table class="data">
-      <thead><tr><th>Scope</th><th class="num">Our announced layoffs since 2022</th><th>External trackers / press</th><th></th><th>Notes</th></tr></thead>
+      <thead><tr><th>Scope</th><th class="num">Our counted layoffs since 2022</th><th>External trackers / press</th><th></th><th>Notes</th></tr></thead>
       <tbody id="coverage-body"></tbody>
     </table>
     <p class="cap">Our totals are computed live from events.json (same rows as every page — one data source). External figures from Layoffs.fyi / wire press, linked. Known gaps: small unannounced rolling cuts (Google 2026 carried as a medium-confidence estimate) and press-reported waves without a company-confirmed number (e.g. Tesla Apr 2026). CI fails if this table's "ours" disagrees with events.json.</p>
@@ -37,18 +37,19 @@
       <li><strong>Announced hiring ≠ actual hiring.</strong> Most hiring is never announced; use the filings-based headcount series and the implied-gross-hiring metric (net change + announced layoffs) instead.</li>
       <li><strong>Net ≠ gross.</strong> Year-end headcount deltas mix hiring, layoffs, attrition and M&amp;A across all areas of a company.</li>
       <li><strong>Coverage is announcement-driven.</strong> Small rolling cuts are undercounted except where estimated (Google 2026). Cross-check industry totals against Layoffs.fyi/TrueUp/Skillsyncer, which count differently.</li>
-      <li><strong>Buyout offers ≠ separations.</strong> Voluntary programs (Microsoft 8,750 → 60,000) count announced offers; acceptance rates noted per event.</li>
+      <li><strong>Buyout offers ≠ separations.</strong> Voluntary programs count accepted departures only, never the eligible pool. Microsoft's May 2026 retirement offer to 8,750 people counts ~2,600 (>30% accepted); its Oct 2026 offer to ~60,000 is logged but not counted until acceptances are known.</li>
+      <li><strong>Not every "hiring" headline is new hiring.</strong> Moves of existing staff into new units (Microsoft Frontier Co., 6,000; Meta's 7,000 redirected to AI teams) and a multi-lab estimate that overlaps per-lab plans are listed but excluded from totals.</li>
       <li><strong>Private-lab headcounts are estimates</strong> (single dated media points, dashed on charts); public companies use 10-K/10-Q counts at fiscal year-end (year-ends differ by company).</li>
       <li><strong>Amazon's % figures refer to its ~350k corporate base</strong>, not the 1.5M+ total workforce.</li>
-      <li>LinkedIn profile counts are <strong>not</strong> used as a proxy — not officially time-stamped and methodologically unstable.</li>
+      <li>LinkedIn profile counts are <strong>not</strong> used for any time series. They aren't officially time-stamped and the method behind them is unstable. The one exception is Mistral's single point, which has no better public source and is flagged as an order-of-magnitude estimate.</li>
     </ul>
   </div>
 </main>
 
-<script src="assets/js/app.js?v=28"></script>
+<script src="assets/js/app.js?v=29"></script>
 <script>
 AIW.loadAll().then(function (d) {
-  document.body.insertAdjacentHTML("afterbegin", AIW.header(""));
+  document.body.insertAdjacentHTML("afterbegin", AIW.header("Methodology"));
   document.querySelector("main").insertAdjacentHTML("beforeend", AIW.footer(d.updated));
   var confCount = { high: 0, medium: 0, low: 0 };
   d.events.forEach(function (e) { confCount[e.confidence] = (confCount[e.confidence] || 0) + 1; });
@@ -70,7 +71,7 @@ AIW.loadAll().then(function (d) {
   function warm() {
     pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
     ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {
-      fetch(d, { cache: "force-cache" }).catch(function () {});
+      fetch(d).catch(function () {});
     });
   }
   if ("requestIdleCallback" in window) requestIdleCallback(warm); else setTimeout(warm, 300);

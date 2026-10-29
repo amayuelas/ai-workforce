@@ -16,6 +16,18 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9-]+$")
 URI_RE = re.compile(r"^https?://[^\s]+$")
 
+# Events that are logged for context but never summed: existing staff moved
+# between teams, and group estimates that overlap per-company events.
+NOT_COUNTED_KINDS = {"internal_redeployment", "multi_company"}
+KINDS = {"layoff": {"buyout_offer"}, "hiring": NOT_COUNTED_KINDS}
+
+
+def counted_size(ev):
+    """Roles an event contributes to totals (mirrors AIW.counted in app.js)."""
+    if ev.get("kind") in NOT_COUNTED_KINDS:
+        return 0
+    return ev.get("size") or 0
+
 
 def fail(msg, errors):
     errors.append(msg)
@@ -129,8 +141,18 @@ def validate_events(doc, company_ids, errors):
         if ev.get("confidence") not in ("high", "medium", "low"):
             fail(f"{p}.confidence: must be 'high', 'medium' or 'low', got {ev.get('confidence')!r}", errors)
         check_sources(ev.get("sources"), f"{p}.sources", errors)
-        if ev.get("type") == "layoff" and size is None:
-            fail(f"{p}: layoff events should carry a size when known (use size=null only for symbolic events)", errors)
+        kind = ev.get("kind")
+        if kind is not None and kind not in KINDS.get(ev.get("type"), set()):
+            fail(f"{p}.kind: {kind!r} is not valid for a {ev.get('type')!r} event", errors)
+        eligible = ev.get("eligible")
+        if (kind == "buyout_offer") != (eligible is not None):
+            fail(f"{p}: 'eligible' is required for buyout offers and only allowed on them", errors)
+        elif eligible is not None and (not isinstance(eligible, int) or isinstance(eligible, bool) or eligible < 1):
+            fail(f"{p}.eligible: must be a positive integer", errors)
+        elif eligible is not None and size is not None and size > eligible:
+            fail(f"{p}.size: accepted departures ({size}) exceed the eligible pool ({eligible})", errors)
+        if ev.get("type") == "layoff" and size is None and kind != "buyout_offer":
+            fail(f"{p}: layoff events must carry a size (size=null is only allowed for buyout offers with unknown acceptance)", errors)
     return events
 
 
@@ -182,8 +204,8 @@ def validate_coverage(doc, company_ids, layoff_sums, errors):
         if r.get("company") != "industry" and r.get("company") not in company_ids:
             fail(f"{p}.company: unknown company '{r.get('company')}'", errors)
         check_uri(r.get("external_url"), f"{p}.external_url", errors)
-        if r.get("company") in layoff_sums:
-            ours = layoff_sums[r["company"]]
+        if r.get("company") == "industry" or r.get("company") in layoff_sums:
+            ours = sum(layoff_sums.values()) if r["company"] == "industry" else layoff_sums[r["company"]]
             if ours != r.get("ours_since_2022"):
                 fail(f"{p}: ours_since_2022={r.get('ours_since_2022')} but events.json sums to {ours} — out of sync", errors)
 
@@ -211,9 +233,9 @@ def main():
     for e in events:
         per_company.setdefault(e["company"], {"layoff": 0, "hiring": 0, "layoff_roles": 0})
         per_company[e["company"]][e["type"]] += 1
-        if e["type"] == "layoff" and e.get("size"):
-            per_company[e["company"]]["layoff_roles"] += e["size"]
-            layoff_sums[e["company"]] = layoff_sums.get(e["company"], 0) + e["size"]
+        if e["type"] == "layoff" and counted_size(e):
+            per_company[e["company"]]["layoff_roles"] += counted_size(e)
+            layoff_sums[e["company"]] = layoff_sums.get(e["company"], 0) + counted_size(e)
     if "coverage" in docs:
         validate_coverage(docs["coverage"], company_ids, layoff_sums, errors)
     print("Per-company reconciliation (from events.json):")
@@ -223,14 +245,16 @@ def main():
 
     layoffs = [e for e in docs["events"].get("events", []) if e.get("type") == "layoff"]
     hirings = [e for e in docs["events"].get("events", []) if e.get("type") == "hiring"]
-    total_laid = sum(e["size"] for e in layoffs if e.get("size"))
-    print(f"OK: {len(company_ids)} companies, {len(layoffs)} layoff events ({total_laid:,} announced roles), "
-          f"{len(hirings)} hiring events, {len(docs['headcount'].get('snapshots', []))} headcount snapshots, "
-          f"{len(docs.get('coverage', {}).get('rows', []))} coverage rows (in sync with events).")
+    total_laid = sum(counted_size(e) for e in layoffs)
+    total_hired = sum(counted_size(e) for e in hirings)
+    print(f"{len(company_ids)} companies, {len(layoffs)} layoff events ({total_laid:,} counted roles), "
+          f"{len(hirings)} hiring events ({total_hired:,} counted roles), {len(docs['headcount'].get('snapshots', []))} headcount snapshots, "
+          f"{len(docs.get('coverage', {}).get('rows', []))} coverage rows.")
     if errors:
         for e in errors:
             print(f"ERROR: {e}", file=sys.stderr)
         return 1
+    print("OK: all checks passed (coverage in sync with events).")
     return 0
 
 
