@@ -271,8 +271,12 @@
     var allPts = [];
     series.forEach(function (s) { s.points.forEach(function (p) { allPts.push(p); }); });
     if (!allPts.length) { container.textContent = "No data"; return; }
-    var t0 = Math.min.apply(null, allPts.map(function (p) { return +new Date(p[0]); }));
-    var t1 = Math.max.apply(null, allPts.map(function (p) { return +new Date(p[0]); }));
+    /* x domain from multi-point series only, so single-dot labs don't stretch the axis */
+    var domainPts = [];
+    series.forEach(function (s) { if (s.points.length >= 2) s.points.forEach(function (p) { domainPts.push(p); }); });
+    var dom = domainPts.length ? domainPts : allPts;
+    var t0 = Math.min.apply(null, dom.map(function (p) { return +new Date(p[0]); }));
+    var t1 = Math.max.apply(null, dom.map(function (p) { return +new Date(p[0]); }));
     var v0 = opts.yMin !== undefined ? opts.yMin : 0;
     var v1 = opts.yMax !== undefined ? opts.yMax : Math.max.apply(null, allPts.map(function (p) { return p[1]; })) * 1.05;
     if (opts.zeroLine) {
@@ -294,7 +298,7 @@
     allPts.forEach(function (p) { years[p[0].slice(0, 4)] = true; });
     var ykeys = Object.keys(years).sort();
     ykeys.forEach(function (y, i) {
-      var x = X(y + "-07-01");
+      var x = X(y + "-01-01");
       svg.appendChild(svgEl("line", { x1: x, y1: padT, x2: x, y2: H - padB, stroke: LINE, "stroke-dasharray": "2 3" }));
       txt(svg, x, H - padB + 15, y, { "text-anchor": "middle", "font-size": 10.5 });
     });
@@ -302,6 +306,9 @@
     series.forEach(function (s, i) {
       var color = s.color || PALETTE[i % PALETTE.length];
       var pts = s.points.slice().sort(function (a, b) { return a[0].localeCompare(b[0]); });
+      if (pts.length && +new Date(pts[0][0]) > t0) {
+        pts.unshift([new Date(t0).toISOString().slice(0, 10), pts[0][1]]);
+      }
       var d = pts.map(function (p, j) { return (j ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1); }).join(" ");
       svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 1.8, "stroke-dasharray": s.dashed ? "5 3" : "none" }));
       pts.forEach(function (p) {
