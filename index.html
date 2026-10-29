@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=14">
+<link rel="stylesheet" href="assets/css/style.css?v=15">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 </head>
 <body>
@@ -34,7 +34,7 @@
     </div>
     <div id="headcount-lines"></div>
     <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Indexed (first year = 100) is the default: every company comparable on one scale. YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M (use "Headcount" + log for scale).</p>
+    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Indexed (first reported year = 100 per company) is the default: every public company comparable on one scale. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M (use "Headcount" + log for scale).</p>
   </div>
 
   <h2><span class="no">02</span>Announced layoffs vs implied actual hiring</h2>
@@ -92,7 +92,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=14"></script>
+<script src="assets/js/app.js?v=15"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));

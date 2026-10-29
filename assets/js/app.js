@@ -414,7 +414,7 @@
         out.push([pts[i].as_of, (pts[i].employees / pts[i - 1].employees - 1) * 100]);
       }
       return { label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""), points: out, color: null };
-    }).filter(function (s) { return s.points.length; });
+    }).filter(function (s) { return s.points.length >= 1; });
   }
 
   /* Indexed headcount (first point = 100): comparable across companies of different sizes. */
@@ -423,7 +423,7 @@
     headcount.forEach(function (s) { (byCo[s.company] = byCo[s.company] || []).push(s); });
     return companies.map(function (c) {
       var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a.as_of.localeCompare(b.as_of); });
-      if (!pts.length) return null;
+      if (pts.length < 2) return null; /* single-snapshot labs can't be indexed */
       var base = pts[0].employees;
       return {
         label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""),
