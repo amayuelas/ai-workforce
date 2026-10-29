@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=22">
+<link rel="stylesheet" href="assets/css/style.css?v=25">
 </head>
 <body>
 <main>
@@ -27,13 +27,13 @@
       <select id="hc-mode">
         <option value="indexed" selected>Indexed (first year = 100) — default</option>
         <option value="yoy">YoY change (%)</option>
-        <option value="level">Headcount (thousands)</option>
+        <option value="level">Headcount (thousands) — auto log scale</option>
       </select>
-      <label><input type="checkbox" id="log-toggle"> log scale (levels mode only; off by default since Indexed is the default view)</label>
+      <label><input type="checkbox" id="log-toggle"> log scale (auto-on in Headcount mode — linear hides everyone under Amazon)</label>
     </div>
     <div id="headcount-lines"></div>
     <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Each company is indexed to its first reported year (2015 or 2016) = 100, so all histories start on the left edge. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M — in Headcount mode, tick "log scale" to spread them.</p>
+    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Each company is indexed to its first reported year (2015 or 2016) = 100, so all histories start on the left edge. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M, so Headcount mode always uses log scale.</p>
   </div>
 
   <h2><span class="no">02</span>Announced layoffs vs implied actual hiring</h2>
@@ -91,7 +91,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=24"></script>
+<script src="assets/js/app.js?v=25"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
@@ -137,7 +137,9 @@ AIW.loadAll().then(function (d) {
   }
   function drawHC() {
     var mode = document.getElementById("hc-mode").value;
-    var log = document.getElementById("log-toggle").checked;
+    var logToggle = document.getElementById("log-toggle");
+    if (mode === "level") logToggle.checked = true; /* levels are unreadable linear because of Amazon */
+    var log = logToggle.checked;
     var series;
     if (mode === "yoy") {
       series = AIW.yoySeries(d.companies, d.headcount).map(function (s) { s.color = colorFor(s.label); return s; });
