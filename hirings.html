@@ -19,16 +19,18 @@
 
   <section class="cards" id="kpis"></section>
 
-  <h2><span class="no">01</span>Latest reported headcount</h2>
+  <h2><span class="no">01</span>Headcount over time — the reliable hiring signal</h2>
   <div class="panel">
-    <div id="headcount-chart"></div>
-    <p class="cap">Latest snapshot per company — SEC filings for public companies (fiscal year-ends differ), labelled estimates for private AI labs.</p>
+    <div id="headcount-lines"></div>
+    <div class="legend"><span class="l-ink">public companies (SEC 10-K, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
+    <p class="cap">Reported total workforce per company, annual points from 10-K filings. Net hiring (gross hires minus exits) is only observable here — most hiring is never announced. Log scale; toggle below.</p>
+    <label class="small muted"><input type="checkbox" id="log-toggle" checked> log scale</label>
   </div>
 
-  <h2><span class="no">02</span>Quantified hiring plans by year (positive flow)</h2>
+  <h2><span class="no">02</span>Announced hiring plans (positive flow, partial by nature)</h2>
   <div class="panel">
     <div id="year-chart"></div>
-    <p class="cap">Announced roles where a number exists. Landmark acqui-hires and mergers (not headcount-quantifiable) appear in the event table below.</p>
+    <p class="cap">Only <em>publicly announced, quantified</em> hiring plans. Most hiring is not announced — treat this as a lower bound; section 01 is the reliable measure.</p>
   </div>
 
   <h2><span class="no">03</span>All hiring events, newest first</h2>
@@ -63,18 +65,37 @@ AIW.loadAll().then(function (d) {
   }).reduce(function (a, s) { return a + s.employees; }, 0);
 
   document.getElementById("kpis").innerHTML = [
-    { label: "Hiring events tracked", value: AIW.fmt(hirings.length), cls: "green", hint: "since " + firstYear },
-    { label: "Quantified hiring plans", value: "+" + AIW.fmt(total), cls: "green", hint: "announced roles where a number exists" },
+    { label: "Announced hiring events", value: AIW.fmt(hirings.length), cls: "green", hint: "since " + firstYear + " — announcements only" },
+    { label: "Quantified announced plans", value: "+" + AIW.fmt(total), cls: "green", hint: "lower bound — most hiring is never announced" },
     { label: "Combined latest headcount", value: AIW.fmt(totalHC), cls: "ink", hint: "across " + trackedHC.length + " tracked companies (mixed filing dates)" },
     { label: "…of which AI labs", value: AIW.fmt(aiLabHC), cls: "violet", hint: "private labs, estimate-based, incl. SpaceX/xAI" }
   ].map(function (k) {
     return '<div class="card c-' + k.cls + '"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
   }).join("");
 
-  var rows = trackedHC.slice().sort(function (a, b) { return b.employees - a.employees; }).map(function (s) {
-    return { label: AIW.companyName(d.companies, s.company), label2: s.as_of, value: s.employees, color: s.is_estimate ? AIW.AI_COLOR : AIW.HIRING_COLOR };
+  var byCo = {};
+  d.headcount.forEach(function (s) {
+    (byCo[s.company] = byCo[s.company] || []).push([s.as_of, s.employees, s.is_estimate]);
   });
-  AIW.barChart(document.getElementById("headcount-chart"), rows, { height: 360 });
+  var LINE_COLORS = { alphabet: "#2456a6", amazon: "#c2620a", apple: "#666055", meta: "#1e5fbf", microsoft: "#0e7c86", nvidia: "#1e7a40", oracle: "#b23a2e", tesla: "#c2498a", intel: "#8a5a2b", openai: "#1b1917", anthropic: "#a33b3b", deepseek: "#5b7a2e", xai: "#6d4fc2", mistral: "#9a6a00" };
+  function drawHC(log) {
+    var series = d.companies.map(function (c) {
+      var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a[0].localeCompare(b[0]); });
+      return {
+        label: AIW.companyName(d.companies, c.id) + (c.ticker ? " " + c.ticker : ""),
+        color: LINE_COLORS[c.id],
+        dashed: pts.some(function (p) { return p[2]; }),
+        points: pts.map(function (p) { return [p[0], log ? Math.log10(p[1]) : p[1]]; })
+      };
+    }).filter(function (s) { return s.points.length; });
+    AIW.lineChart(document.getElementById("headcount-lines"), series, {
+      height: 420,
+      yFmt: log ? function (v) { return "10^" + Math.round(v); } : function (v) { return fmt(Math.round(v / 1000)) + "k"; },
+      xLabel: "Fiscal year-end (varies by company)"
+    });
+  }
+  drawHC(true);
+  document.getElementById("log-toggle").addEventListener("change", function (e) { drawHC(e.target.checked); });
 
   var byYear = {};
   quantified.forEach(function (e) {

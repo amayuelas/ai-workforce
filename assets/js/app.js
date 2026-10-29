@@ -204,6 +204,54 @@
     container.innerHTML = html;
   }
 
+  /* Multi-series line chart, Artificial-Analysis-style: x = date, y = value, square markers, top-right legend. */
+  function lineChart(container, series, opts) {
+    opts = opts || {};
+    var W = container.clientWidth || 900, H = opts.height || 380;
+    var padL = 64, padR = 150, padT = 14, padB = 40;
+    var allPts = [];
+    series.forEach(function (s) { s.points.forEach(function (p) { allPts.push(p); }); });
+    if (!allPts.length) { container.textContent = "No data"; return; }
+    var t0 = Math.min.apply(null, allPts.map(function (p) { return +new Date(p[0]); }));
+    var t1 = Math.max.apply(null, allPts.map(function (p) { return +new Date(p[0]); }));
+    var v0 = opts.yMin !== undefined ? opts.yMin : 0;
+    var v1 = opts.yMax !== undefined ? opts.yMax : Math.max.apply(null, allPts.map(function (p) { return p[1]; })) * 1.05;
+    function X(d) { return padL + (W - padL - padR) * ((+new Date(d)) - t0) / (t1 - t0 || 1); }
+    function Y(v) { return padT + (H - padT - padB) * (1 - (v - v0) / (v1 - v0 || 1)); }
+    var svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "chart tall", role: "img", style: "height:" + H + "px" });
+    for (var g = 0; g <= 4; g++) {
+      var gv = v0 + (v1 - v0) * g / 4, gy = Y(gv);
+      svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - padR + 130, y2: gy, stroke: LINE }));
+      txt(svg, padL - 8, gy + 4, opts.yFmt ? opts.yFmt(gv) : fmt(Math.round(gv)), { "text-anchor": "end" });
+    }
+    var years = {};
+    allPts.forEach(function (p) { years[p[0].slice(0, 4)] = true; });
+    Object.keys(years).sort().forEach(function (y) {
+      var approx = y + "-07-01";
+      var x = X(approx);
+      svg.appendChild(svgEl("line", { x1: x, y1: padT, x2: x, y2: H - padB, stroke: LINE, "stroke-dasharray": "2 3" }));
+      txt(svg, x, H - padB + 16, y, { "text-anchor": "middle", "font-size": 10.5 });
+    });
+    txt(svg, (padL + W - padR) / 2, H - 6, opts.xLabel || "Date", { "text-anchor": "middle", "font-size": 11, fill: MUTED });
+    series.forEach(function (s, i) {
+      var color = s.color || PALETTE[i % PALETTE.length];
+      var pts = s.points.slice().sort(function (a, b) { return a[0].localeCompare(b[0]); });
+      var d = pts.map(function (p, j) { return (j ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1); }).join(" ");
+      svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 1.8, "stroke-dasharray": s.dashed ? "5 3" : "none" }));
+      pts.forEach(function (p) {
+        svg.appendChild(svgEl("rect", { x: X(p[0]) - 2.6, y: Y(p[1]) - 2.6, width: 5.2, height: 5.2, fill: color }));
+      });
+    });
+    var lx = W - padR + 8, ly = padT + 6;
+    series.forEach(function (s, i) {
+      var color = s.color || PALETTE[i % PALETTE.length];
+      svg.appendChild(svgEl("line", { x1: lx, y1: ly + i * 17, x2: lx + 16, y2: ly + i * 17, stroke: color, "stroke-width": 2, "stroke-dasharray": s.dashed ? "4 2" : "none" }));
+      var t = txt(svg, lx + 22, ly + i * 17 + 4, s.label, { "font-size": 10.5, fill: INK });
+    });
+    container.innerHTML = "";
+    container.appendChild(svg);
+  }
+
   /* Simple vertical bars (all-positive) for rankings like headcount / top layoffs. */
   function barChart(container, rows, opts) {
     opts = opts || {};
@@ -295,7 +343,7 @@
     fmt: fmt, fmtSigned: fmtSigned, signed: signed, esc: esc,
     companyName: companyName, companyTicker: companyTicker,
     signedBarChart: signedBarChart, netFlowChart: netFlowChart, companyEvolution: companyEvolution,
-    barChart: barChart, eventsTable: eventsTable, companiesTable: companiesTable,
+    barChart: barChart, lineChart: lineChart, eventsTable: eventsTable, companiesTable: companiesTable,
     badges: badges, sourceLinks: sourceLinks,
     PALETTE: PALETTE, LAYOFF_COLOR: LAYOFF_COLOR, HIRING_COLOR: HIRING_COLOR, AI_COLOR: AI_COLOR
   };

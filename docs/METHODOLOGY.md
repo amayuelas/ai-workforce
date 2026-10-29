@@ -54,9 +54,9 @@ Rules enforced by `scripts/validate_data.py` and review:
 - Sizes from "~" or "about" phrasing are marked `size_is_estimate: true`.
 - Private-lab headcounts (OpenAI, Anthropic, DeepSeek, xAI) are media estimates (`is_estimate: true`) because these companies do not file; we prefer company-spokesperson figures (e.g. Anthropic ">3,500" via WSJ) over scraped estimates.
 
-## Headcount snapshots (`data/headcount.json`)
+## Headcount time series (`data/headcount.json`)
 
-Public companies: official employee counts from the latest 10-K/10-Q (note fiscal years end on different dates — NVIDIA/Intel/Amazon end in January, Microsoft June 30, Apple late September, Oracle May 31). Private labs: most recent credible media report, labelled as an estimate. Snapshots are point-in-time; they are **not** a continuous series, and fiscal-year-end differences mean year-over-year deltas mix hiring, layoffs, attrition, and M&A.
+This is the **reliable hiring signal**, because most hiring is never announced. Public companies: the annual employee count from each Form 10-K, plotted at fiscal year-end (year-ends differ: Dec 31 for Alphabet/Amazon/Meta/Tesla, Jun 30 Microsoft, late Sep Apple, late Jan NVIDIA/Intel, May 31 Oracle). Private labs: dated media estimates, `is_estimate: true`, drawn dashed on the site. Year-over-year deltas mix gross hiring, layoffs, attrition, and M&A — they are net headcount change, not gross hires.
 
 ## WorkforceBench / LayoffsBench / HiringsBench
 
@@ -67,7 +67,7 @@ Public companies: official employee counts from the latest 10-K/10-Q (note fisca
 ## Known limitations
 
 - **Announced ≠ realized.** Announced layoff counts include attrition and unfilled-role closures in some company framings (e.g. Intel's "workforce reductions and attrition"); we record the announced figure and describe the nuance in `scope`.
-- **Layoffs and hirings are different units.** A "layoff" is a lost role; a "hiring plan" is a target that may not be filled (e.g. OpenAI's 4,500→8,000 plan). The net view is indicative, not a headcount delta.
+- **Layoffs and announced hiring plans are different units.** A "layoff" is a lost role; a "hiring plan" is a target that may not be filled (e.g. OpenAI's 4,500→8,000 plan). Announced hiring is a strict lower bound on actual hiring — the headcount time series above is the reliable measure of net workforce change.
 - **Coverage is announcement-driven, not census-driven.** We capture events big enough to be publicly announced; small rolling cuts (e.g. Google's unannounced 2026 reductions, estimated 1.5–3k) are undercounted. Cross-check against Layoffs.fyi/TrueUp industry totals (which count differently) before quoting.
 - **Layoffs.fyi-style trackers count differently** (per-company rolling cuts vs. single announcements), so our totals will not match theirs exactly.
 - **Point-in-time headcount** for private labs can vary widely between sources (e.g. Anthropic estimates range ~2,500–5,000 across 2026); we pick the most authoritative dated figure and link it.
