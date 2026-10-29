@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LayoffsBench — AI Workforce Tracker</title>
 <meta name="description" content="LayoffsBench: announced layoffs (counted negative) at the main tech companies and AI labs, with AI attribution, confidence tiers and sources.">
-<link rel="stylesheet" href="assets/css/style.css?v=20">
+<link rel="stylesheet" href="assets/css/style.css?v=22">
 </head>
 <body>
 <main>
@@ -135,7 +135,7 @@ AIW.loadAll().then(function (d) {
 /* Warm the cache: fetch sibling pages + data at idle so navigation feels instant. */
 (function () {
   var me = location.pathname.split("/").pop() || "index.html";
-  var pages = ["index.html", "layoffs.html", "hirings.html"].filter(function (p) { return p !== me; });
+  var pages = ["index.html", "layoffs.html", "hirings.html", "methodology.html"].filter(function (p) { return p !== me; });
   function warm() {
     pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
     ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {

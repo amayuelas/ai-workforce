@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology &amp; coverage — AI Workforce Tracker</title>
+<meta name="description" content="How the AI Workforce Tracker measures layoffs and hirings, confidence tiers, and the coverage reconciliation against external trackers.">
+<link rel="stylesheet" href="assets/css/style.css?v=22">
+</head>
+<body>
+<main>
+  <div class="hero">
+    <div class="kicker"><span>Methodology &amp; coverage</span><span>updated 2026-10-29</span></div>
+    <h1>How we measure, and how we check ourselves</h1>
+    <p class="lede">Two instruments: <strong>announced events</strong> (signed: layoffs negative, hirings positive) and <strong>reported headcount from SEC filings</strong>. Full write-up in <a href="https://github.com/amayuelas/ai-workforce/blob/main/docs/METHODOLOGY.md">docs/METHODOLOGY.md</a>. Back to <a href="index.html">WorkforceBench</a>.</p>
+  </div>
+
+  <h2><span class="no">01</span>Confidence tiers on every event</h2>
+  <div class="panel">
+    <div class="tiers" id="tiers"></div>
+    <p class="cap"><strong>high</strong> = company-stated (newsroom, CEO memo, SEC filing) · <strong>medium</strong> = wire-reported unconfirmed figures, estimates flagged · <strong>low</strong> = single secondary source, directional only.</p>
+  </div>
+
+  <h2><span class="no">02</span>Coverage check — are we missing events?</h2>
+  <div class="panel" style="overflow-x:auto">
+    <table class="data">
+      <thead><tr><th>Scope</th><th class="num">Our announced layoffs since 2022</th><th>External trackers / press</th><th></th><th>Notes</th></tr></thead>
+      <tbody id="coverage-body"></tbody>
+    </table>
+    <p class="cap">Our totals are computed live from events.json (same rows as every page — one data source). External figures from Layoffs.fyi / wire press, linked. Known gaps: small unannounced rolling cuts (Google 2026 carried as a medium-confidence estimate) and press-reported waves without a company-confirmed number (e.g. Tesla Apr 2026). CI fails if this table's "ours" disagrees with events.json.</p>
+  </div>
+
+  <h2><span class="no">03</span>Known limits</h2>
+  <div class="panel">
+    <ul class="small" style="max-width:90ch">
+      <li><strong>Announced ≠ realized.</strong> Layoff counts are announcement figures; some include attrition/unfilled roles (noted per event).</li>
+      <li><strong>Announced hiring ≠ actual hiring.</strong> Most hiring is never announced; use the filings-based headcount series and the implied-gross-hiring metric (net change + announced layoffs) instead.</li>
+      <li><strong>Net ≠ gross.</strong> Year-end headcount deltas mix hiring, layoffs, attrition and M&amp;A across all areas of a company.</li>
+      <li><strong>Coverage is announcement-driven.</strong> Small rolling cuts are undercounted except where estimated (Google 2026). Cross-check industry totals against Layoffs.fyi/TrueUp/Skillsyncer, which count differently.</li>
+      <li><strong>Buyout offers ≠ separations.</strong> Voluntary programs (Microsoft 8,750 → 60,000) count announced offers; acceptance rates noted per event.</li>
+      <li><strong>Private-lab headcounts are estimates</strong> (single dated media points, dashed on charts); public companies use 10-K/10-Q counts at fiscal year-end (year-ends differ by company).</li>
+      <li><strong>Amazon's % figures refer to its ~350k corporate base</strong>, not the 1.5M+ total workforce.</li>
+      <li>LinkedIn profile counts are <strong>not</strong> used as a proxy — not officially time-stamped and methodologically unstable.</li>
+    </ul>
+  </div>
+</main>
+
+<script src="assets/js/app.js?v=22"></script>
+<script>
+AIW.loadAll().then(function (d) {
+  document.body.insertAdjacentHTML("afterbegin", AIW.header(""));
+  document.querySelector("main").insertAdjacentHTML("beforeend", AIW.footer(d.updated));
+  var confCount = { high: 0, medium: 0, low: 0 };
+  d.events.forEach(function (e) { confCount[e.confidence] = (confCount[e.confidence] || 0) + 1; });
+  document.getElementById("tiers").innerHTML = [
+    { name: "High — company-stated", desc: "Newsroom post, CEO memo, or SEC filing states the number.", n: confCount.high + " of " + d.events.length + " events" },
+    { name: "Medium — wire-reported", desc: "Reuters/Bloomberg/CNBC/BBC/AP/FT/WSJ citing sources or memos; estimates flagged.", n: confCount.medium + " events" },
+    { name: "Low — single secondary source", desc: "One outlet or tracker-derived; directional only.", n: confCount.low + " events" }
+  ].map(function (t) {
+    return '<div class="tier"><div class="t-name">' + t.name + '</div><div class="t-desc">' + t.desc + '</div><div class="t-num">' + t.n + "</div></div>";
+  }).join("");
+  AIW.coverageTable(document.getElementById("coverage-body"), d.companies, d.events, d.coverage);
+});
+</script>
+<script>
+/* prefetch warm-up */
+(function () {
+  var me = location.pathname.split("/").pop() || "index.html";
+  var pages = ["index.html", "layoffs.html", "hirings.html"].filter(function (p) { return p !== me; });
+  function warm() {
+    pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
+    ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {
+      fetch(d, { cache: "force-cache" }).catch(function () {});
+    });
+  }
+  if ("requestIdleCallback" in window) requestIdleCallback(warm); else setTimeout(warm, 300);
+})();
+</script>
+</body>
+</html>

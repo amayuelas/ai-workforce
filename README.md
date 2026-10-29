@@ -35,7 +35,7 @@ Schemas live in [`schemas/`](schemas/) and every change is checked in CI by [`sc
 2. Run `python3 scripts/validate_data.py` locally.
 3. Open a PR — CI re-runs the validator and must pass.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full checklist and [docs/METHODOLOGY.md](docs/METHODOLOGY.md) for definitions, caveats, and how layoffs vs. hirings are measured.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full checklist, the live [methodology & coverage page](https://amayuelas.github.io/ai-workforce/methodology.html) for confidence tiers and the external-tracker reconciliation, and [docs/METHODOLOGY.md](docs/METHODOLOGY.md) for the full definitions and caveats.
 
 ## Run locally
 

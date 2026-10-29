@@ -543,7 +543,7 @@
       "Data last updated " + esc(updated) + ". Every event links to its sources in " +
       '<a href="https://github.com/amayuelas/ai-workforce/tree/main/data">data/</a>. ' +
       "Layoffs are counted negative, hirings positive; announced figures, not realized separations. " +
-      'Methodology &amp; confidence tiers: <a href="https://github.com/amayuelas/ai-workforce/blob/main/docs/METHODOLOGY.md">docs/METHODOLOGY.md</a>.</footer>';
+      'Methodology &amp; coverage: <a href="methodology.html">methodology page</a> · <a href="https://github.com/amayuelas/ai-workforce/blob/main/docs/METHODOLOGY.md">docs/METHODOLOGY.md</a>.</footer>';
   }
 
   function loadAll() {
