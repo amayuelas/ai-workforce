@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HiringsBench — AI Workforce Tracker</title>
 <meta name="description" content="HiringsBench: announced hiring plans and AI talent moves (positive flow) plus net headcount growth from filings — the reliable hiring signal.">
-<link rel="stylesheet" href="assets/css/style.css?v=10">
+<link rel="stylesheet" href="assets/css/style.css?v=12">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
 </head>
 <body>
@@ -32,10 +32,10 @@
     <p class="cap">One bubble per announced hiring plan / talent move; bubble size = announced roles where quantified. Lower bound only.</p>
   </div>
 
-  <h2><span class="no">03</span>Announced quantified plans by year (positive)</h2>
+  <h2><span class="no">03</span>Announced quantified plans by quarter (positive)</h2>
   <div class="panel">
     <div id="year-chart"></div>
-    <p class="cap">Only publicly announced, quantified plans (OpenAI +3,500 target dominates 2026). Compare with 01 — the gap is the unannounced hiring.</p>
+    <p class="cap">Only publicly announced, quantified plans — all landed in 2026, hence quarterly grouping (Q1 OpenAI +3,500; Q2 Meta +7,000, AI labs +6,200; Q3 Microsoft Frontier +6,000, DeepSeek +300, Anthropic +500). Compare with 01 — the gap is the unannounced hiring.</p>
   </div>
 
   <h2><span class="no">04</span>All hiring events, newest first</h2>
@@ -47,7 +47,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=10"></script>
+<script src="assets/js/app.js?v=13"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("HiringsBench"));
@@ -76,14 +76,15 @@ AIW.loadAll().then(function (d) {
 
   AIW.eventScatter(document.getElementById("scatter"), d.companies, hirings, "hiring");
 
-  var byYear = {};
+  var byQ = {};
   quantified.forEach(function (e) {
-    var y = e.date.slice(0, 4);
-    byYear[y] = (byYear[y] || 0) + e.size;
+    var m = parseInt(e.date.slice(5, 7), 10);
+    var q = e.date.slice(0, 4) + "-Q" + Math.ceil(m / 3);
+    byQ[q] = (byQ[q] || 0) + e.size;
   });
-  var yRows = Object.keys(byYear).sort().map(function (y) { return { label: y, value: byYear[y] }; });
+  var qRows = Object.keys(byQ).sort().map(function (q) { return { label: q, value: byQ[q] }; });
   AIW.signedBarChart(document.getElementById("year-chart"),
-    yRows.length ? yRows : [{ label: "—", value: 0 }], { height: 280 });
+    qRows.length ? qRows : [{ label: "—", value: 0 }], { height: 280 });
 
   AIW.eventsTable(document.getElementById("events-body"), d.companies, hirings, "hiring");
 });

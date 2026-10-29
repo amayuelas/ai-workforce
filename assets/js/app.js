@@ -108,8 +108,8 @@
     opts = opts || {};
     rows = (rows || []).filter(function (r) { return r && isFinite(r.value); });
     var W = container.clientWidth || 900, H = opts.height || 300;
-    var rotate = rows.length > 7;
-    var padL = 70, padR = 70, padT = 20, padB = rotate ? 78 : 34;
+    var many = rows.length > 7;
+    var padL = 70, padR = 70, padT = 20, padB = many ? 52 : 34;
     var maxAbs = 1;
     rows.forEach(function (r) { maxAbs = Math.max(maxAbs, Math.abs(r.value)); });
     if (!rows.length) { container.innerHTML = '<p class="muted small">No data.</p>'; return; }
@@ -147,10 +147,14 @@
           "text-anchor": "middle", fill: col, "font-weight": 700, "font-size": 11
         });
       }
-      var lx = x + w / 2, ly = H - padB + (rotate ? 14 : 18);
-      var t = txt(svg, lx, ly, r.label, { "text-anchor": rotate ? "end" : "middle", "font-size": rotate ? 9.5 : 11 });
-      if (rotate) t.setAttribute("transform", "rotate(-32 " + lx + " " + ly + ")");
-      if (r.label2 && !rotate) txt(svg, lx, H - padB + 30, r.label2, { "text-anchor": "middle", "font-size": 9.5 });
+      var lx = x + w / 2;
+      if (many) {
+        var row = i % 2;
+        txt(svg, lx, H - padB + 14 + row * 13, r.label, { "text-anchor": "middle", "font-size": 9.5, fill: row ? MUTED : INK });
+      } else {
+        txt(svg, lx, H - padB + 18, r.label, { "text-anchor": "middle", "font-size": 11 });
+        if (r.label2) txt(svg, lx, H - padB + 30, r.label2, { "text-anchor": "middle", "font-size": 9.5 });
+      }
     });
     container.innerHTML = "";
     container.appendChild(svg);
@@ -309,7 +313,7 @@
   function barChart(container, rows, opts) {
     opts = opts || {};
     var W = container.clientWidth || 900, H = opts.height || 300;
-    var padL = 70, padR = 20, padT = 22, padB = 52;
+    var padL = 70, padR = 20, padT = 22, padB = rows.length > 7 ? 66 : 52;
     var max = Math.max.apply(null, rows.map(function (r) { return r.value; }).concat([1]));
     var bw = (W - padL - padR) / rows.length;
     var svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "chart", role: "img" });
@@ -330,8 +334,12 @@
       } else {
         txt(svg, x + w / 2, y - 6, fmt(r.value), { "text-anchor": "middle", fill: INK, "font-weight": 700, "font-size": 11 });
       }
-      txt(svg, x + w / 2, H - padB + 17, r.label, { "text-anchor": "middle", "font-size": 10.5 });
-      if (r.label2) txt(svg, x + w / 2, H - padB + 31, r.label2, { "text-anchor": "middle", "font-size": 9.5 });
+      if (rows.length > 7) {
+        txt(svg, x + w / 2, H - padB + 14 + (i % 2) * 13, r.label, { "text-anchor": "middle", "font-size": 9.5, fill: (i % 2) ? MUTED : INK });
+      } else {
+        txt(svg, x + w / 2, H - padB + 17, r.label, { "text-anchor": "middle", "font-size": 10.5 });
+        if (r.label2) txt(svg, x + w / 2, H - padB + 31, r.label2, { "text-anchor": "middle", "font-size": 9.5 });
+      }
     });
     container.innerHTML = "";
     container.appendChild(svg);
