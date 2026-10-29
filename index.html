@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=26">
+<link rel="stylesheet" href="assets/css/style.css?v=27">
 </head>
 <body>
 <main>
@@ -30,7 +30,7 @@
         <option value="yoy">YoY change (%)</option>
         <option value="level">Headcount (thousands) — auto log scale</option>
       </select>
-      <label><input type="checkbox" id="log-toggle"> log scale (auto-on in Headcount mode — linear hides everyone under Amazon)</label>
+      <label><input type="checkbox" id="log-toggle"> log scale (only affects Headcount mode — auto-on there; Indexed/YoY are unaffected)</label>
     </div>
     <div id="headcount-lines"></div>
     <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
@@ -92,7 +92,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=26"></script>
+<script src="assets/js/app.js?v=27"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
