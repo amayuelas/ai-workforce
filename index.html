@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=9">
+<link rel="stylesheet" href="assets/css/style.css?v=10">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 </head>
 <body>
@@ -92,7 +92,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=9"></script>
+<script src="assets/js/app.js?v=10"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
@@ -207,6 +207,21 @@ AIW.loadAll().then(function (d) {
   AIW.companiesTable(document.getElementById("companies-body"), d.companies, d.headcount);
   AIW.eventsTable(document.getElementById("events-body"), d.companies, d.events, null);
 });
+</script>
+
+<script>
+/* Warm the cache: fetch sibling pages + data at idle so navigation feels instant. */
+(function () {
+  var me = location.pathname.split("/").pop() || "index.html";
+  var pages = ["index.html", "layoffs.html", "hirings.html"].filter(function (p) { return p !== me; });
+  function warm() {
+    pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
+    ["data/companies.json", "data/events.json", "data/headcount.json"].forEach(function (d) {
+      fetch(d, { cache: "force-cache" }).catch(function () {});
+    });
+  }
+  if ("requestIdleCallback" in window) requestIdleCallback(warm); else setTimeout(warm, 300);
+})();
 </script>
 </body>
 </html>

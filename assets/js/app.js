@@ -7,11 +7,14 @@
   var PALETTE = ["#2456a6", "#b23a2e", "#1e7a40", "#9a6a00", "#6d4fc2", "#0e7c86", "#c2498a", "#5b7a2e", "#8a5a2b", "#4a6fa5", "#a33b3b", "#3d8b6d", "#7a6fc2", "#666055"];
   var LAYOFF_COLOR = RED, HIRING_COLOR = GREEN, AI_COLOR = VIOLET;
 
+  var _cache = {};
   function loadJSON(path) {
-    return fetch(path).then(function (r) {
+    if (_cache[path]) return _cache[path];
+    _cache[path] = fetch(path, { cache: "force-cache" }).then(function (r) {
       if (!r.ok) throw new Error("Failed to load " + path + " (" + r.status + ")");
       return r.json();
     });
+    return _cache[path];
   }
 
   function fmt(n) {
