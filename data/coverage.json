@@ -1,0 +1,64 @@
+{
+  "$schema": "../schemas/coverage.schema.json",
+  "version": 1,
+  "updated": "2026-10-29",
+  "note": "Reconciliation of this tracker's announced layoff totals vs external trackers/press, per company. 'ours' is computed from events.json (sum of layoff sizes since 2022). 'external' is what Layoffs.fyi / wire press report. Differences are expected: trackers count rolling per-team cuts we don't capture, and our numbers include announced buyout offers (Microsoft 60,000) which trackers may count differently.",
+  "rows": [
+    {
+      "company": "amazon",
+      "ours_since_2022": 59000,
+      "external": "Layoffs.fyi/press: ~57,000 since 2022 (CNBC, Jan 2026); 30,000 corporate in Oct 2025 + Jan 2026 rounds",
+      "external_url": "https://www.cnbc.com/2026/01/28/amazon-layoffs-anti-bureaucracy-ai.html",
+      "note": "Ours adds the Oct 2026 stores/devices trimming (~1,000 est.); trackers may not."
+    },
+    {
+      "company": "microsoft",
+      "ours_since_2022": 98550,
+      "external": "Press: 10,000 (Jan 2023) + ~15,000 in 2025 (May 6,000 + Jul 9,000) + 4,800 (Jul 2026) + 8,750 VRP + 60,000 buyout offer (Oct 2026)",
+      "external_url": "https://www.cnbc.com/2026/07/06/microsoft-cuts-2point1percent-of-employees-as-xbox-unit-plans-to-spin-studios.html",
+      "note": "Buyout offers are announced offers, not realized separations — see METHODOLOGY."
+    },
+    {
+      "company": "meta",
+      "ours_since_2022": 31200,
+      "external": "Press: 21,000 (2022-23 Year of Efficiency) + ~9,700-10,200 in 2026 (Jan 1,000-1,500 RL, Mar ~700, May 8,000)",
+      "external_url": "https://finance.yahoo.com/sectors/technology/articles/meta-layoffs-2026-8-000-114209703.html",
+      "note": "2026 waves are partly estimate-flagged (Jan, Mar)."
+    },
+    {
+      "company": "alphabet",
+      "ours_since_2022": 14250,
+      "external": "Only the Jan 2023 12,000 is company-announced; 2026 rolling cuts estimated 1,500-3,000+ by trackers (no official total)",
+      "external_url": "https://www.kore1.com/google-layoffs-2026/",
+      "note": "Largest known undercount — Google never announces a 2026 total; we carry the outside estimate as medium confidence."
+    },
+    {
+      "company": "oracle",
+      "ours_since_2022": 21000,
+      "external": "Layoffs.fyi: 21,000 in FY2026 (largest single-company tally of 2026), per FY2026 10-K",
+      "external_url": "https://www.cnbc.com/2026/06/23/oracle-ai-job-cuts-layoffs-21000.html",
+      "note": "Matches; gross terminations reported up to ~30,000 across waves."
+    },
+    {
+      "company": "intel",
+      "ours_since_2022": 30000,
+      "external": "Layoffs.fyi/Statista: ~22,000 announced Apr 2025 (20%) + 15,000 Aug 2024; headcount fell 131,900 -> 85,100 (2022-2025)",
+      "external_url": "https://www.statista.com/statistics/1127080/worldwide-tech-layoffs-covid-19-biggest/",
+      "note": "We count the two company-announced rounds (15,000 each); the Apr 2025 20% round overlaps the Jul 2025 target — scope notes explain."
+    },
+    {
+      "company": "tesla",
+      "ours_since_2022": 14000,
+      "external": "Apr 2024 'more than 10%' (~14,000); Apr 2026 press: further 22% cut wave reported",
+      "external_url": "https://www.cnbc.com/2024/04/15/tesla-shares-dip-in-premarket-trade-on-global-layoff-reports.html",
+      "note": "Apr 2026 wave is press-reported; add when a company-confirmed number lands."
+    },
+    {
+      "company": "industry",
+      "ours_since_2022": 268000,
+      "external": "Layoffs.fyi: ~900,000 since 2020 (~128,536 in 2026 by Sep 10); Skillsyncer: 232,946+ by Sep 19, 2026 — industry-wide, all companies",
+      "external_url": "https://layoffs.fyi/",
+      "note": "Ours covers only the 14 tracked companies — not comparable to industry totals; that's the point of the bench."
+    }
+  ]
+}

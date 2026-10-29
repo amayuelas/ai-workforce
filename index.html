@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=17">
+<link rel="stylesheet" href="assets/css/style.css?v=19">
 </head>
 <body>
 <main>
@@ -29,11 +29,11 @@
         <option value="yoy">YoY change (%)</option>
         <option value="level">Headcount (thousands)</option>
       </select>
-      <label><input type="checkbox" id="log-toggle"> log scale (levels only)</label>
+      <label><input type="checkbox" id="log-toggle" checked> log scale (levels mode, on by default — linear hides everyone under Amazon)</label>
     </div>
     <div id="headcount-lines"></div>
     <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Each company is indexed to its first reported year (2015 or 2016) = 100, so all histories start on the left edge. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M (use "Headcount" + log for scale).</p>
+    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Each company is indexed to its first reported year (2015 or 2016) = 100, so all histories start on the left edge. AI labs have single media-estimate points, so they appear only in the Headcount view (dashed marker). YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M — the Headcount view therefore defaults to log scale.</p>
   </div>
 
   <h2><span class="no">02</span>Announced layoffs vs implied actual hiring</h2>
@@ -82,7 +82,16 @@
     </table>
   </div>
 
-  <h2><span class="no">09</span>All events, newest first</h2>
+  <h2><span class="no">09</span>Coverage check — are we missing events?</h2>
+  <div class="panel" style="overflow-x:auto">
+    <table class="data">
+      <thead><tr><th>Scope</th><th class="num">Our announced layoffs since 2022</th><th>External trackers / press</th><th></th><th>Notes</th></tr></thead>
+      <tbody id="coverage-body"></tbody>
+    </table>
+    <p class="cap">Our totals are computed live from events.json (same rows as section 10 and both bench pages — one data source, so they can't drift). External figures from Layoffs.fyi / wire press, linked. Known gaps: small unannounced rolling cuts (Google 2026 carried as a medium-confidence estimate) and press-reported waves without a company-confirmed number (e.g. Tesla Apr 2026). CI fails if coverage.json's "ours" disagrees with events.json.</p>
+  </div>
+
+  <h2><span class="no">10</span>All events, newest first</h2>
   <div class="panel" style="overflow-x:auto">
     <table class="data">
       <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Signed size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
@@ -91,7 +100,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=17"></script>
+<script src="assets/js/app.js?v=19"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
@@ -205,6 +214,7 @@ AIW.loadAll().then(function (d) {
   }).join("");
 
   AIW.companiesTable(document.getElementById("companies-body"), d.companies, d.headcount);
+  AIW.coverageTable(document.getElementById("coverage-body"), d.companies, d.events, d.coverage);
   AIW.eventsTable(document.getElementById("events-body"), d.companies, d.events, null);
 });
 </script>
@@ -216,7 +226,7 @@ AIW.loadAll().then(function (d) {
   var pages = ["index.html", "layoffs.html", "hirings.html"].filter(function (p) { return p !== me; });
   function warm() {
     pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
-    ["data/companies.json", "data/events.json", "data/headcount.json"].forEach(function (d) {
+    ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {
       fetch(d, { cache: "force-cache" }).catch(function () {});
     });
   }

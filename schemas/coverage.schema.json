@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Coverage reconciliation vs external trackers",
+  "type": "object",
+  "required": ["version", "updated", "rows"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "updated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "note": { "type": "string" },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["company", "ours_since_2022", "external", "external_url", "note"],
+        "additionalProperties": false,
+        "properties": {
+          "company": { "type": "string" },
+          "ours_since_2022": { "type": "integer", "minimum": 0 },
+          "external": { "type": "string", "minLength": 1 },
+          "external_url": { "type": "string", "format": "uri" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

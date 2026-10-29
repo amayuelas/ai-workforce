@@ -162,10 +162,35 @@ def validate_headcount(doc, company_ids, errors):
         check_sources(s.get("sources"), f"{p}.sources", errors)
 
 
+def validate_coverage(doc, company_ids, layoff_sums, errors):
+    if not isinstance(doc, dict):
+        fail("coverage.json: root must be an object", errors)
+        return
+    for key in ("version", "updated", "rows"):
+        if key not in doc:
+            fail(f"coverage.json: missing required key '{key}'", errors)
+    check_date(doc.get("updated"), "coverage.updated", errors)
+    rows = doc.get("rows")
+    if not isinstance(rows, list) or not rows:
+        fail("coverage.json: 'rows' must be a non-empty array", errors)
+        return
+    for i, r in enumerate(rows):
+        p = f"coverage.rows[{i}]"
+        for key in ("company", "ours_since_2022", "external", "external_url", "note"):
+            if key not in r:
+                fail(f"{p}: missing required key '{key}'", errors)
+        if r.get("company") != "industry" and r.get("company") not in company_ids:
+            fail(f"{p}.company: unknown company '{r.get('company')}'", errors)
+        check_uri(r.get("external_url"), f"{p}.external_url", errors)
+        if r.get("company") in layoff_sums:
+            ours = layoff_sums[r["company"]]
+            if ours != r.get("ours_since_2022"):
+                fail(f"{p}: ours_since_2022={r.get('ours_since_2022')} but events.json sums to {ours} — out of sync", errors)
+
 def main():
     errors = []
     docs = {}
-    for name in ("companies", "events", "headcount"):
+    for name in ("companies", "events", "headcount", "coverage"):
         path = DATA / f"{name}.json"
         try:
             docs[name] = json.loads(path.read_text(encoding="utf-8"))
@@ -179,14 +204,29 @@ def main():
         return 1
 
     company_ids = validate_companies(docs["companies"], errors)
-    validate_events(docs["events"], company_ids, errors)
+    events = validate_events(docs["events"], company_ids, errors)
     validate_headcount(docs["headcount"], company_ids, errors)
+    layoff_sums = {}
+    per_company = {}
+    for e in events:
+        per_company.setdefault(e["company"], {"layoff": 0, "hiring": 0, "layoff_roles": 0})
+        per_company[e["company"]][e["type"]] += 1
+        if e["type"] == "layoff" and e.get("size"):
+            per_company[e["company"]]["layoff_roles"] += e["size"]
+            layoff_sums[e["company"]] = layoff_sums.get(e["company"], 0) + e["size"]
+    if "coverage" in docs:
+        validate_coverage(docs["coverage"], company_ids, layoff_sums, errors)
+    print("Per-company reconciliation (from events.json):")
+    for co in sorted(per_company):
+        pc = per_company[co]
+        print(f"  {co:10s} layoffs={pc['layoff']:2d} events ({pc['layoff_roles']:,} roles)  hirings={pc['hiring']}")
 
     layoffs = [e for e in docs["events"].get("events", []) if e.get("type") == "layoff"]
     hirings = [e for e in docs["events"].get("events", []) if e.get("type") == "hiring"]
     total_laid = sum(e["size"] for e in layoffs if e.get("size"))
     print(f"OK: {len(company_ids)} companies, {len(layoffs)} layoff events ({total_laid:,} announced roles), "
-          f"{len(hirings)} hiring events, {len(docs['headcount'].get('snapshots', []))} headcount snapshots.")
+          f"{len(hirings)} hiring events, {len(docs['headcount'].get('snapshots', []))} headcount snapshots, "
+          f"{len(docs.get('coverage', {}).get('rows', []))} coverage rows (in sync with events).")
     if errors:
         for e in errors:
             print(f"ERROR: {e}", file=sys.stderr)

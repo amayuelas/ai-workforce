@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HiringsBench — AI Workforce Tracker</title>
 <meta name="description" content="HiringsBench: announced hiring plans and AI talent moves (positive flow) plus net headcount growth from filings — the reliable hiring signal.">
-<link rel="stylesheet" href="assets/css/style.css?v=17">
+<link rel="stylesheet" href="assets/css/style.css?v=19">
 </head>
 <body>
 <main>
@@ -46,7 +46,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=17"></script>
+<script src="assets/js/app.js?v=19"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("HiringsBench"));
@@ -96,7 +96,7 @@ AIW.loadAll().then(function (d) {
   var pages = ["index.html", "layoffs.html", "hirings.html"].filter(function (p) { return p !== me; });
   function warm() {
     pages.forEach(function (p) { var l = document.createElement("link"); l.rel = "prefetch"; l.href = p; document.head.appendChild(l); });
-    ["data/companies.json", "data/events.json", "data/headcount.json"].forEach(function (d) {
+    ["data/companies.json", "data/events.json", "data/headcount.json", "data/coverage.json"].forEach(function (d) {
       fetch(d, { cache: "force-cache" }).catch(function () {});
     });
   }

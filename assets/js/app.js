@@ -541,8 +541,29 @@
     return Promise.all([
       loadJSON("data/companies.json"),
       loadJSON("data/events.json"),
-      loadJSON("data/headcount.json")
-    ]).then(function (r) { return { companies: r[0].companies, events: r[1].events, headcount: r[2].snapshots, updated: r[1].updated }; });
+      loadJSON("data/headcount.json"),
+      loadJSON("data/coverage.json")
+    ]).then(function (r) {
+      return { companies: r[0].companies, events: r[1].events, headcount: r[2].snapshots, coverage: r[3].rows, updated: r[1].updated };
+    });
+  }
+
+  /* Coverage table: our announced-layoff totals vs external trackers, per company. */
+  function coverageTable(tbody, companies, events, coverage) {
+    var sums = {};
+    events.forEach(function (e) {
+      if (e.type === "layoff" && e.size) sums[e.company] = (sums[e.company] || 0) + e.size;
+    });
+    var rows = coverage.map(function (r) {
+      var name = r.company === "industry" ? "Industry total (all companies)" : companyName(companies, r.company);
+      var ours = r.company === "industry" ? Object.keys(sums).reduce(function (a, k) { return a + sums[k]; }, 0) : (sums[r.company] || 0);
+      return "<tr><td><strong>" + esc(name) + "</strong></td>" +
+        '<td class="num">−' + fmt(ours) + "</td>" +
+        "<td class='small'>" + esc(r.external) + "</td>" +
+        '<td><a href="' + esc(r.external_url) + '" target="_blank" rel="noopener noreferrer">source</a></td>' +
+        "<td class='small muted'>" + esc(r.note) + "</td></tr>";
+    }).join("");
+    tbody.innerHTML = rows;
   }
 
   window.AIW = {
@@ -552,7 +573,7 @@
     signedBarChart: signedBarChart, netFlowChart: netFlowChart, companyEvolution: companyEvolution,
     barChart: barChart, lineChart: lineChart, eventScatter: eventScatter, netHeadcountChange: netHeadcountChange,
     yoySeries: yoySeries, indexedSeries: indexedSeries, impliedHiring: impliedHiring,
-    eventsTable: eventsTable, companiesTable: companiesTable,
+    eventsTable: eventsTable, companiesTable: companiesTable, coverageTable: coverageTable,
     badges: badges, sourceLinks: sourceLinks,
     PALETTE: PALETTE, LAYOFF_COLOR: LAYOFF_COLOR, HIRING_COLOR: HIRING_COLOR, AI_COLOR: AI_COLOR
   };
