@@ -8,10 +8,12 @@ Thanks for helping keep the AI Workforce Tracker accurate. This project is data-
    - unique `id` (`company-YYYY-MM-slug`), `type` (`layoff`/`hiring`), `company` (must exist in `data/companies.json`), `date` and `announced` (YYYY-MM-DD)
    - `size` (roles; `null` only when not quantifiable, e.g. a pure acqui-hire) and `size_is_estimate` (`true` for "~"/"about"/reported figures)
    - optional `percent_of_workforce` (relative to the base the company stated)
+   - optional `kind`: `buyout_offer` (with `eligible` = people offered; `size` = accepted departures or `null` until known), `internal_redeployment` (existing staff moved, never counted as hiring), or `multi_company` (group estimate, never counted)
    - `scope`, `reason`, `ai_related` (see [METHODOLOGY.md](docs/METHODOLOGY.md) — only set `true` when the company or reporting explicitly attributes the move to AI)
    - `sources`: **at least one URL**. Prefer company newsroom / SEC filing > Reuters, Bloomberg, CNBC, BBC, AP, WSJ, FT > other press.
-2. Run `python3 scripts/validate_data.py` — it must print `OK`.
-3. Open a PR using the template. CI re-runs the validator.
+2. If it is a layoff at a company listed in `data/coverage.json`, update that row's `ours_since_2022` (and the `industry` row).
+3. Run `python3 scripts/validate_data.py`; it must print `OK`.
+4. Open a PR using the template. CI re-runs the validator.
 
 ## Updating headcount
 

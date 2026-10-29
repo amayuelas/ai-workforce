@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/events.schema.json",
-  "version": 1,
+  "version": 2,
   "updated": "2026-10-29",
   "events": [
     {
@@ -10,12 +10,12 @@
       "date": "2022-11-18",
       "announced": "2022-11-18",
       "size": 10000,
-      "size_is_estimate": false,
+      "size_is_estimate": true,
       "percent_of_workforce": null,
-      "scope": "Corporate, retail, devices and HR roles; first wave of the 2022-2023 downsizing.",
+      "scope": "First wave of the 2022-2023 downsizing (devices, retail, HR); ~10,000 as first reported by the press. Amazon did not give a number until Jan 2023, when the Nov + Jan cuts were stated together as 'just over 18,000'.",
       "reason": "Overhiring during pandemic demand peak; cost reduction.",
       "ai_related": false,
-      "confidence": "high",
+      "confidence": "medium",
       "sources": [
         {
           "title": "Reuters (via Yahoo Finance): Amazon plans second round of corporate job cuts",
@@ -28,15 +28,15 @@
       ]
     },
     {
-      "id": "amzn-2023-01-18k",
+      "id": "amzn-2023-01-8k",
       "type": "layoff",
       "company": "amazon",
       "date": "2023-01-04",
       "announced": "2023-01-04",
-      "size": 18000,
-      "size_is_estimate": false,
+      "size": 8000,
+      "size_is_estimate": true,
       "percent_of_workforce": null,
-      "scope": "Second, larger wave (AWS, stores, HR, recruiting) bringing the 2022-2023 total to ~27,000.",
+      "scope": "Second wave (stores, PXT/HR). Jassy memo: 'between the reductions we made in November and the ones we're sharing today, we plan to eliminate just over 18,000 roles' — counted here as the ~8,000 increment over the Nov 2022 wave so the two events don't double count.",
       "reason": "Continued cost reduction after pandemic overhiring.",
       "ai_related": false,
       "confidence": "high",
@@ -48,6 +48,30 @@
         {
           "title": "BBC: Amazon to axe 18,000 jobs as it cuts costs",
           "url": "https://www.bbc.com/news/business-64171008"
+        },
+        {
+          "title": "VOA: Amazon Cuts 9,000 More Jobs, Bringing 2023 Total to 27,000",
+          "url": "https://www.voanews.com/a/amazon-cuts-9-000-more-jobs-bringing-2023-total-to-27-000-/7013720.html"
+        }
+      ]
+    },
+    {
+      "id": "amzn-2023-03-9k",
+      "type": "layoff",
+      "company": "amazon",
+      "date": "2023-03-20",
+      "announced": "2023-03-20",
+      "size": 9000,
+      "size_is_estimate": false,
+      "percent_of_workforce": null,
+      "scope": "Third wave (AWS, advertising, PXT, Twitch), bringing the Nov 2022 - Mar 2023 total to ~27,000.",
+      "reason": "Continued cost reduction amid economic uncertainty (Jassy memo).",
+      "ai_related": false,
+      "confidence": "high",
+      "sources": [
+        {
+          "title": "NPR/MPR: Amazon is cutting another 9,000 jobs as tech industry keeps shrinking",
+          "url": "https://www.mprnews.org/story/2023/03/20/amazon-is-cutting-another-9000-jobs-as-tech-industry-keeps-shrinking"
         },
         {
           "title": "VOA: Amazon Cuts 9,000 More Jobs, Bringing 2023 Total to 27,000",
@@ -208,6 +232,30 @@
         {
           "title": "The Verge: Intel is laying off over 15,000 employees",
           "url": "https://www.theverge.com/2024/8/1/24210656/intel-is-laying-off-over-10000-employees-and-will-cut-10-billion-in-costs"
+        }
+      ]
+    },
+    {
+      "id": "meta-2025-01-3600",
+      "type": "layoff",
+      "company": "meta",
+      "date": "2025-01-14",
+      "announced": "2025-01-14",
+      "size": 3600,
+      "size_is_estimate": true,
+      "percent_of_workforce": 5,
+      "scope": "Performance-based cuts of ~5% of staff (~3,600 of ~72,400), notifications from Feb 10, 2025; roles to be backfilled.",
+      "reason": "Zuckerberg memo: 'raise the bar on performance management and move out low-performers faster' ahead of an 'intense year' (AI, smart glasses).",
+      "ai_related": false,
+      "confidence": "high",
+      "sources": [
+        {
+          "title": "CBS News: Meta is cutting 5% of its workforce, or more than 3,600 employees",
+          "url": "https://www.cbsnews.com/news/meta-layoffs-5-percent-workforce-cuts-low-performers/"
+        },
+        {
+          "title": "Fox Business: Meta cutting 5% of workforce based on performance",
+          "url": "https://www.foxbusiness.com/markets/meta-cutting-5-workforce-based-performance"
         }
       ]
     },
@@ -395,7 +443,7 @@
       "id": "oracle-2026-fy-21k",
       "type": "layoff",
       "company": "oracle",
-      "date": "2026-06-22",
+      "date": "2026-05-31",
       "announced": "2026-06-22",
       "size": 21000,
       "size_is_estimate": false,
@@ -429,10 +477,10 @@
       "company": "microsoft",
       "date": "2026-05-20",
       "announced": "2026-05-20",
-      "size": 8750,
-      "size_is_estimate": false,
-      "percent_of_workforce": 7,
-      "scope": "Voluntary retirement program for ~8,750 eligible US employees (~7% of US workforce); >30% of eligible accepted, per Bloomberg. Followed Oct 26, 2026 by a second buyout offer to ~60,000 workers (~27% of 223,000), departures planned end-2026.",
+      "size": 2625,
+      "size_is_estimate": true,
+      "percent_of_workforce": null,
+      "scope": "Voluntary retirement program offered to ~8,750 eligible US employees (~7% of the US workforce); >30% of those eligible accepted per Bloomberg, so ~2,600 departures are counted (lower bound). The Oct 2026 60,000-person offer is a separate event.",
       "reason": "Cost reduction amid AI capex; reports of up to 60,000 further voluntary buyouts under consideration.",
       "ai_related": true,
       "confidence": "medium",
@@ -444,16 +492,10 @@
         {
           "title": "NBC News: Meta says it will lay off 10% of its workforce (cites Microsoft buyouts)",
           "url": "https://www.nbcnews.com/tech/tech-news/meta-layoffs-ai-memo-rcna341683"
-        },
-        {
-          "title": "Bloomberg: Microsoft to Trim Workforce With Buyout Offers for 60,000 Staff (Oct 26, 2026)",
-          "url": "https://www.bloomberg.com/news/articles/2026-10-26/microsoft-to-offer-buyouts-to-60-000-workers-in-latest-cost-cut"
-        },
-        {
-          "title": "CNBC: Microsoft offers voluntary buyouts to 60,000 employees as AI leads to efficiency push",
-          "url": "https://www.cnbc.com/2026/10/26/microsoft-msft-voluntary-buyouts.html"
         }
-      ]
+      ],
+      "kind": "buyout_offer",
+      "eligible": 8750
     },
     {
       "id": "msft-2024-03-inflection",
@@ -673,10 +715,10 @@
       "company": "microsoft",
       "date": "2026-10-26",
       "announced": "2026-10-26",
-      "size": 60000,
-      "size_is_estimate": false,
-      "percent_of_workforce": 27,
-      "scope": "Voluntary buyout offer to ~60,000 eligible workers (~27% of 223,000; VP-level and below; data-center, some sales/marketing excluded); decide by early Dec, departures end-2026.",
+      "size": null,
+      "size_is_estimate": true,
+      "percent_of_workforce": null,
+      "scope": "Voluntary exit offer to ~60,000 eligible workers (~27% of 223,000; US, UK, Canada, India; VP-level and below; data-center and some sales/marketing excluded); decide by early Dec, departures end-2026. Not counted in layoff totals until acceptances are known — the eligible pool is not a separation count.",
       "reason": "Cost trim + workforce retooling for the AI era amid ~$175B 2026 capex.",
       "ai_related": true,
       "confidence": "high",
@@ -693,7 +735,9 @@
           "title": "CBS News: Microsoft offers buyouts to 60,000 workers as it pours money into AI",
           "url": "https://www.cbsnews.com/news/microsoft-buyouts-60000-workers-artificial-intelligence-layoffs/"
         }
-      ]
+      ],
+      "kind": "buyout_offer",
+      "eligible": 60000
     },
     {
       "id": "amzn-2026-10-stores",
@@ -761,7 +805,7 @@
       "size_is_estimate": false,
       "percent_of_workforce": null,
       "scope": "New Microsoft Frontier Co. subsidiary: 6,000 employees (existing FDEs, consultants, support, sales) embedded with clients on AI engagements ('forward deployed engineering'); $2.5B commitment.",
-      "reason": "AI implementation for enterprise clients.",
+      "reason": "AI implementation for enterprise clients. Staffed with existing employees, so not counted as new hiring.",
       "ai_related": true,
       "confidence": "high",
       "sources": [
@@ -769,7 +813,8 @@
           "title": "CNBC: Microsoft commits $2.5 billion and 6,000 employees to new AI implementation unit (Jul 2, 2026)",
           "url": "https://www.cnbc.com/2026/07/02/microsoft-commits-2point5-billion-6000-employees-ai-implementation-unit.html"
         }
-      ]
+      ],
+      "kind": "internal_redeployment"
     },
     {
       "id": "meta-2026-05-7k-reassign",
@@ -781,7 +826,7 @@
       "size_is_estimate": false,
       "percent_of_workforce": null,
       "scope": "Up to 7,000 existing employees redirected into new AI-focused teams (Applied AI Engineering, Agent Transformation Accelerator XFN, Central Analytics); 6,000 open roles cancelled.",
-      "reason": "Internal reallocation to AI, alongside the 8,000-role cut.",
+      "reason": "Internal reallocation to AI, alongside the 8,000-role cut. Existing employees, so not counted as new hiring.",
       "ai_related": true,
       "confidence": "high",
       "sources": [
@@ -789,7 +834,8 @@
           "title": "Quartz (via Yahoo Finance): Meta layoffs 2026 — 7,000 workers redirected to AI teams",
           "url": "https://finance.yahoo.com/sectors/technology/articles/meta-layoffs-2026-8-000-114209703.html"
         }
-      ]
+      ],
+      "kind": "internal_redeployment"
     },
     {
       "id": "ai-labs-2026-h1-6200",
@@ -801,7 +847,7 @@
       "size_is_estimate": true,
       "percent_of_workforce": null,
       "scope": "Anthropic, OpenAI, Cohere and Mistral collectively hired ~6,200 people in H1 2026 (record), absorbing talent shed by big tech.",
-      "reason": "AI-native labs scaling amid enterprise demand.",
+      "reason": "AI-native labs scaling amid enterprise demand. Covers four labs (filed under Anthropic for lack of a group entity) and overlaps the per-lab plans, so it is shown for context but not counted in totals.",
       "ai_related": true,
       "confidence": "medium",
       "sources": [
@@ -813,7 +859,8 @@
           "title": "TechCrunch running list 2026: AI-focused companies hiring rapidly, absorbing laid-off talent",
           "url": "https://techcrunch.com/2026/07/25/the-running-list-major-tech-layoffs-in-2026-where-employers-cited-ai/"
         }
-      ]
+      ],
+      "kind": "multi_company"
     }
   ]
 }
