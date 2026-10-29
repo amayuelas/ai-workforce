@@ -77,6 +77,29 @@
     return t;
   }
 
+  /* Shared HTML tooltip for SVG hover (native <title> is unreliable on SVG in some browsers). */
+  function bindTooltip(container) {
+    var tip = document.createElement("div");
+    tip.className = "svg-tip"; tip.setAttribute("class", "svg-tip");
+    tip.style.display = "none";
+    container.style.position = "relative";
+    container.appendChild(tip);
+    container.addEventListener("mousemove", function (ev) {
+      var el = ev.target && ev.target.getAttribute ? ev.target : null;
+      var d = el && el.getAttribute("data-tip");
+      if (d) {
+        tip.textContent = d;
+        tip.style.display = "block";
+        var r = container.getBoundingClientRect();
+        tip.style.left = Math.min(ev.clientX - r.left + 12, r.width - 220) + "px";
+        tip.style.top = (ev.clientY - r.top + 14) + "px";
+      } else {
+        tip.style.display = "none";
+      }
+    });
+    container.addEventListener("mouseleave", function () { tip.style.display = "none"; });
+  }
+
   /* Diverging bar chart: negative (layoffs) down in red, positive (hirings) up in green. */
   function signedBarChart(container, rows, opts) {
     opts = opts || {};
@@ -105,10 +128,12 @@
       var x = padL + i * bw + bw * 0.18, w = bw * 0.64;
       var h = Math.abs(r.value) * scale;
       var y = r.value >= 0 ? zeroY - h : zeroY;
-      svg.appendChild(svgEl("rect", {
+      var bar = svgEl("rect", {
         x: x, y: y, width: w, height: Math.max(h, 1.5),
         fill: r.color || (r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR), rx: 2
-      }));
+      });
+      bar.setAttribute("data-tip", (r.label ? r.label + " · " : "") + fmtSigned(r.value) + (r.label2 ? " · " + r.label2 : ""));
+      svg.appendChild(bar);
       txt(svg, x + w / 2, r.value >= 0 ? y - 6 : y + h + 13, fmtSigned(r.value), {
         "text-anchor": "middle", fill: r.color || (r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR), "font-weight": 700, "font-size": 11
       });
@@ -119,6 +144,7 @@
     });
     container.innerHTML = "";
     container.appendChild(svg);
+    bindTooltip(container);
   }
 
   /* Horizontal stacked bars per year: layoffs (red, left of zero) vs hirings (green, right of zero). */
@@ -146,14 +172,15 @@
     keys.forEach(function (q, i) {
       var y = padT + i * rowH + rowH / 2;
       var lw = byQ[q].lay * scale, hw = byQ[q].hir * scale;
-      if (lw > 0) svg.appendChild(svgEl("rect", { x: midX - lw, y: y - 9, width: lw, height: 18, fill: LAYOFF_COLOR, rx: 2 }));
-      if (hw > 0) svg.appendChild(svgEl("rect", { x: midX, y: y - 9, width: hw, height: 18, fill: HIRING_COLOR, rx: 2 }));
+      if (lw > 0) { var rl = svgEl("rect", { x: midX - lw, y: y - 9, width: lw, height: 18, fill: LAYOFF_COLOR, rx: 2 }); rl.setAttribute("data-tip", q + " · layoffs −" + fmt(byQ[q].lay)); svg.appendChild(rl); }
+      if (hw > 0) { var rh = svgEl("rect", { x: midX, y: y - 9, width: hw, height: 18, fill: HIRING_COLOR, rx: 2 }); rh.setAttribute("data-tip", q + " · hirings +" + fmt(byQ[q].hir)); svg.appendChild(rh); }
       if (lw > 0) txt(svg, midX - lw - 6, y + 4, "−" + fmt(byQ[q].lay), { "text-anchor": "end", fill: LAYOFF_COLOR, "font-size": 10.5, "font-weight": 600 });
       if (hw > 0) txt(svg, midX + hw + 6, y + 4, "+" + fmt(byQ[q].hir), { "text-anchor": "start", fill: HIRING_COLOR, "font-size": 10.5, "font-weight": 600 });
       txt(svg, padL - 10, y + 4, q, { "text-anchor": "end", fill: INK, "font-weight": 600, "font-size": 11 });
     });
     container.innerHTML = "";
     container.appendChild(svg);
+    bindTooltip(container);
   }
 
   /* Per-company evolution timeline, leaderboard-style rows with a mini signed step chart. */
@@ -247,7 +274,9 @@
       var d = pts.map(function (p, j) { return (j ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1); }).join(" ");
       svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 1.8, "stroke-dasharray": s.dashed ? "5 3" : "none" }));
       pts.forEach(function (p) {
-        svg.appendChild(svgEl("rect", { x: X(p[0]) - 2.6, y: Y(p[1]) - 2.6, width: 5.2, height: 5.2, fill: color }));
+        var m = svgEl("rect", { x: X(p[0]) - 3.4, y: Y(p[1]) - 3.4, width: 6.8, height: 6.8, fill: color, "fill-opacity": 0.9 });
+        m.setAttribute("data-tip", s.label + " · " + p[0] + " · " + (opts.yFmt ? opts.yFmt(p[1]) : fmt(Math.round(p[1]))));
+        svg.appendChild(m);
       });
     });
     if (legendBelow) {
@@ -269,6 +298,7 @@
     }
     container.innerHTML = "";
     container.appendChild(svg);
+    bindTooltip(container);
   }
 
   /* Simple vertical bars (all-positive) for rankings like headcount / top layoffs. */
@@ -288,13 +318,16 @@
     rows.forEach(function (r, i) {
       var h = (H - padT - padB) * (r.value / max);
       var x = padL + i * bw + bw * 0.14, w = bw * 0.72, y = H - padB - h;
-      svg.appendChild(svgEl("rect", { x: x, y: y, width: w, height: Math.max(h, 1.5), fill: r.color || PALETTE[i % PALETTE.length], rx: 2 }));
+      var b2 = svgEl("rect", { x: x, y: y, width: w, height: Math.max(h, 1.5), fill: r.color || PALETTE[i % PALETTE.length], rx: 2 });
+      b2.setAttribute("data-tip", (r.label || "") + " · " + fmt(r.value) + (r.label2 ? " · " + r.label2 : ""));
+      svg.appendChild(b2);
       txt(svg, x + w / 2, y - 6, fmt(r.value), { "text-anchor": "middle", fill: INK, "font-weight": 700, "font-size": 11.5 });
       txt(svg, x + w / 2, H - padB + 17, r.label, { "text-anchor": "middle", "font-size": 10.5 });
       if (r.label2) txt(svg, x + w / 2, H - padB + 31, r.label2, { "text-anchor": "middle", "font-size": 9.5 });
     });
     container.innerHTML = "";
     container.appendChild(svg);
+    bindTooltip(container);
   }
 
   /* Event scatter timeline: x = date, y = company row, marker size ~ |signed size|. */
@@ -335,14 +368,14 @@
           fill: colorOf(e),
           "fill-opacity": 0.75, stroke: colorOf(e)
         });
-        var title = svgEl("title", {});
-        title.textContent = e.date + " " + companyName(companies, id) + " " + fmtSigned(signed(e)) + (e.ai_related ? " (AI)" : "");
-        c.appendChild(title);
+        c.setAttribute("class", "bubble");
+        c.setAttribute("data-tip", e.date + " · " + companyName(companies, id) + " · " + fmtSigned(signed(e)) + (e.size ? "" : " (not quantified)") + (e.ai_related ? " · AI" : "") + " · " + (e.confidence || "") + " conf.");
         svg.appendChild(c);
       });
     });
     container.innerHTML = "";
     container.appendChild(svg);
+    bindTooltip(container);
   }
 
   /* YoY % change series per company. */

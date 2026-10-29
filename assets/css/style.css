@@ -236,6 +236,27 @@ table.data .num, .num { text-align: right; font-variant-numeric: tabular-nums; w
 .tier .t-desc { color: var(--muted); font-size: 0.82rem; margin-top: 0.25rem; }
 .tier .t-num { font-family: var(--mono); font-size: 0.8rem; color: var(--faint); margin-top: 0.35rem; }
 
+/* ---------- tooltips & hover ---------- */
+.svg-tip {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  background: var(--ink);
+  color: #fbfaf6;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  padding: 0.3rem 0.55rem;
+  border-radius: 5px;
+  max-width: 240px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.bubble { cursor: pointer; }
+.bubble:hover { stroke: var(--ink); "stroke-width": 1.5; }
+.chart rect[data-tip]:hover, .chart circle[data-tip]:hover, .chart path[data-tip]:hover {
+  stroke: var(--ink);
+  stroke-width: 1.2;
+}
+
 /* ---------- misc ---------- */
 footer.site {
   border-top: 1px solid var(--line-strong);
