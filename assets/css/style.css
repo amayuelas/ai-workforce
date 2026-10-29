@@ -102,31 +102,36 @@ h2 {
 }
 h2 .no { color: var(--faint); font-family: var(--mono); font-size: 0.8rem; margin-right: 0.5rem; vertical-align: 0.15em; }
 
-/* ---------- KPI strip ---------- */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 0.8rem;
-  margin: 1.4rem 0 0.4rem;
+/* ---------- stat strip (editorial, not cards) ---------- */
+.statline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0;
+  margin: 1.3rem 0 0.2rem;
+  padding: 0.9rem 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line-strong);
 }
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--line-strong);
-  border-radius: 6px;
-  padding: 0.85rem 1rem 0.8rem;
+.stat {
+  padding: 0 1.6rem 0 0;
+  margin-right: 1.6rem;
+  border-right: 1px solid var(--line);
 }
-.card.c-red { border-top-color: var(--red); }
-.card.c-green { border-top-color: var(--green); }
-.card.c-violet { border-top-color: var(--violet); }
-.card.c-ink { border-top-color: var(--ink); }
-.card .label { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
-.card .value { font-family: var(--serif); font-size: 1.9rem; font-weight: 700; margin-top: 0.15rem; font-variant-numeric: tabular-nums; }
-.card .value.red { color: var(--red); }
-.card .value.green { color: var(--green); }
-.card .value.violet { color: var(--violet); }
-.card .value.ink { color: var(--ink); }
-.card .hint { color: var(--faint); font-size: 0.78rem; margin-top: 0.2rem; }
+.stat:last-child { border-right: none; margin-right: 0; }
+.stat .v {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.stat .v.red { color: var(--red); }
+.stat .v.green { color: var(--green); }
+.stat .v.violet { color: var(--violet); }
+.stat .l { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.15rem; }
+.stat .h { color: var(--faint); font-size: 0.76rem; }
 
 /* ---------- panels & charts ---------- */
 .panel {

@@ -19,14 +19,21 @@
       <a href="layoffs.html">LayoffsBench</a> · <a href="hirings.html">HiringsBench</a>.</p>
   </div>
 
-  <section class="cards" id="kpis"></section>
+  <section class="statline" id="kpis"></section>
 
-  <h2><span class="no">01</span>Headcount over time (reported, fiscal year-end)</h2>
+  <h2><span class="no">01</span>Headcount over time</h2>
   <div class="panel">
+    <div class="filters">
+      <label for="hc-mode">Metric</label>
+      <select id="hc-mode">
+        <option value="level">Headcount (thousands)</option>
+        <option value="yoy">YoY change (%)</option>
+      </select>
+      <label><input type="checkbox" id="log-toggle"> log scale (levels only)</label>
+    </div>
     <div id="headcount-lines"></div>
-    <div class="legend"><span class="l-ink">public companies (SEC 10-K, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Annual employee counts from 10-K filings (fiscal year-ends differ: Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). This is the reliable net-workforce signal.</p>
-    <label class="small muted"><input type="checkbox" id="log-toggle" checked> log scale</label>
+    <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
+    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Levels show scale (Amazon dominates — hence the log toggle); YoY % shows who is actually shrinking vs growing.</p>
   </div>
 
   <h2><span class="no">02</span>Latest net headcount change (YoY, from filings)</h2>
@@ -103,14 +110,14 @@ AIW.loadAll().then(function (d) {
     .reduce(function (a, s) { return a + s.employees; }, 0);
 
   document.getElementById("kpis").innerHTML = [
-    { label: "Tracked companies", value: AIW.fmt(d.companies.length), cls: "ink c-ink", hint: "9 big tech · 5 AI labs" },
-    { label: "Combined reported headcount", value: AIW.fmt(totalHC), cls: "ink c-ink", hint: "latest filings, mixed dates" },
-    { label: "Announced layoffs since 2022", value: "−" + AIW.fmt(totalLaid), cls: "red c-red", hint: layoffs.length + " events · " + Math.round(100 * totalAI / totalLaid) + "% AI-attributed" },
-    { label: "Announced hiring plans", value: "+" + AIW.fmt(totalHired), cls: "green c-green", hint: hirings.length + " events · lower bound only" },
+    { label: "Tracked companies", value: AIW.fmt(d.companies.length), cls: "ink", hint: "9 big tech · 5 AI labs" },
+    { label: "Combined reported headcount", value: AIW.fmt(totalHC), cls: "ink", hint: "latest filings, mixed dates" },
+    { label: "Announced layoffs since 2022", value: "−" + AIW.fmt(totalLaid), cls: "red", hint: layoffs.length + " events · " + Math.round(100 * totalAI / totalLaid) + "% AI-attributed" },
+    { label: "Announced hiring plans", value: "+" + AIW.fmt(totalHired), cls: "green", hint: hirings.length + " events · lower bound only" },
     { label: "Net announced flow", value: AIW.fmtSigned(net), cls: net < 0 ? "red c-red" : "green c-green", hint: "hirings − layoffs, announced" },
-    { label: "High-confidence events", value: confCount.high + "/" + d.events.length, cls: "violet c-violet", hint: "company-stated figures" }
+    { label: "High-confidence events", value: confCount.high + "/" + d.events.length, cls: "violet", hint: "company-stated figures" }
   ].map(function (k) {
-    return '<div class="card ' + k.cls + '"><div class="label">' + k.label + '</div><div class="value ' + k.cls.split(" ")[0].replace("c-", "") + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
+    return '<div class="stat"><div class="v ' + k.cls + '">' + k.value + '</div><div class="l">' + k.label + '</div><div class="h">' + k.hint + "</div></div>";
   }).join("");
 
   var byCo = {};
@@ -118,24 +125,40 @@ AIW.loadAll().then(function (d) {
     (byCo[s.company] = byCo[s.company] || []).push([s.as_of, s.employees, s.is_estimate]);
   });
   var LINE_COLORS = { alphabet: "#2456a6", amazon: "#c2620a", apple: "#666055", meta: "#1e5fbf", microsoft: "#0e7c86", nvidia: "#1e7a40", oracle: "#b23a2e", tesla: "#c2498a", intel: "#8a5a2b", openai: "#1b1917", anthropic: "#a33b3b", deepseek: "#5b7a2e", xai: "#6d4fc2", mistral: "#9a6a00" };
-  function drawHC(log) {
-    var series = d.companies.map(function (c) {
-      var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a[0].localeCompare(b[0]); });
-      return {
-        label: AIW.companyName(d.companies, c.id) + (c.ticker ? " " + c.ticker : ""),
-        color: LINE_COLORS[c.id],
-        dashed: pts.some(function (p) { return p[2]; }),
-        points: pts.map(function (p) { return [p[0], log ? Math.log10(p[1]) : p[1]]; })
-      };
-    }).filter(function (s) { return s.points.length; });
-    AIW.lineChart(document.getElementById("headcount-lines"), series, {
-      height: 400,
-      yFmt: log ? function (v) { return "10^" + Math.round(v); } : function (v) { return AIW.fmt(Math.round(v / 1000)) + "k"; },
-      xLabel: "Fiscal year-end (varies by company)"
-    });
+  function drawHC() {
+    var mode = document.getElementById("hc-mode").value;
+    var log = document.getElementById("log-toggle").checked;
+    var series;
+    if (mode === "yoy") {
+      series = AIW.yoySeries(d.companies, d.headcount).map(function (s, i) {
+        s.color = LINE_COLORS[d.companies.filter(function (c) { return (byCo[c.id] || []).length > 1; })[i]?.id] || AIW.PALETTE[i % AIW.PALETTE.length];
+        return s;
+      });
+      AIW.lineChart(document.getElementById("headcount-lines"), series, {
+        height: 380,
+        yFmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + "%"; },
+        xLabel: "Fiscal year-end (varies by company)"
+      });
+    } else {
+      series = d.companies.map(function (c) {
+        var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a[0].localeCompare(b[0]); });
+        return {
+          label: AIW.companyName(d.companies, c.id) + (c.ticker ? " " + c.ticker : ""),
+          color: LINE_COLORS[c.id],
+          dashed: pts.some(function (p) { return p[2]; }),
+          points: pts.map(function (p) { return [p[0], log ? Math.log10(p[1]) : p[1]]; })
+        };
+      }).filter(function (s) { return s.points.length; });
+      AIW.lineChart(document.getElementById("headcount-lines"), series, {
+        height: 400,
+        yFmt: log ? function (v) { return "10^" + Math.round(v); } : function (v) { return AIW.fmt(Math.round(v / 1000)) + "k"; },
+        xLabel: "Fiscal year-end (varies by company)"
+      });
+    }
   }
-  drawHC(true);
-  document.getElementById("log-toggle").addEventListener("change", function (e) { drawHC(e.target.checked); });
+  drawHC();
+  document.getElementById("hc-mode").addEventListener("change", drawHC);
+  document.getElementById("log-toggle").addEventListener("change", drawHC);
 
   var nhc = AIW.netHeadcountChange(d.companies, d.headcount);
   AIW.signedBarChart(document.getElementById("net-hc"), nhc.map(function (r) {

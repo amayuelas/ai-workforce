@@ -328,6 +328,22 @@
     container.appendChild(svg);
   }
 
+  /* YoY % change series per company (indexed alternative for the line chart). */
+  function yoySeries(companies, headcount) {
+    var byCo = {};
+    headcount.forEach(function (s) { (byCo[s.company] = byCo[s.company] || []).push(s); });
+    return companies.map(function (c) {
+      var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a.as_of.localeCompare(b.as_of); });
+      var out = [];
+      for (var i = 1; i < pts.length; i++) {
+        var dt = (+new Date(pts[i].as_of) - +new Date(pts[i - 1].as_of)) / (365.25 * 86400000);
+        if (dt < 0.5) continue;
+        out.push([pts[i].as_of, (pts[i].employees / pts[i - 1].employees - 1) * 100]);
+      }
+      return { label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""), points: out };
+    }).filter(function (s) { return s.points.length; });
+  }
+
   /* Latest fiscal-year net headcount change per company, derived from the headcount series (signed). */
   function netHeadcountChange(companies, headcount) {
     var byCo = {};
@@ -415,7 +431,7 @@
     fmt: fmt, fmtSigned: fmtSigned, signed: signed, esc: esc,
     companyName: companyName, companyTicker: companyTicker,
     signedBarChart: signedBarChart, netFlowChart: netFlowChart, companyEvolution: companyEvolution,
-    barChart: barChart, lineChart: lineChart, eventScatter: eventScatter, netHeadcountChange: netHeadcountChange,
+    barChart: barChart, lineChart: lineChart, eventScatter: eventScatter, netHeadcountChange: netHeadcountChange, yoySeries: yoySeries,
     eventsTable: eventsTable, companiesTable: companiesTable,
     badges: badges, sourceLinks: sourceLinks,
     PALETTE: PALETTE, LAYOFF_COLOR: LAYOFF_COLOR, HIRING_COLOR: HIRING_COLOR, AI_COLOR: AI_COLOR

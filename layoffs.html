@@ -17,7 +17,7 @@
       <a href="index.html">WorkforceBench</a> · <a href="hirings.html">HiringsBench</a>.</p>
   </div>
 
-  <section class="cards" id="kpis"></section>
+  <section class="statline" id="kpis"></section>
 
   <h2><span class="no">01</span>Layoff events timeline</h2>
   <div class="panel">
@@ -77,7 +77,7 @@ AIW.loadAll().then(function (d) {
     { label: "Largest single event", value: "−" + AIW.fmt(biggest.size), cls: "red", hint: AIW.companyName(d.companies, biggest.company) + ", " + biggest.date },
     { label: "Companies affected", value: AIW.fmt(new Set(layoffs.map(function (e) { return e.company; })).size), cls: "ink", hint: "of " + d.companies.length + " tracked" }
   ].map(function (k) {
-    return '<div class="card c-' + k.cls + '"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
+    return '<div class="stat"><div class="v ' + k.cls + '">' + k.value + '</div><div class="l">' + k.label + '</div><div class="h">' + k.hint + "</div></div>";
   }).join("");
 
   AIW.eventScatter(document.getElementById("scatter"), d.companies, layoffs, "layoff");

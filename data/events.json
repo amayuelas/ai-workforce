@@ -341,17 +341,21 @@
       "company": "meta",
       "date": "2026-01-14",
       "announced": "2026-01-14",
-      "size": 1000,
-      "size_is_estimate": false,
+      "size": 1500,
+      "size_is_estimate": true,
       "percent_of_workforce": null,
-      "scope": "Reality Labs / metaverse-related roles; ~10% of those teams.",
+      "scope": "Reality Labs / metaverse-related roles; ~10-15% of that division (1,000-1,500 reported).",
       "reason": "Efficiency while focusing on generative AI.",
       "ai_related": true,
       "confidence": "medium",
       "sources": [
         {
-          "title": "CNBC: Meta layoffs starting this week stress harsh AI reality inside Zuckerberg's company",
+          "title": "CNBC: Meta layoffs starting this week (Jan 2026 Reality Labs ~1,000)",
           "url": "https://www.cnbc.com/2026/05/18/metas-layoffs-starting-this-week-underscore-zuckerbergs-ai-reality-.html"
+        },
+        {
+          "title": "Quartz (via Yahoo Finance): Meta 2026 layoffs detail (Jan RL 10-15%, Mar ~700, May 8,000)",
+          "url": "https://finance.yahoo.com/sectors/technology/articles/meta-layoffs-2026-8-000-114209703.html"
         }
       ]
     },
@@ -428,7 +432,7 @@
       "size": 8750,
       "size_is_estimate": false,
       "percent_of_workforce": 7,
-      "scope": "Voluntary retirement program for ~8,750 US employees (~7% of US workforce of ~125,000); first voluntary buyout program in 51 years.",
+      "scope": "Voluntary retirement program for ~8,750 eligible US employees (~7% of US workforce); >30% of eligible accepted, per Bloomberg. Followed Oct 26, 2026 by a second buyout offer to ~60,000 workers (~27% of 223,000), departures planned end-2026.",
       "reason": "Cost reduction amid AI capex; reports of up to 60,000 further voluntary buyouts under consideration.",
       "ai_related": true,
       "confidence": "medium",
@@ -440,6 +444,14 @@
         {
           "title": "NBC News: Meta says it will lay off 10% of its workforce (cites Microsoft buyouts)",
           "url": "https://www.nbcnews.com/tech/tech-news/meta-layoffs-ai-memo-rcna341683"
+        },
+        {
+          "title": "Bloomberg: Microsoft to Trim Workforce With Buyout Offers for 60,000 Staff (Oct 26, 2026)",
+          "url": "https://www.bloomberg.com/news/articles/2026-10-26/microsoft-to-offer-buyouts-to-60-000-workers-in-latest-cost-cut"
+        },
+        {
+          "title": "CNBC: Microsoft offers voluntary buyouts to 60,000 employees as AI leads to efficiency push",
+          "url": "https://www.cnbc.com/2026/10/26/microsoft-msft-voluntary-buyouts.html"
         }
       ]
     },
@@ -600,6 +612,206 @@
         {
           "title": "TechCrunch: Elon Musk's SpaceX officially acquires xAI",
           "url": "https://techcrunch.com/2026/02/02/elon-musk-spacex-acquires-xai-data-centers-space-merger/"
+        }
+      ]
+    },
+    {
+      "id": "meta-2026-03-700",
+      "type": "layoff",
+      "company": "meta",
+      "date": "2026-03-16",
+      "announced": "2026-03-16",
+      "size": 700,
+      "size_is_estimate": true,
+      "percent_of_workforce": null,
+      "scope": "~700 roles across at least five divisions (Reality Labs, Facebook social, recruiting, sales, global operations); second 2026 wave, incl. ~600 recruiter roles.",
+      "reason": "Efficiency / AI reallocation; part of the 2026 wave totaling ~9,700-10,200 announced roles.",
+      "ai_related": true,
+      "confidence": "medium",
+      "sources": [
+        {
+          "title": "Quartz (via Yahoo Finance): Meta layoffs 2026 detail (Mar ~700 across five divisions)",
+          "url": "https://finance.yahoo.com/sectors/technology/articles/meta-layoffs-2026-8-000-114209703.html"
+        },
+        {
+          "title": "SQ Magazine: Meta 2026 waves sum ~29,100 incl. Feb 7,500 and Mar 600",
+          "url": "https://sqmagazine.co.uk/meta-employee-count-statistics/"
+        },
+        {
+          "title": "The Next Web: Meta 2026 third wave detail (Mar ~700)",
+          "url": "https://thenextweb.com/news/meta-layoffs-8000-ai-restructuring-may-2026"
+        }
+      ]
+    },
+    {
+      "id": "msft-2026-07-4800",
+      "type": "layoff",
+      "company": "microsoft",
+      "date": "2026-07-06",
+      "announced": "2026-07-06",
+      "size": 4800,
+      "size_is_estimate": false,
+      "percent_of_workforce": 2.1,
+      "scope": "Company-wide round (~2.1% of ~228,000); Xbox absorbed ~3,200 roles through FY2027 (~20% of the division, 1,600 immediate Jul 6); 4 studios spun off; WA WARN: 605 Redmond roles effective Sep 4; further ~268 Xbox + ~500 total on Sep 22, 2026.",
+      "reason": "Efficiency / AI-era retooling; 'Resetting Xbox'; not framed as AI replacement.",
+      "ai_related": true,
+      "confidence": "high",
+      "sources": [
+        {
+          "title": "CNBC: Microsoft cuts 4,800 jobs, as Xbox unit downsizes (Jul 6, 2026)",
+          "url": "https://www.cnbc.com/2026/07/06/microsoft-cuts-2point1percent-of-employees-as-xbox-unit-plans-to-spin-studios.html"
+        },
+        {
+          "title": "GeekWire: Microsoft cuts hundreds more jobs in Xbox overhaul (Sep 22, 2026: 268 Xbox)",
+          "url": "https://www.geekwire.com/2026/microsoft-cuts-hundreds-more-jobs-shifts-next-halo-game-to-activision-in-xbox-overhaul/"
+        }
+      ]
+    },
+    {
+      "id": "msft-2026-10-60k-buyout",
+      "type": "layoff",
+      "company": "microsoft",
+      "date": "2026-10-26",
+      "announced": "2026-10-26",
+      "size": 60000,
+      "size_is_estimate": false,
+      "percent_of_workforce": 27,
+      "scope": "Voluntary buyout offer to ~60,000 eligible workers (~27% of 223,000; VP-level and below; data-center, some sales/marketing excluded); decide by early Dec, departures end-2026.",
+      "reason": "Cost trim + workforce retooling for the AI era amid ~$175B 2026 capex.",
+      "ai_related": true,
+      "confidence": "high",
+      "sources": [
+        {
+          "title": "Bloomberg: Microsoft to offer buyouts to 60,000 workers (Oct 26, 2026)",
+          "url": "https://www.bloomberg.com/news/articles/2026-10-26/microsoft-to-offer-buyouts-to-60-000-workers-in-latest-cost-cut"
+        },
+        {
+          "title": "CNBC: Microsoft offers voluntary buyouts to 60,000 employees",
+          "url": "https://www.cnbc.com/2026/10/26/microsoft-msft-voluntary-buyouts.html"
+        },
+        {
+          "title": "CBS News: Microsoft offers buyouts to 60,000 workers as it pours money into AI",
+          "url": "https://www.cbsnews.com/news/microsoft-buyouts-60000-workers-artificial-intelligence-layoffs/"
+        }
+      ]
+    },
+    {
+      "id": "amzn-2026-10-stores",
+      "type": "layoff",
+      "company": "amazon",
+      "date": "2026-10-07",
+      "announced": "2026-10-07",
+      "size": 1000,
+      "size_is_estimate": true,
+      "percent_of_workforce": null,
+      "scope": "Fewer than 1,000 roles, mainly Stores division (US, UK, India); plus ~250 devices & services roles (Oct 28) and ~1,000 core retail roles earlier in October; WA WARN: 148 Bay Area roles.",
+      "reason": "Continued post-30k trimming; AI efficiency.",
+      "ai_related": true,
+      "confidence": "medium",
+      "sources": [
+        {
+          "title": "GeekWire: Amazon confirms job cuts impacting hundreds in retail unit (Oct 8, 2026)",
+          "url": "https://www.geekwire.com/2026/amazon-confirms-job-cuts-impacting-hundreds-of-employees-in-retail-unit/"
+        },
+        {
+          "title": "Moneycontrol/Reuters: Amazon cuts ~250 jobs in devices unit",
+          "url": "https://www.moneycontrol.com/world/amazon-cuts-more-jobs-in-devices-unit-after-flurry-of-product-rollouts-article-14062870.html"
+        },
+        {
+          "title": "Beinsure: Amazon layoffs continue in October after 30k cuts (<1,000 Stores)",
+          "url": "https://beinsure.com/news/amazon-layoffs-continue-in-october-after-30k-job-cuts/"
+        }
+      ]
+    },
+    {
+      "id": "goog-2026-rolling",
+      "type": "layoff",
+      "company": "alphabet",
+      "date": "2026-06-08",
+      "announced": "2026-06-08",
+      "size": 2250,
+      "size_is_estimate": true,
+      "percent_of_workforce": null,
+      "scope": "Rolling, unannounced 2026 reductions: performance-based separations, voluntary buyouts (Platforms & Devices, Global Business, People Ops), Platforms & Devices restructuring, Google Cloud cuts incl. Cloud Design and security teams; outside estimates 1,500-3,000+ for 2026; ~100 Cloud design/UX roles Oct 2025; ~10% of manager/VP roles cut start-2025. No single company-wide number announced.",
+      "reason": "AI reallocation: shift hiring to AI/data-center roles amid ~$175-205B 2026 capex guidance; headcount still grew to 194,668 (Q1) / 198,933 (Q2 2026).",
+      "ai_related": true,
+      "confidence": "medium",
+      "sources": [
+        {
+          "title": "KORE1: Google 2026 layoffs 1,500-3,000+ engineers, no official total",
+          "url": "https://www.kore1.com/google-layoffs-2026/"
+        },
+        {
+          "title": "Medhacloud: Google layoffs 2026 timeline (rolling waves, headcount rose to ~194,700 by Mar 2026)",
+          "url": "https://medhacloud.com/blog/google-layoffs"
+        },
+        {
+          "title": "TechCrunch running list 2026: Google never announced a single overall number",
+          "url": "https://techcrunch.com/2026/07/25/the-running-list-major-tech-layoffs-in-2026-where-employers-cited-ai/"
+        }
+      ]
+    },
+    {
+      "id": "msft-2026-07-frontier",
+      "type": "hiring",
+      "company": "microsoft",
+      "date": "2026-07-02",
+      "announced": "2026-07-02",
+      "size": 6000,
+      "size_is_estimate": false,
+      "percent_of_workforce": null,
+      "scope": "New Microsoft Frontier Co. subsidiary: 6,000 employees (existing FDEs, consultants, support, sales) embedded with clients on AI engagements ('forward deployed engineering'); $2.5B commitment.",
+      "reason": "AI implementation for enterprise clients.",
+      "ai_related": true,
+      "confidence": "high",
+      "sources": [
+        {
+          "title": "CNBC: Microsoft commits $2.5 billion and 6,000 employees to new AI implementation unit (Jul 2, 2026)",
+          "url": "https://www.cnbc.com/2026/07/02/microsoft-commits-2point5-billion-6000-employees-ai-implementation-unit.html"
+        }
+      ]
+    },
+    {
+      "id": "meta-2026-05-7k-reassign",
+      "type": "hiring",
+      "company": "meta",
+      "date": "2026-05-20",
+      "announced": "2026-05-20",
+      "size": 7000,
+      "size_is_estimate": false,
+      "percent_of_workforce": null,
+      "scope": "Up to 7,000 existing employees redirected into new AI-focused teams (Applied AI Engineering, Agent Transformation Accelerator XFN, Central Analytics); 6,000 open roles cancelled.",
+      "reason": "Internal reallocation to AI, alongside the 8,000-role cut.",
+      "ai_related": true,
+      "confidence": "high",
+      "sources": [
+        {
+          "title": "Quartz (via Yahoo Finance): Meta layoffs 2026 — 7,000 workers redirected to AI teams",
+          "url": "https://finance.yahoo.com/sectors/technology/articles/meta-layoffs-2026-8-000-114209703.html"
+        }
+      ]
+    },
+    {
+      "id": "ai-labs-2026-h1-6200",
+      "type": "hiring",
+      "company": "anthropic",
+      "date": "2026-06-30",
+      "announced": "2026-06-30",
+      "size": 6200,
+      "size_is_estimate": true,
+      "percent_of_workforce": null,
+      "scope": "Anthropic, OpenAI, Cohere and Mistral collectively hired ~6,200 people in H1 2026 (record), absorbing talent shed by big tech.",
+      "reason": "AI-native labs scaling amid enterprise demand.",
+      "ai_related": true,
+      "confidence": "medium",
+      "sources": [
+        {
+          "title": "Vesper News: AI-native companies Anthropic, OpenAI, Cohere, Mistral hired 6,200 in H1 2026",
+          "url": "https://www.vespernews.com/en/articles/tech/4b5c864f-9686-43cc-ac00-50209b44e35a"
+        },
+        {
+          "title": "TechCrunch running list 2026: AI-focused companies hiring rapidly, absorbing laid-off talent",
+          "url": "https://techcrunch.com/2026/07/25/the-running-list-major-tech-layoffs-in-2026-where-employers-cited-ai/"
         }
       ]
     }

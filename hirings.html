@@ -18,7 +18,7 @@
       <a href="index.html">WorkforceBench</a> · <a href="layoffs.html">LayoffsBench</a>.</p>
   </div>
 
-  <section class="cards" id="kpis"></section>
+  <section class="statline" id="kpis"></section>
 
   <h2><span class="no">01</span>Net headcount change YoY (filings, signed)</h2>
   <div class="panel">
@@ -67,7 +67,7 @@ AIW.loadAll().then(function (d) {
     { label: "Companies that grew YoY", value: AIW.fmt(nhc.filter(function (r) { return r.value > 0; }).length) + " of " + nhc.length, cls: "ink", hint: "per latest 10-K vs prior year" },
     { label: "Net headcount added (growers)", value: "+" + AIW.fmt(grown), cls: "green", hint: "sum of positive YoY changes, filings" }
   ].map(function (k) {
-    return '<div class="card c-' + k.cls + '"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
+    return '<div class="stat"><div class="v ' + k.cls + '">' + k.value + '</div><div class="l">' + k.label + '</div><div class="h">' + k.hint + "</div></div>";
   }).join("");
 
   AIW.signedBarChart(document.getElementById("net-hc"), nhc.map(function (r) {

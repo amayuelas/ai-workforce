@@ -718,6 +718,58 @@
           "url": "https://finance.yahoo.com/news/musks-spacex-merge-xai-combined-212210116.html"
         }
       ]
+    },
+    {
+      "company": "alphabet",
+      "as_of": "2026-03-31",
+      "employees": 194668,
+      "is_estimate": false,
+      "basis": "Alphabet Q1 2026 earnings release (8-K, Apr 29, 2026)",
+      "sources": [
+        {
+          "title": "Alphabet Q1 2026 earnings release (8-K, Apr 29, 2026)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=8-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2026-03-31",
+      "employees": 77986,
+      "is_estimate": false,
+      "basis": "Meta Q1 2026 10-Q: 77,986 as of Mar 31, 2026",
+      "sources": [
+        {
+          "title": "Meta Q1 2026 10-Q: 77,986 as of Mar 31, 2026",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-Q"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2026-06-30",
+      "employees": 75472,
+      "is_estimate": false,
+      "basis": "Meta Q2 2026: ~75,472 employees at June 30, 2026 (post-May cuts)",
+      "sources": [
+        {
+          "title": "Meta Q2 2026: ~75,472 employees at June 30, 2026 (post-May cuts)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-Q"
+        }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2026-06-30",
+      "employees": 1595000,
+      "is_estimate": false,
+      "basis": "Amazon Q2 2026 earnings release: ~1,595,000 employees",
+      "sources": [
+        {
+          "title": "Amazon Q2 2026 earnings release: ~1,595,000 employees",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=8-K"
+        }
+      ]
     }
   ]
 }
