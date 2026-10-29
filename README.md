@@ -6,7 +6,7 @@ Three views:
 
 | View | Page | What it shows |
 |---|---|---|
-| **Total** | [`index.html`](https://amayuelas.github.io/ai-workforce/) | Aggregate KPIs, net workforce change by year, largest layoffs, all events |
+| **WorkforceBench** | [`index.html`](https://amayuelas.github.io/ai-workforce/) | Aggregate KPIs, quarterly net flow, company evolution timeline, robustness panel, all events |
 | **LayoffsBench** | [`layoffs.html`](https://amayuelas.github.io/ai-workforce/layoffs.html) | Announced layoffs by year and company, AI-attributed share, filterable event log |
 | **HiringsBench** | [`hirings.html`](https://amayuelas.github.io/ai-workforce/hirings.html) | Hiring plans, talent moves, latest reported headcount per company |
 

@@ -267,7 +267,7 @@
 
   /* ---------- chrome ---------- */
   function header(active) {
-    var pages = [["index.html", "Total"], ["layoffs.html", "LayoffsBench"], ["hirings.html", "HiringsBench"]];
+    var pages = [["index.html", "WorkforceBench"], ["layoffs.html", "LayoffsBench"], ["hirings.html", "HiringsBench"]];
     var nav = pages.map(function (p) {
       return '<a href="' + p[0] + '"' + (p[1] === active ? ' class="active"' : "") + ">" + p[1] + "</a>";
     }).join("");

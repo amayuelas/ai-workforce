@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Workforce Tracker — Total</title>
-<meta name="description" content="Tracking layoffs (negative) and hiring (positive) at the main tech companies and AI labs: LayoffsBench, HiringsBench, and the aggregate Total.">
+<title>WorkforceBench — AI Workforce Tracker</title>
+<meta name="description" content="Tracking layoffs (negative) and hiring (positive) at the main tech companies and AI labs: LayoffsBench, HiringsBench, and the aggregate WorkforceBench.">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 </head>
 <body>
 <main>
   <div class="hero">
-    <div class="kicker">Open data · sourced · updated 2026-10-29</div>
-    <h1>AI Workforce Tracker</h1>
+    <div class="kicker">Bench 00 · aggregate · sourced · updated 2026-10-29</div>
+    <h1>WorkforceBench</h1>
     <p class="lede">How the workforce of the main tech companies and AI labs is moving — layoffs counted
       <strong class="neg">negative</strong>, hirings <strong class="pos">positive</strong>. Three views:
       <a href="layoffs.html">LayoffsBench</a>, <a href="hirings.html">HiringsBench</a>, and this aggregate
-      <strong>Total</strong>. Every figure links to its source in
+      <strong>WorkforceBench</strong>. Every figure links to its source in
       <a href="https://github.com/amayuelas/ai-workforce/tree/main/data">data/</a>.</p>
   </div>
 
@@ -73,7 +73,7 @@
 <script src="assets/js/app.js"></script>
 <script>
 AIW.loadAll().then(function (d) {
-  document.body.insertAdjacentHTML("afterbegin", AIW.header("Total"));
+  document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
   document.querySelector("main").insertAdjacentHTML("beforeend", AIW.footer(d.updated));
 
   var layoffs = d.events.filter(function (e) { return e.type === "layoff"; });

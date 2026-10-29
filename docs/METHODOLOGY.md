@@ -30,11 +30,11 @@ Every event is tagged with one of three tiers, shown on the site and filterable 
 | `medium` | Reputable wire outlet reporting unconfirmed figures | Reuters, Bloomberg, CNBC, BBC, AP, FT, WSJ citing sources/memos |
 | `low` | Single secondary source or aggregator | One outlet, or tracker-derived; directional only |
 
-The current mix is computed live on the site's Total view (section "How robust is this tracker?"). Figures marked `size_is_estimate` additionally carry the "~"/"about" qualifier.
+The current mix is computed live on the site's WorkforceBench view (section "How robust is this tracker?"). Figures marked `size_is_estimate` additionally carry the "~"/"about" qualifier.
 
 ### Signed convention
 
-Layoffs are counted **negative**, hirings **positive** (`signed = -size` for layoffs, `+size` for hirings). All charts and tables use this convention; the Total view shows the net flow by quarter and a per-company evolution timeline.
+Layoffs are counted **negative**, hirings **positive** (`signed = -size` for layoffs, `+size` for hirings). All charts and tables use this convention; the WorkforceBench view shows the net flow by quarter and a per-company evolution timeline.
 
 ### The `ai_related` flag
 
@@ -58,11 +58,11 @@ Rules enforced by `scripts/validate_data.py` and review:
 
 Public companies: official employee counts from the latest 10-K/10-Q (note fiscal years end on different dates — NVIDIA/Intel/Amazon end in January, Microsoft June 30, Apple late September, Oracle May 31). Private labs: most recent credible media report, labelled as an estimate. Snapshots are point-in-time; they are **not** a continuous series, and fiscal-year-end differences mean year-over-year deltas mix hiring, layoffs, attrition, and M&A.
 
-## LayoffsBench / HiringsBench / Total
+## WorkforceBench / LayoffsBench / HiringsBench
 
 - **LayoffsBench** sums announced layoff sizes by year and company and shows the AI-attributed share.
 - **HiringsBench** shows quantified hiring plans and latest headcounts.
-- **Total** aggregates both, including a net (hiring − layoffs) view per year.
+- **WorkforceBench** aggregates both, including a net (hiring − layoffs) view per year.
 
 ## Known limitations
 
