@@ -30,7 +30,7 @@ Every event is tagged with one of three tiers, shown on the site and filterable 
 | `medium` | Reputable wire outlet reporting unconfirmed figures | Reuters, Bloomberg, CNBC, BBC, AP, FT, WSJ citing sources/memos |
 | `low` | Single secondary source or aggregator | One outlet, or tracker-derived; directional only |
 
-Current mix: 12 high, 10 medium, 1 low (of 23 events). Figures marked `size_is_estimate` additionally carry the "~"/"about" qualifier.
+The current mix is computed live on the site's Total view (section "How robust is this tracker?"). Figures marked `size_is_estimate` additionally carry the "~"/"about" qualifier.
 
 ### Signed convention
 
