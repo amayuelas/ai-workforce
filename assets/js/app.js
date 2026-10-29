@@ -526,7 +526,7 @@
     var nav = pages.map(function (p) {
       return '<a href="' + p[0] + '"' + (p[1] === active ? ' class="active"' : "") + ">" + p[1] + "</a>";
     }).join("");
-    return '<header class="site"><div class="bar"><a class="brand" href="index.html">AI Workforce Tracker</a><nav>' + nav + "</nav></div></header>";
+    return '<header class="site"><div class="bar"><a class="brand" href="index.html">AI Workforce Tracker<small>Layoffs &amp; hirings · tech &amp; AI labs</small></a><nav>' + nav + "</nav></div></header>";
   }
 
   function footer(updated) {

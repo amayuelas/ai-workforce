@@ -5,13 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LayoffsBench — AI Workforce Tracker</title>
 <meta name="description" content="LayoffsBench: announced layoffs (counted negative) at the main tech companies and AI labs, with AI attribution, confidence tiers and sources.">
-<link rel="stylesheet" href="assets/css/style.css?v=15">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📉</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css?v=16">
 </head>
 <body>
 <main>
   <div class="hero">
-    <div class="kicker">Bench 01 · announced layoffs, negative flow</div>
+    <div class="kicker"><span>Bench 01 — announced layoffs</span><span>counted negative</span></div>
     <h1>LayoffsBench</h1>
     <p class="lede">Every announced layoff at the tracked companies, counted negative. Announcements are the reliable layoff signal (unlike hiring). Back to
       <a href="index.html">WorkforceBench</a> · <a href="hirings.html">HiringsBench</a>.</p>
@@ -57,7 +56,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=15"></script>
+<script src="assets/js/app.js?v=16"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("LayoffsBench"));
