@@ -60,7 +60,9 @@ header.site .brand {
   color: var(--ink);
   margin-right: auto;
   letter-spacing: -0.01em;
+  border-bottom: none;
 }
+header.site .brand:hover { border-bottom: none; color: var(--blue); }
 header.site nav { display: flex; gap: 0.25rem; }
 header.site nav a {
   color: var(--muted);
@@ -235,6 +237,30 @@ table.data .num, .num { text-align: right; font-variant-numeric: tabular-nums; w
 .tier .t-name { font-weight: 700; font-size: 0.95rem; }
 .tier .t-desc { color: var(--muted); font-size: 0.82rem; margin-top: 0.25rem; }
 .tier .t-num { font-family: var(--mono); font-size: 0.8rem; color: var(--faint); margin-top: 0.35rem; }
+
+/* HTML legend below line charts — wraps, never overlaps the plot */
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line);
+}
+.chart-legend .lg-item {
+  font-size: 0.78rem;
+  color: var(--ink);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.chart-legend .lg-item i {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+}
 
 /* ---------- tooltips & hover ---------- */
 .svg-tip {

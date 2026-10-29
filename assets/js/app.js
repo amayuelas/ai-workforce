@@ -134,9 +134,16 @@
       });
       bar.setAttribute("data-tip", (r.label ? r.label + " · " : "") + fmtSigned(r.value) + (r.label2 ? " · " + r.label2 : ""));
       svg.appendChild(bar);
-      txt(svg, x + w / 2, r.value >= 0 ? y - 6 : y + h + 13, fmtSigned(r.value), {
-        "text-anchor": "middle", fill: r.color || (r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR), "font-weight": 700, "font-size": 11
-      });
+      var col = r.color || (r.value >= 0 ? HIRING_COLOR : LAYOFF_COLOR);
+      if (h > 26) {
+        txt(svg, x + w / 2, r.value >= 0 ? y + h - 8 : y + 16, fmtSigned(r.value), {
+          "text-anchor": "middle", fill: "#fbfaf6", "font-weight": 700, "font-size": 10.5
+        });
+      } else {
+        txt(svg, x + w / 2, r.value >= 0 ? y - 6 : y + h + 13, fmtSigned(r.value), {
+          "text-anchor": "middle", fill: col, "font-weight": 700, "font-size": 11
+        });
+      }
       var lx = x + w / 2, ly = H - padB + (rotate ? 14 : 18);
       var t = txt(svg, lx, ly, r.label, { "text-anchor": rotate ? "end" : "middle", "font-size": rotate ? 9.5 : 11 });
       if (rotate) t.setAttribute("transform", "rotate(-32 " + lx + " " + ly + ")");
@@ -242,8 +249,7 @@
     opts = opts || {};
     series = (series || []).filter(function (s) { return s.points && s.points.length; });
     var W = container.clientWidth || 900, H = opts.height || 380;
-    var legendBelow = series.length > 8;
-    var padL = 64, padR = legendBelow ? 16 : 150, padT = 14, padB = legendBelow ? 70 : 40;
+    var padL = 64, padR = 16, padT = 14, padB = 34;
     var allPts = [];
     series.forEach(function (s) { s.points.forEach(function (p) { allPts.push(p); }); });
     if (!allPts.length) { container.textContent = "No data"; return; }
@@ -261,11 +267,13 @@
     }
     var years = {};
     allPts.forEach(function (p) { years[p[0].slice(0, 4)] = true; });
-    Object.keys(years).sort().forEach(function (y) {
-      var approx = y + "-07-01";
-      var x = X(approx);
+    var ykeys = Object.keys(years).sort();
+    var step = ykeys.length > 8 ? 2 : 1;
+    ykeys.forEach(function (y, i) {
+      if (i % step !== 0 && i !== ykeys.length - 1) return;
+      var x = X(y + "-07-01");
       svg.appendChild(svgEl("line", { x1: x, y1: padT, x2: x, y2: H - padB, stroke: LINE, "stroke-dasharray": "2 3" }));
-      txt(svg, x, H - padB + 16, y, { "text-anchor": "middle", "font-size": 10.5 });
+      txt(svg, x, H - padB + 15, y, { "text-anchor": "middle", "font-size": 10.5 });
     });
     txt(svg, (padL + W - padR) / 2, H - 6, opts.xLabel || "Date", { "text-anchor": "middle", "font-size": 11, fill: MUTED });
     series.forEach(function (s, i) {
@@ -274,30 +282,23 @@
       var d = pts.map(function (p, j) { return (j ? "L" : "M") + X(p[0]).toFixed(1) + " " + Y(p[1]).toFixed(1); }).join(" ");
       svg.appendChild(svgEl("path", { d: d, fill: "none", stroke: color, "stroke-width": 1.8, "stroke-dasharray": s.dashed ? "5 3" : "none" }));
       pts.forEach(function (p) {
-        var m = svgEl("rect", { x: X(p[0]) - 3.4, y: Y(p[1]) - 3.4, width: 6.8, height: 6.8, fill: color, "fill-opacity": 0.9 });
+        var m = svgEl("rect", { x: X(p[0]) - 2.6, y: Y(p[1]) - 2.6, width: 5.2, height: 5.2, fill: color });
         m.setAttribute("data-tip", s.label + " · " + p[0] + " · " + (opts.yFmt ? opts.yFmt(p[1]) : fmt(Math.round(p[1]))));
         svg.appendChild(m);
       });
     });
-    if (legendBelow) {
-      var cols = 3, lx0 = padL, ly0 = H - padB + 18;
-      series.forEach(function (s, i) {
-        var color = s.color || PALETTE[i % PALETTE.length];
-        var cx = lx0 + (i % cols) * ((W - padL - padR) / cols);
-        var cy = ly0 + Math.floor(i / cols) * 16;
-        svg.appendChild(svgEl("line", { x1: cx, y1: cy, x2: cx + 14, y2: cy, stroke: color, "stroke-width": 2, "stroke-dasharray": s.dashed ? "4 2" : "none" }));
-        txt(svg, cx + 20, cy + 4, s.label, { "font-size": 10, fill: INK });
-      });
-    } else {
-      var lx = W - padR + 8, ly = padT + 6;
-      series.forEach(function (s, i) {
-        var color = s.color || PALETTE[i % PALETTE.length];
-        svg.appendChild(svgEl("line", { x1: lx, y1: ly + i * 17, x2: lx + 16, y2: ly + i * 17, stroke: color, "stroke-width": 2, "stroke-dasharray": s.dashed ? "4 2" : "none" }));
-        txt(svg, lx + 22, ly + i * 17 + 4, s.label, { "font-size": 10.5, fill: INK });
-      });
-    }
     container.innerHTML = "";
     container.appendChild(svg);
+    var leg = document.createElement("div");
+    leg.className = "chart-legend";
+    series.forEach(function (s, i) {
+      var color = s.color || PALETTE[i % PALETTE.length];
+      var item = document.createElement("span");
+      item.className = "lg-item";
+      item.innerHTML = '<i style="background:' + color + (s.dashed ? ";height:0;border-top:2px dashed " + color : "") + '"></i>' + esc(s.label);
+      leg.appendChild(item);
+    });
+    container.appendChild(leg);
     bindTooltip(container);
   }
 
@@ -321,7 +322,11 @@
       var b2 = svgEl("rect", { x: x, y: y, width: w, height: Math.max(h, 1.5), fill: r.color || PALETTE[i % PALETTE.length], rx: 2 });
       b2.setAttribute("data-tip", (r.label || "") + " · " + fmt(r.value) + (r.label2 ? " · " + r.label2 : ""));
       svg.appendChild(b2);
-      txt(svg, x + w / 2, y - 6, fmt(r.value), { "text-anchor": "middle", fill: INK, "font-weight": 700, "font-size": 11.5 });
+      if (h > 24) {
+        txt(svg, x + w / 2, y + h - 7, fmt(r.value), { "text-anchor": "middle", fill: "#fbfaf6", "font-weight": 700, "font-size": 10.5 });
+      } else {
+        txt(svg, x + w / 2, y - 6, fmt(r.value), { "text-anchor": "middle", fill: INK, "font-weight": 700, "font-size": 11 });
+      }
       txt(svg, x + w / 2, H - padB + 17, r.label, { "text-anchor": "middle", "font-size": 10.5 });
       if (r.label2) txt(svg, x + w / 2, H - padB + 31, r.label2, { "text-anchor": "middle", "font-size": 9.5 });
     });
@@ -503,7 +508,7 @@
     var nav = pages.map(function (p) {
       return '<a href="' + p[0] + '"' + (p[1] === active ? ' class="active"' : "") + ">" + p[1] + "</a>";
     }).join("");
-    return '<header class="site"><div class="bar"><span class="brand">AI Workforce Tracker</span><nav>' + nav + "</nav></div></header>";
+    return '<header class="site"><div class="bar"><a class="brand" href="index.html">AI Workforce Tracker</a><nav>' + nav + "</nav></div></header>";
   }
 
   function footer(updated) {
