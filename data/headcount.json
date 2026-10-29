@@ -1,18 +1,83 @@
 {
   "$schema": "../schemas/headcount.schema.json",
-  "version": 2,
+  "version": 3,
   "updated": "2026-10-29",
-  "note": "Time series of reported headcount. Public companies: annual employee counts from Form 10-K (fiscal year-ends differ: Dec 31 for Alphabet/Amazon/Meta/Tesla, Jun 30 Microsoft, late Sep Apple, late Jan NVIDIA/Intel, May 31 Oracle) — plotted at fiscal year-end. Private AI labs: dated media estimates (is_estimate=true), shown dashed.",
+  "note": "Time series of reported headcount, each point = the company's own annual employee count from its Form 10-K at fiscal year-end (fiscal year-ends differ: Dec 31 Alphabet/Amazon/Meta/Tesla, Jun 30 Microsoft, late Sep Apple, late Jan NVIDIA/Intel, May 31 Oracle; 2026 quarterly points where a 10-Q disclosed them). Private AI labs: single dated media estimates (is_estimate=true), shown only as markers. Indexed/YoY views use each company's first reported year as 100.",
   "snapshots": [
+    {
+      "company": "alphabet",
+      "as_of": "2015-12-31",
+      "employees": 61814,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "alphabet",
+      "as_of": "2016-12-31",
+      "employees": 72053,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "alphabet",
+      "as_of": "2017-12-31",
+      "employees": 80110,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "alphabet",
+      "as_of": "2018-12-31",
+      "employees": 98771,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "alphabet",
+      "as_of": "2019-12-31",
+      "employees": 118899,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
+        }
+      ]
+    },
     {
       "company": "alphabet",
       "as_of": "2020-12-31",
       "employees": 135301,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2020 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
         }
       ]
@@ -22,10 +87,10 @@
       "as_of": "2021-12-31",
       "employees": 156500,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2021 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
         }
       ]
@@ -35,10 +100,10 @@
       "as_of": "2022-12-31",
       "employees": 190234,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
         }
       ]
@@ -48,10 +113,10 @@
       "as_of": "2023-12-31",
       "employees": 182502,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
         }
       ]
@@ -61,10 +126,10 @@
       "as_of": "2024-12-31",
       "employees": 183323,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
         }
       ]
@@ -74,10 +139,23 @@
       "as_of": "2025-12-31",
       "employees": 190820,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "alphabet",
+      "as_of": "2026-03-31",
+      "employees": 194668,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
         }
       ]
@@ -87,11 +165,76 @@
       "as_of": "2026-06-30",
       "employees": 198933,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2026 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2015-12-31",
+      "employees": 230800,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2016-12-31",
+      "employees": 341400,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2017-12-31",
+      "employees": 566000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2018-12-31",
+      "employees": 647500,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2019-12-31",
+      "employees": 798000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
         }
       ]
     },
@@ -100,10 +243,10 @@
       "as_of": "2020-12-31",
       "employees": 1298000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2020 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
         }
       ]
@@ -113,10 +256,10 @@
       "as_of": "2021-12-31",
       "employees": 1608000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2021 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
         }
       ]
@@ -126,10 +269,10 @@
       "as_of": "2022-12-31",
       "employees": 1541000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
         }
       ]
@@ -139,10 +282,10 @@
       "as_of": "2023-12-31",
       "employees": 1525000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
         }
       ]
@@ -152,10 +295,10 @@
       "as_of": "2024-12-31",
       "employees": 1556000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
         }
       ]
@@ -165,11 +308,89 @@
       "as_of": "2025-12-31",
       "employees": 1576000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "amazon",
+      "as_of": "2026-06-30",
+      "employees": 1595000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "apple",
+      "as_of": "2015-09-26",
+      "employees": 110000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end late Sep (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end late Sep (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "apple",
+      "as_of": "2016-09-24",
+      "employees": 116000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end late Sep (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end late Sep (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "apple",
+      "as_of": "2017-09-30",
+      "employees": 123000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end late Sep (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end late Sep (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "apple",
+      "as_of": "2018-09-29",
+      "employees": 132000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end late Sep (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end late Sep (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "apple",
+      "as_of": "2019-09-28",
+      "employees": 137000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end late Sep (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end late Sep (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
         }
       ]
     },
@@ -178,10 +399,10 @@
       "as_of": "2020-09-26",
       "employees": 147000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Sep (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end late Sep (FY-end))",
       "sources": [
         {
-          "title": "FY 2020 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end late Sep (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
         }
       ]
@@ -191,10 +412,10 @@
       "as_of": "2021-09-25",
       "employees": 154000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Sep (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end late Sep (FY-end))",
       "sources": [
         {
-          "title": "FY 2021 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end late Sep (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
         }
       ]
@@ -204,10 +425,10 @@
       "as_of": "2022-09-24",
       "employees": 164000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Sep (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end late Sep (FY-end))",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end late Sep (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
         }
       ]
@@ -217,10 +438,10 @@
       "as_of": "2023-09-30",
       "employees": 161000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Sep (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end late Sep (FY-end))",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end late Sep (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
         }
       ]
@@ -230,10 +451,10 @@
       "as_of": "2024-09-28",
       "employees": 164000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Sep (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end late Sep (FY-end))",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end late Sep (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
         }
       ]
@@ -243,11 +464,63 @@
       "as_of": "2025-09-27",
       "employees": 166000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Sep (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end late Sep (FY-end))",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end late Sep (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000320193&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2016-12-31",
+      "employees": 17048,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2017-12-31",
+      "employees": 25105,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2018-12-31",
+      "employees": 35587,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2019-12-31",
+      "employees": 44942,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
         }
       ]
     },
@@ -256,10 +529,10 @@
       "as_of": "2020-12-31",
       "employees": 58604,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2020 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
         }
       ]
@@ -269,10 +542,10 @@
       "as_of": "2021-12-31",
       "employees": 71970,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2021 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
         }
       ]
@@ -282,10 +555,10 @@
       "as_of": "2022-12-31",
       "employees": 86482,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
         }
       ]
@@ -295,10 +568,10 @@
       "as_of": "2023-12-31",
       "employees": 67317,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
         }
       ]
@@ -308,10 +581,10 @@
       "as_of": "2024-12-31",
       "employees": 74067,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
         }
       ]
@@ -321,11 +594,102 @@
       "as_of": "2025-12-31",
       "employees": 78865,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2026-03-31",
+      "employees": 77986,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "meta",
+      "as_of": "2026-06-30",
+      "employees": 75472,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "microsoft",
+      "as_of": "2016-06-30",
+      "employees": 114000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Jun 30 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Jun 30 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "microsoft",
+      "as_of": "2017-06-30",
+      "employees": 124000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Jun 30 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Jun 30 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "microsoft",
+      "as_of": "2018-06-30",
+      "employees": 131000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Jun 30 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Jun 30 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "microsoft",
+      "as_of": "2019-06-30",
+      "employees": 144000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Jun 30 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Jun 30 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "microsoft",
+      "as_of": "2020-06-30",
+      "employees": 163000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Jun 30 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Jun 30 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
         }
       ]
     },
@@ -334,10 +698,10 @@
       "as_of": "2021-06-30",
       "employees": 181000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jun 30 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Jun 30 (FY-end))",
       "sources": [
         {
-          "title": "FY 2021 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Jun 30 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
         }
       ]
@@ -347,10 +711,10 @@
       "as_of": "2022-06-30",
       "employees": 221000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jun 30 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Jun 30 (FY-end))",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Jun 30 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
         }
       ]
@@ -360,10 +724,10 @@
       "as_of": "2023-06-30",
       "employees": 221000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jun 30 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Jun 30 (FY-end))",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Jun 30 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
         }
       ]
@@ -373,10 +737,10 @@
       "as_of": "2024-06-30",
       "employees": 228000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jun 30 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Jun 30 (FY-end))",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Jun 30 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
         }
       ]
@@ -386,10 +750,10 @@
       "as_of": "2025-06-30",
       "employees": 228000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jun 30 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Jun 30 (FY-end))",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Jun 30 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
         }
       ]
@@ -399,11 +763,50 @@
       "as_of": "2026-06-30",
       "employees": 223000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jun 30 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Jun 30 (FY-end))",
       "sources": [
         {
-          "title": "FY 2026 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end Jun 30 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "nvidia",
+      "as_of": "2019-01-27",
+      "employees": 13277,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end late Jan (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end late Jan (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "nvidia",
+      "as_of": "2020-01-26",
+      "employees": 13775,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end late Jan (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end late Jan (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "nvidia",
+      "as_of": "2021-01-31",
+      "employees": 18975,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end late Jan (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end late Jan (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
         }
       ]
     },
@@ -412,10 +815,10 @@
       "as_of": "2022-01-30",
       "employees": 22473,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jan (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end late Jan (FY-end))",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end late Jan (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
         }
       ]
@@ -425,10 +828,10 @@
       "as_of": "2023-01-29",
       "employees": 26196,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jan (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end late Jan (FY-end))",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end late Jan (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
         }
       ]
@@ -438,10 +841,10 @@
       "as_of": "2024-01-28",
       "employees": 29600,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jan (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end late Jan (FY-end))",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end late Jan (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
         }
       ]
@@ -451,10 +854,10 @@
       "as_of": "2025-01-26",
       "employees": 36000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jan (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end late Jan (FY-end))",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end late Jan (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
         }
       ]
@@ -464,11 +867,128 @@
       "as_of": "2026-01-25",
       "employees": 42000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Jan (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end late Jan (FY-end))",
       "sources": [
         {
-          "title": "FY 2026 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end late Jan (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2015-05-31",
+      "employees": 132000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2016-05-31",
+      "employees": 136000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2017-05-31",
+      "employees": 138000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2018-05-31",
+      "employees": 137000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2019-05-31",
+      "employees": 136000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2020-05-31",
+      "employees": 135000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2021-05-31",
+      "employees": 132000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2022-05-31",
+      "employees": 143000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "oracle",
+      "as_of": "2023-05-31",
+      "employees": 164000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end May 31 (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end May 31 (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
         }
       ]
     },
@@ -477,10 +997,10 @@
       "as_of": "2024-05-31",
       "employees": 159000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; May 31 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end May 31 (FY-end))",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end May 31 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
         }
       ]
@@ -490,10 +1010,10 @@
       "as_of": "2025-05-31",
       "employees": 162000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; May 31 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end May 31 (FY-end))",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end May 31 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
         }
       ]
@@ -503,11 +1023,76 @@
       "as_of": "2026-05-31",
       "employees": 141000,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; May 31 (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end May 31 (FY-end))",
       "sources": [
         {
-          "title": "FY 2026 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2026 (fiscal year-end May 31 (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001321655&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "tesla",
+      "as_of": "2015-12-31",
+      "employees": 13058,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "tesla",
+      "as_of": "2016-12-31",
+      "employees": 17782,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "tesla",
+      "as_of": "2017-12-31",
+      "employees": 37543,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "tesla",
+      "as_of": "2018-12-31",
+      "employees": 48817,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "tesla",
+      "as_of": "2019-12-31",
+      "employees": 48016,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end Dec 31)",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
         }
       ]
     },
@@ -516,10 +1101,10 @@
       "as_of": "2020-12-31",
       "employees": 70757,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2020 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
         }
       ]
@@ -529,10 +1114,10 @@
       "as_of": "2021-12-31",
       "employees": 99290,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2021 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
         }
       ]
@@ -542,10 +1127,10 @@
       "as_of": "2022-12-31",
       "employees": 127855,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
         }
       ]
@@ -555,10 +1140,10 @@
       "as_of": "2023-12-31",
       "employees": 140473,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
         }
       ]
@@ -568,10 +1153,10 @@
       "as_of": "2024-12-31",
       "employees": 125665,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
         }
       ]
@@ -581,11 +1166,76 @@
       "as_of": "2025-12-31",
       "employees": 134785,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec 31)",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end Dec 31)",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001318605&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "intel",
+      "as_of": "2015-12-26",
+      "employees": 107300,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end late Dec (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2015 (fiscal year-end late Dec (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "intel",
+      "as_of": "2016-12-31",
+      "employees": 106000,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end late Dec (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2016 (fiscal year-end late Dec (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "intel",
+      "as_of": "2017-12-30",
+      "employees": 102700,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end late Dec (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2017 (fiscal year-end late Dec (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "intel",
+      "as_of": "2018-12-29",
+      "employees": 107400,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end late Dec (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2018 (fiscal year-end late Dec (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
+        }
+      ]
+    },
+    {
+      "company": "intel",
+      "as_of": "2019-12-28",
+      "employees": 110800,
+      "is_estimate": false,
+      "basis": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end late Dec (FY-end))",
+      "sources": [
+        {
+          "title": "Company Form 10-K annual employee count, FY 2019 (fiscal year-end late Dec (FY-end))",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
         }
       ]
     },
@@ -594,10 +1244,10 @@
       "as_of": "2020-12-26",
       "employees": 110600,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end late Dec (FY-end))",
       "sources": [
         {
-          "title": "FY 2020 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2020 (fiscal year-end late Dec (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
         }
       ]
@@ -607,10 +1257,10 @@
       "as_of": "2021-12-25",
       "employees": 121100,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end late Dec (FY-end))",
       "sources": [
         {
-          "title": "FY 2021 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2021 (fiscal year-end late Dec (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
         }
       ]
@@ -620,10 +1270,10 @@
       "as_of": "2022-12-31",
       "employees": 131900,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end late Dec (FY-end))",
       "sources": [
         {
-          "title": "FY 2022 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2022 (fiscal year-end late Dec (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
         }
       ]
@@ -633,10 +1283,10 @@
       "as_of": "2023-12-30",
       "employees": 124800,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end late Dec (FY-end))",
       "sources": [
         {
-          "title": "FY 2023 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2023 (fiscal year-end late Dec (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
         }
       ]
@@ -646,10 +1296,10 @@
       "as_of": "2024-12-28",
       "employees": 108900,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end late Dec (FY-end))",
       "sources": [
         {
-          "title": "FY 2024 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2024 (fiscal year-end late Dec (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
         }
       ]
@@ -659,10 +1309,10 @@
       "as_of": "2025-12-27",
       "employees": 85100,
       "is_estimate": false,
-      "basis": "Company Form 10-K annual employee count (fiscal year-end; Dec (FY-end))",
+      "basis": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end late Dec (FY-end))",
       "sources": [
         {
-          "title": "FY 2025 — SEC 10-K filings (annual employee count)",
+          "title": "Company Form 10-K annual employee count, FY 2025 (fiscal year-end late Dec (FY-end))",
           "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000050863&type=10-K"
         }
       ]
@@ -716,58 +1366,6 @@
         {
           "title": "SpaceX IPO filing: >22,000 full-time employees as of Mar 31, 2026 (xAI merged into SpaceX, Feb 2026)",
           "url": "https://finance.yahoo.com/news/musks-spacex-merge-xai-combined-212210116.html"
-        }
-      ]
-    },
-    {
-      "company": "alphabet",
-      "as_of": "2026-03-31",
-      "employees": 194668,
-      "is_estimate": false,
-      "basis": "Alphabet Q1 2026 earnings release (8-K, Apr 29, 2026)",
-      "sources": [
-        {
-          "title": "Alphabet Q1 2026 earnings release (8-K, Apr 29, 2026)",
-          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=8-K"
-        }
-      ]
-    },
-    {
-      "company": "meta",
-      "as_of": "2026-03-31",
-      "employees": 77986,
-      "is_estimate": false,
-      "basis": "Meta Q1 2026 10-Q: 77,986 as of Mar 31, 2026",
-      "sources": [
-        {
-          "title": "Meta Q1 2026 10-Q: 77,986 as of Mar 31, 2026",
-          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-Q"
-        }
-      ]
-    },
-    {
-      "company": "meta",
-      "as_of": "2026-06-30",
-      "employees": 75472,
-      "is_estimate": false,
-      "basis": "Meta Q2 2026: ~75,472 employees at June 30, 2026 (post-May cuts)",
-      "sources": [
-        {
-          "title": "Meta Q2 2026: ~75,472 employees at June 30, 2026 (post-May cuts)",
-          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-Q"
-        }
-      ]
-    },
-    {
-      "company": "amazon",
-      "as_of": "2026-06-30",
-      "employees": 1595000,
-      "is_estimate": false,
-      "basis": "Amazon Q2 2026 earnings release: ~1,595,000 employees",
-      "sources": [
-        {
-          "title": "Amazon Q2 2026 earnings release: ~1,595,000 employees",
-          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=8-K"
         }
       ]
     }
