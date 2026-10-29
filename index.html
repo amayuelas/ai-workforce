@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WorkforceBench — AI Workforce Tracker</title>
 <meta name="description" content="WorkforceBench: how the workforce of the main tech companies and AI labs is moving — layoffs negative, hirings positive, plus reported headcount over time.">
-<link rel="stylesheet" href="assets/css/style.css?v=12">
+<link rel="stylesheet" href="assets/css/style.css?v=14">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 </head>
 <body>
@@ -26,15 +26,15 @@
     <div class="filters">
       <label for="hc-mode">Metric</label>
       <select id="hc-mode">
-        <option value="yoy" selected>YoY change (%) — default</option>
-        <option value="indexed">Indexed (first year = 100)</option>
+        <option value="indexed" selected>Indexed (first year = 100) — default</option>
+        <option value="yoy">YoY change (%)</option>
         <option value="level">Headcount (thousands)</option>
       </select>
       <label><input type="checkbox" id="log-toggle"> log scale (levels only)</label>
     </div>
     <div id="headcount-lines"></div>
     <div class="legend"><span class="l-ink">public companies (SEC filings, solid)</span><span class="l-line">AI labs (media estimates, dashed)</span></div>
-    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). YoY % and indexed put every company on the same scale — raw levels dwarf the rest with Amazon's 1.6M (use "Headcount" + log to see scale).</p>
+    <p class="cap">Reported employee counts from 10-K/10-Q filings; fiscal year-ends differ (Dec 31 Alphabet/Amazon/Meta/Tesla · Jun 30 Microsoft · late Sep Apple · late Jan NVIDIA/Intel · May 31 Oracle). Indexed (first year = 100) is the default: every company comparable on one scale. YoY % shows yearly swings; raw levels dwarf the rest with Amazon's 1.6M (use "Headcount" + log for scale).</p>
   </div>
 
   <h2><span class="no">02</span>Announced layoffs vs implied actual hiring</h2>
@@ -92,7 +92,7 @@
   </div>
 </main>
 
-<script src="assets/js/app.js?v=13"></script>
+<script src="assets/js/app.js?v=14"></script>
 <script>
 AIW.loadAll().then(function (d) {
   document.body.insertAdjacentHTML("afterbegin", AIW.header("WorkforceBench"));
@@ -145,6 +145,7 @@ AIW.loadAll().then(function (d) {
       AIW.lineChart(document.getElementById("headcount-lines"), series, {
         height: 400,
         yFmt: function (v) { return (v > 0 ? "+" : "") + v.toFixed(1) + "%"; },
+        zeroLine: true,
         xLabel: "Fiscal year-end (varies by company)"
       });
     } else if (mode === "indexed") {

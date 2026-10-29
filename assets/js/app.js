@@ -264,9 +264,16 @@
     var t1 = Math.max.apply(null, allPts.map(function (p) { return +new Date(p[0]); }));
     var v0 = opts.yMin !== undefined ? opts.yMin : 0;
     var v1 = opts.yMax !== undefined ? opts.yMax : Math.max.apply(null, allPts.map(function (p) { return p[1]; })) * 1.05;
+    if (opts.zeroLine) {
+      var m = Math.max(Math.abs(v0), Math.abs(v1));
+      v0 = -m * 1.05; v1 = m * 1.05;
+    }
     function X(d) { return padL + (W - padL - padR) * ((+new Date(d)) - t0) / (t1 - t0 || 1); }
     function Y(v) { return padT + (H - padT - padB) * (1 - (v - v0) / (v1 - v0 || 1)); }
     var svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "chart tall", role: "img", style: "height:" + H + "px" });
+    if (opts.zeroLine && v0 < 0 && v1 > 0) {
+      svg.appendChild(svgEl("line", { x1: padL, y1: Y(0), x2: W - padR, y2: Y(0), stroke: INK, "stroke-width": 1.3 }));
+    }
     for (var g = 0; g <= 4; g++) {
       var gv = v0 + (v1 - v0) * g / 4, gy = Y(gv);
       svg.appendChild(svgEl("line", { x1: padL, y1: gy, x2: W - padR + 130, y2: gy, stroke: LINE }));
