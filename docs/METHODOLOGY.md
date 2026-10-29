@@ -58,16 +58,20 @@ Rules enforced by `scripts/validate_data.py` and review:
 
 This is the **reliable hiring signal**, because most hiring is never announced. Public companies: the annual employee count from each Form 10-K, plotted at fiscal year-end (year-ends differ: Dec 31 for Alphabet/Amazon/Meta/Tesla, Jun 30 Microsoft, late Sep Apple, late Jan NVIDIA/Intel, May 31 Oracle). Private labs: dated media estimates, `is_estimate: true`, drawn dashed on the site. Year-over-year deltas mix gross hiring, layoffs, attrition, and M&A — they are net headcount change, not gross hires.
 
-## WorkforceBench / LayoffsBench / HiringsBench
+## The two measurement methods (and why both)
 
-- **LayoffsBench** sums announced layoff sizes by year and company and shows the AI-attributed share.
-- **HiringsBench** shows quantified hiring plans and latest headcounts.
-- **WorkforceBench** aggregates both, including a net (hiring − layoffs) view per year.
+Layoffs and hiring need different instruments, because they differ in observability:
+
+1. **Announced events** (`events.json`) — reliable for **layoffs** (companies announce big cuts; WARN filings corroborate) but only a lower bound for **hiring** (most hiring is never announced). Signed convention: layoffs negative, hirings positive. Shown as timelines, bubbles and flow charts.
+2. **Reported headcount** (`headcount.json`) — the annual employee count from each 10-K, the reliable signal for **net workforce change** (gross hiring − exits − layoffs ± M&A). WorkforceBench plots it over time and derives the latest YoY net change per company; HiringsBench uses it as the hiring measure.
+
+The three views: **WorkforceBench** = both methods side by side; **LayoffsBench** = announced layoff events (timeline, by year/company, AI-attributed share) plus filing-based net change for affected companies; **HiringsBench** = filing-based net headcount growth plus announced hiring events.
 
 ## Known limitations
 
 - **Announced ≠ realized.** Announced layoff counts include attrition and unfilled-role closures in some company framings (e.g. Intel's "workforce reductions and attrition"); we record the announced figure and describe the nuance in `scope`.
-- **Layoffs and announced hiring plans are different units.** A "layoff" is a lost role; a "hiring plan" is a target that may not be filled (e.g. OpenAI's 4,500→8,000 plan). Announced hiring is a strict lower bound on actual hiring — the headcount time series above is the reliable measure of net workforce change.
+- **Layoffs and announced hiring plans are different units.** A "layoff" is a lost role; a "hiring plan" is a target that may not be filled (e.g. OpenAI's 4,500→8,000 plan). Announced hiring is a strict lower bound on actual hiring — the headcount time series is the reliable measure of net workforce change.
+- **Net headcount change ≠ gross hiring.** YoY filing deltas mix hiring, layoffs, attrition and M&A (e.g. Microsoft flat at 228,000 through ~15,000 announced 2025 cuts; the Activision deal added ~13,000 in FY2024).
 - **Coverage is announcement-driven, not census-driven.** We capture events big enough to be publicly announced; small rolling cuts (e.g. Google's unannounced 2026 reductions, estimated 1.5–3k) are undercounted. Cross-check against Layoffs.fyi/TrueUp industry totals (which count differently) before quoting.
 - **Layoffs.fyi-style trackers count differently** (per-company rolling cuts vs. single announcements), so our totals will not match theirs exactly.
 - **Point-in-time headcount** for private labs can vary widely between sources (e.g. Anthropic estimates range ~2,500–5,000 across 2026); we pick the most authoritative dated figure and link it.

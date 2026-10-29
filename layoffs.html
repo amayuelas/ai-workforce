@@ -11,22 +11,31 @@
 <body>
 <main>
   <div class="hero">
-    <div class="kicker">Bench 01 · layoffs are negative numbers</div>
+    <div class="kicker">Bench 01 · announced layoffs, negative flow</div>
     <h1>LayoffsBench</h1>
-    <p class="lede">Every announced layoff at the tracked companies, shown as a negative flow. Back to
+    <p class="lede">Every announced layoff at the tracked companies, counted negative. Announcements are the reliable layoff signal (unlike hiring). Back to
       <a href="index.html">WorkforceBench</a> · <a href="hirings.html">HiringsBench</a>.</p>
   </div>
 
   <section class="cards" id="kpis"></section>
 
-  <h2><span class="no">01</span>Announced layoffs by year (negative flow)</h2>
+  <h2><span class="no">01</span>Layoff events timeline</h2>
   <div class="panel">
-    <div id="year-chart"></div>
-    <div class="legend"><span class="l-red">all layoffs</span><span class="l-violet">AI-attributed portion</span></div>
+    <div id="scatter"></div>
+    <p class="cap">One bubble per announced layoff; bubble size = announced roles. Red = layoff, violet edge = AI-attributed.</p>
   </div>
 
-  <h2><span class="no">02</span>By company, cumulative announced</h2>
+  <h2><span class="no">02</span>Announced layoffs by year (negative)</h2>
+  <div class="panel"><div id="year-chart"></div></div>
+
+  <h2><span class="no">03</span>By company, cumulative announced (negative)</h2>
   <div class="panel"><div id="company-chart"></div></div>
+
+  <h2><span class="no">04</span>Actual workforce change where filings show it</h2>
+  <div class="panel">
+    <div id="net-hc"></div>
+    <p class="cap">Signed YoY change in reported headcount (10-K) for companies that announced layoffs. Layoffs show up here only net of hiring/attrition — e.g. Microsoft stayed flat at 228,000 through ~15,000 announced 2025 cuts.</p>
+  </div>
 
   <div class="filters">
     <label for="f-company">Company</label>
@@ -39,7 +48,7 @@
     <input type="search" id="f-search" placeholder="scope, reason…">
   </div>
 
-  <h2><span class="no">03</span>All layoff events, newest first</h2>
+  <h2><span class="no">05</span>All layoff events, newest first</h2>
   <div class="panel" style="overflow-x:auto">
     <table class="data">
       <thead><tr><th>Date</th><th>Company</th><th>Tags</th><th class="num">Signed size</th><th>Scope / reason</th><th>Sources</th></tr></thead>
@@ -71,26 +80,28 @@ AIW.loadAll().then(function (d) {
     return '<div class="card c-' + k.cls + '"><div class="label">' + k.label + '</div><div class="value ' + k.cls + '">' + k.value + '</div><div class="hint">' + k.hint + "</div></div>";
   }).join("");
 
+  AIW.eventScatter(document.getElementById("scatter"), d.companies, layoffs, "layoff");
+
   var byYear = {}, byCompany = {};
   sized.forEach(function (e) {
     var y = e.date.slice(0, 4);
-    byYear[y] = byYear[y] || { all: 0, ai: 0 };
-    byYear[y].all += e.size;
-    if (e.ai_related) byYear[y].ai += e.size;
+    byYear[y] = (byYear[y] || 0) + e.size;
     byCompany[e.company] = (byCompany[e.company] || 0) + e.size;
   });
-
-  var years = Object.keys(byYear).sort();
-  var rows = years.map(function (y) {
-    return { label: y, value: -byYear[y] };
-  });
-  AIW.signedBarChart(document.getElementById("year-chart"), rows, { height: 300 });
+  var yRows = Object.keys(byYear).sort().map(function (y) { return { label: y, value: -byYear[y] }; });
+  AIW.signedBarChart(document.getElementById("year-chart"), yRows, { height: 300 });
 
   var compRows = Object.keys(byCompany).sort(function (a, b) { return byCompany[b] - byCompany[a]; }).map(function (id) {
     return { label: AIW.companyName(d.companies, id), value: -byCompany[id], color: AIW.LAYOFF_COLOR };
   });
   AIW.signedBarChart(document.getElementById("company-chart"), compRows, { height: 340 });
 
+  var nhc = AIW.netHeadcountChange(d.companies, d.headcount).filter(function (r) {
+    return layoffs.some(function (e) { return e.company === r.company; });
+  });
+  AIW.signedBarChart(document.getElementById("net-hc"), nhc.map(function (r) {
+    return { label: r.label, label2: r.as_of.slice(0, 4), value: r.value };
+  }), { height: 320 });
 
   var sel = document.getElementById("f-company");
   d.companies.forEach(function (c) {
@@ -103,7 +114,7 @@ AIW.loadAll().then(function (d) {
     var fc = sel.value, fai = document.getElementById("f-ai").value,
         fconf = document.getElementById("f-conf").value,
         q = document.getElementById("f-search").value.toLowerCase();
-    var rows2 = layoffs.filter(function (e) {
+    var rows = layoffs.filter(function (e) {
       if (fc && e.company !== fc) return false;
       if (fai === "yes" && !e.ai_related) return false;
       if (fai === "no" && e.ai_related) return false;
@@ -111,7 +122,7 @@ AIW.loadAll().then(function (d) {
       if (q && (e.scope + " " + e.reason).toLowerCase().indexOf(q) === -1) return false;
       return true;
     });
-    AIW.eventsTable(document.getElementById("events-body"), d.companies, rows2, "layoff");
+    AIW.eventsTable(document.getElementById("events-body"), d.companies, rows, "layoff");
   }
   [sel, document.getElementById("f-ai"), document.getElementById("f-conf")].forEach(function (el) {
     el.addEventListener("change", render);

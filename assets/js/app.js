@@ -77,13 +77,15 @@
     return t;
   }
 
-  /* Diverging bar chart: negative (layoffs) left/down in red, positive (hirings) in green. */
+  /* Diverging bar chart: negative (layoffs) down in red, positive (hirings) up in green. */
   function signedBarChart(container, rows, opts) {
     opts = opts || {};
+    rows = (rows || []).filter(function (r) { return r && isFinite(r.value); });
     var W = container.clientWidth || 900, H = opts.height || 300;
     var padL = 70, padR = 70, padT = 20, padB = 34;
     var maxAbs = 1;
     rows.forEach(function (r) { maxAbs = Math.max(maxAbs, Math.abs(r.value)); });
+    if (!rows.length) { container.innerHTML = '<p class="muted small">No data.</p>'; return; }
     var zeroY = padT + (H - padT - padB) / 2;
     var scale = (H - padT - padB) / 2 / maxAbs;
     var svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "chart", role: "img" });
@@ -265,6 +267,7 @@
       svg.appendChild(svgEl("line", { x1: padL, y1: y, x2: W - padR, y2: y, stroke: LINE }));
       txt(svg, padL - 8, y + 4, fmt(Math.round(max * g / 4)), { "text-anchor": "end" });
     }
+    if (!rows.length) { container.innerHTML = '<p class="muted small">No data.</p>'; return; }
     rows.forEach(function (r, i) {
       var h = (H - padT - padB) * (r.value / max);
       var x = padL + i * bw + bw * 0.14, w = bw * 0.72, y = H - padB - h;
@@ -275,6 +278,75 @@
     });
     container.innerHTML = "";
     container.appendChild(svg);
+  }
+
+  /* Event scatter timeline: x = date, y = company row, marker size ~ |signed size|. */
+  function eventScatter(container, companies, events, type) {
+    var evs = (events || []).filter(function (e) { return !type || e.type === type; });
+    if (!evs.length) { container.innerHTML = '<p class="muted small">No events.</p>'; return; }
+    function colorOf(e) { return e.type === "layoff" ? LAYOFF_COLOR : HIRING_COLOR; }
+    var ids = [];
+    evs.forEach(function (e) { if (ids.indexOf(e.company) === -1) ids.push(e.company); });
+    var latest = {};
+    var byCo = {};
+    evs.forEach(function (e) {
+      byCo[e.company] = byCo[e.company] || [];
+      byCo[e.company].push(e);
+    });
+    var W = container.clientWidth || 900, rowH = 26, padL = 150, padR = 20, padT = 10, padB = 34;
+    var H = padT + ids.length * rowH + padB;
+    var t0 = Math.min.apply(null, evs.map(function (e) { return +new Date(e.date); })) - 86400000 * 60;
+    var t1 = Math.max.apply(null, evs.map(function (e) { return +new Date(e.date); })) + 86400000 * 90;
+    function X(d) { return padL + (W - padL - padR) * ((+new Date(d)) - t0) / (t1 - t0); }
+    var maxSize = Math.max.apply(null, evs.map(function (e) { return e.size || 1; }));
+    var svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "chart", style: "height:" + H + "px", role: "img" });
+    var years = {};
+    evs.forEach(function (e) { years[e.date.slice(0, 4)] = true; });
+    Object.keys(years).sort().forEach(function (y) {
+      var x = X(y + "-01-15");
+      svg.appendChild(svgEl("line", { x1: x, y1: padT - 4, x2: x, y2: H - padB, stroke: LINE, "stroke-dasharray": "2 3" }));
+      txt(svg, x, H - padB + 16, y, { "text-anchor": "middle", "font-size": 10.5 });
+    });
+    ids.forEach(function (id, i) {
+      var y = padT + i * rowH + rowH / 2;
+      txt(svg, padL - 10, y + 4, companyName(companies, id), { "text-anchor": "end", fill: INK, "font-weight": 600, "font-size": 11 });
+      svg.appendChild(svgEl("line", { x1: padL, y1: y, x2: W - padR, y2: y, stroke: LINE, "stroke-width": 0.5 }));
+      byCo[id].forEach(function (e) {
+        var r = e.size ? 3 + 10 * Math.sqrt(e.size / maxSize) : 3;
+        var c = svgEl("circle", {
+          cx: X(e.date), cy: y, r: r,
+          fill: colorOf(e),
+          "fill-opacity": 0.75, stroke: colorOf(e)
+        });
+        var title = svgEl("title", {});
+        title.textContent = e.date + " " + companyName(companies, id) + " " + fmtSigned(signed(e)) + (e.ai_related ? " (AI)" : "");
+        c.appendChild(title);
+        svg.appendChild(c);
+      });
+    });
+    container.innerHTML = "";
+    container.appendChild(svg);
+  }
+
+  /* Latest fiscal-year net headcount change per company, derived from the headcount series (signed). */
+  function netHeadcountChange(companies, headcount) {
+    var byCo = {};
+    headcount.forEach(function (s) {
+      (byCo[s.company] = byCo[s.company] || []).push(s);
+    });
+    var rows = [];
+    companies.forEach(function (c) {
+      var pts = (byCo[c.id] || []).slice().sort(function (a, b) { return a.as_of.localeCompare(b.as_of); });
+      if (pts.length < 2) return;
+      var last = pts[pts.length - 1], prev = pts[pts.length - 2];
+      var dt = (+new Date(last.as_of) - +new Date(prev.as_of)) / (365.25 * 86400000);
+      if (dt < 0.5) return;
+      rows.push({
+        company: c.id, label: companyName(companies, c.id) + (c.ticker ? " " + c.ticker : ""),
+        value: last.employees - prev.employees, as_of: last.as_of, est: last.is_estimate
+      });
+    });
+    return rows.sort(function (a, b) { return a.value - b.value; });
   }
 
   /* ---------- tables ---------- */
@@ -343,7 +415,8 @@
     fmt: fmt, fmtSigned: fmtSigned, signed: signed, esc: esc,
     companyName: companyName, companyTicker: companyTicker,
     signedBarChart: signedBarChart, netFlowChart: netFlowChart, companyEvolution: companyEvolution,
-    barChart: barChart, lineChart: lineChart, eventsTable: eventsTable, companiesTable: companiesTable,
+    barChart: barChart, lineChart: lineChart, eventScatter: eventScatter, netHeadcountChange: netHeadcountChange,
+    eventsTable: eventsTable, companiesTable: companiesTable,
     badges: badges, sourceLinks: sourceLinks,
     PALETTE: PALETTE, LAYOFF_COLOR: LAYOFF_COLOR, HIRING_COLOR: HIRING_COLOR, AI_COLOR: AI_COLOR
   };
