@@ -1,0 +1,86 @@
+name: Monthly refresh
+
+# Runs on the last day of every month (UTC): validates data, re-deploys Pages,
+# and opens a reminder issue if the data files have not been touched recently.
+# It never edits numbers automatically — every figure must stay source-linked,
+# which scripts/validate_data.py enforces.
+on:
+  schedule:
+    # at 06:00 UTC on days 28-31; the step below skips unless tomorrow is the 1st
+    - cron: "0 6 28-31 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  actions: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Only run on the last day of the month
+        run: |
+          if [ "$(date -u -d 'tomorrow' +%d)" != "01" ]; then
+            echo "Not the last day of the month — skipping."
+            exit 0
+          fi
+          echo "Last day of $(date -u +%B %Y) — running monthly refresh."
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate data (fails the run if anything is broken or unsourced)
+        run: python3 scripts/validate_data.py
+
+      - name: Check data freshness
+        id: freshness
+        run: |
+          THRESHOLD_DAYS=35
+          now=$(date -u +%s)
+          stale=""
+          for f in data/companies.json data/events.json data/headcount.json data/coverage.json; do
+            last=$(git log -1 --format=%ct -- "$f")
+            age_days=$(( (now - last) / 86400 ))
+            echo "$f last modified ${age_days} days ago"
+            if [ "$age_days" -gt "$THRESHOLD_DAYS" ]; then stale="$stale $f"; fi
+          done
+          if [ -n "$stale" ]; then
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+            echo "stale_files=$stale" >> "$GITHUB_OUTPUT"
+          else
+            echo "stale=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open reminder issue if data is stale
+        if: steps.freshness.outputs.stale == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          MONTH=$(date -u +%Y-%m)
+          TITLE="Monthly refresh ${MONTH}: data files look stale"
+          BODY="The monthly refresh ran on $(date -u +%Y-%m-%d) and found these data files untouched for >35 days:${{ steps.freshness.outputs.stale_files }}
+
+          Please review new layoff/hiring announcements for the tracked companies and add them to \`data/events.json\` with at least one source URL each (see CONTRIBUTING.md), then refresh headcount snapshots from the latest 10-K/10-Q filings into \`data/headcount.json\`.
+
+          CI (validate-data.yml) will fail the PR if any entry lacks sources, has an unknown company, or disagrees with data/coverage.json."
+          # skip if an open issue with this title already exists
+          if gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$TITLE\" in:title" --jq '.[].number' | grep -q .; then
+            echo "Reminder issue already open — skipping."
+          else
+            printf '%s\n' "$BODY" > /tmp/body.md
+            printf '%s\n' "$TITLE" > /tmp/title.txt
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$(cat /tmp/title.txt)" --body-file /tmp/body.md --label data
+          fi
+
+      - name: Re-deploy GitHub Pages (Pages source branch)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run deploy-pages.yml --repo "$GITHUB_REPOSITORY" --ref vibe/ai-workforce-tracker-9b4424
+          echo "Pages redeploy dispatched for $(date -u +%Y-%m-%d)."
